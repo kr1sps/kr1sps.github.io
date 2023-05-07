@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>JamRunner</title>
+    <title>Atomic Rush</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -43,13 +43,13 @@
             console.log("Click PostGameOnTheWall");
             vkBridge.send("VKWebAppShowWallPostBox", {
                 "message": "Привет! Я хочу рассказать тебе о захватывающей новой игре под названием \"Atomic Rush\"! Это runner-platform'ер от 3-го лица, где тебе предстоит набрать как можно больше очков. В игре ты сможешь испытать свои реакцию и ловкость, а также просто хорошо провести время. Я уже начал играть и просто в восторге от нее! Я уверен, что тебе она тоже понравится. Ты можешь попробовать побить мой рекорд и стать лучшим игроком в \"Atomic Rush\"! \n\nК тому же, если ты пригласишь своих друзей в игру, вы сможете сразиться друг с другом и узнать, кто из вас настоящий чемпион! Не упусти свой шанс стать лучшим - переходи в игру \"Atomic Rush\" и начинай играть уже сегодня!",
-                "attachments": "https://vk.com/app51636904_271077376"
+                "attachments": "https://vk.com/app51636904_271077376" <!-- CHANGE!!!!!-->
             });
         }
 
         function Share() {
             console.log("Click share button");
-            vkBridge.send("VKWebAppShare", { "link": "https://vk.com/app51636904_271077376" });
+            vkBridge.send("VKWebAppShare", { "link": "https://vk.com/app51636904_271077376" }); <!-- HERE TOO!!!!-->
         }
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -108,5 +108,7 @@
     <div class="row buttonarea text-center" id="buttonrow3">
         <div class="col-sm-12 text-center"><button type="button" class="btn btn-primary" id="play-button"><img src="https://www.freeiconspng.com/uploads/play-button-icon-png-19.png" alt="Кнопка «button»"></button></div>
     </div>
+    <div class="row buttonarea text-center" id="buttonrow4">
+        <div class="col-sm-22 text-center"><button type = "button" class="btn btn-primary" id="exit-button" onclick="location.reload();"><img src="https://www.freeiconspng.com/uploads/exit-button-icon-18.png"></button></div>
 </body>
 </html>
