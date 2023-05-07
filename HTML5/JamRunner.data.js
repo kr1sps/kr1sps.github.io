@@ -173,6 +173,6 @@ Module['FS_createPath']('/JamRunner/Content', 'Paks', true, true);
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 53, "filename": "/Manifest_NonUFSFiles_HTML5.txt"}, {"start": 53, "audio": 0, "end": 91, "filename": "/UE4CommandLine.txt"}, {"start": 91, "audio": 0, "end": 539890772, "filename": "/JamRunner/Content/Paks/JamRunner-HTML5.pak"}], "remote_package_size": 539890772, "package_uuid": "931c5119-f369-4290-ba01-8823d8b74565"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 53, "filename": "/Manifest_NonUFSFiles_HTML5.txt"}, {"start": 53, "audio": 0, "end": 91, "filename": "/UE4CommandLine.txt"}, {"start": 91, "audio": 0, "end": 89400906, "filename": "/JamRunner/Content/Paks/JamRunner-HTML5.pak"}], "remote_package_size": 89400906, "package_uuid": "079a7e2d-5d7f-4293-acf0-796df737141b"});
 
 })();
