@@ -126,4 +126,6 @@ html, body, .container {
 
 #exit-button {
 	transform: scale(0.2);
+	position: relative;
+	top: -200px;
 }
