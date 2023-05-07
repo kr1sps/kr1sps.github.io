@@ -1,4 +1,4 @@
-﻿/* CSS style sheet used with Epic Games HTML5 projects
+/* CSS style sheet used with Epic Games HTML5 projects
  *
  * much of this is for UE4 development purposes.
  *
@@ -101,7 +101,7 @@ html, body, .container {
 	border-bottom: 0px;
 	padding: 0px;
 	margin-right: 0px;
-	margin-top: 0px;
+	margin-top: 10px;
 	margin-bottom: 0px;
  }
 
@@ -113,5 +113,13 @@ html, body, .container {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%,-50%);
+}
+
+#play-button {
+  background-color: transparent;
+  transform: scale(0.5);
+  border: 0px solid rgba(255, 255, 255, 1);
+  position: relative;
+  top: -250px;
 }
 
