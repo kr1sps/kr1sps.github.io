@@ -65,9 +65,6 @@
                 document.getElementById("but3").style.display = "none";
                 document.getElementById("pause").style.display = "inline-block";
                 document.getElementById("resume").style.display = "inline-block";
-                document.getElementById("exit-button").style.position = "absolute";
-                document.getElementById("exit-button").style.bottom = "-1210px";
-                document.getElementById("exit-button").style.left = "628px";
                 // start the game script
                 var script = document.createElement("script");
                 script.src = "JamRunner.UE4.js";
@@ -105,14 +102,11 @@
         <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="but1" onclick="AddToFavourite();">Add to favourites</button></div>
         <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="but2" onclick="PostGameOnTheWall();">Post on the wall</button></div>
         <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="but3" onclick="Share()">Share</button></div>
-        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="fullscreen_request">Enable fullscreen</button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="fullscreen_request">Fullscreen</button></div>
         <div class="col-sm-2 text-center"></div>
     </div>
     <div class="row buttonarea text-center" id="buttonrow3">
         <div class="col-sm-12 text-center"><button type="button" class="btn btn-primary" id="play-button"><img src="https://www.freeiconspng.com/uploads/play-button-icon-png-19.png" alt="Кнопка «button»"></button></div>
-    </div>
-    <div class="row buttonarea text-center" id="buttonrow4">
-        <div class="col-sm-22 text-center"><button type = "button" class="btn btn-primary" id="exit-button" onclick="location.reload();"><img src="https://www.freeiconspng.com/uploads/exit-button-icon-18.png"></button></div>
     </div>
 </body>
 </html>
