@@ -123,14 +123,6 @@ html, body, .container {
   top: -350px;
 }
 
-#buttonrow {
-	border: 5px solid rgba(0, 0, 0, 1);
-}
-
-#buttonrow2 {
-	border: 5px solid rgba(0, 0, 0, 1);
-}
-
-#buttonrow3 {
-	border: 5px solid rgba(0, 0, 0, 1);
+#button {
+  border: 3px solid black;
 }
