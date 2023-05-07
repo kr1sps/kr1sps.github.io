@@ -1,48 +1,158 @@
-﻿<!DOCTYPE html>
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@kr1sps 
+KrivoshapkinDaniil
+/
+KrivoshapkinDaniil.github.io
+Public
+Fork your own copy of KrivoshapkinDaniil/KrivoshapkinDaniil.github.io
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Beta Try the new code view
+KrivoshapkinDaniil.github.io/HTML5/JamRunner.html
+@kr1sps
+kr1sps Update JamRunner.html
+Latest commit 7c7c243 1 hour ago
+ History
+ 2 contributors
+@kr1sps@KrivoshapkinDaniil
+110 lines (96 sloc)  6.44 KB
+ 
 
-<!--
-     HTML code used with Epic Games HTML5 projects
-
-     much of this is for UE4 development purposes.
-
-     to create a custom HTML file for your project:
-     - make a copy of this file - or make one from scratch
-     - and put it in: "your project folder"/Build/HTML/GameX.html.template
--->
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>JamRunner</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JamRunner</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
-	<link href="JamRunner.css" rel="stylesheet">
+    <link href="JamRunner.css" rel="stylesheet">
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+
+    <script>
+        console.log("Start Program");
+
+        vkBridge.send("VKWebAppInit");
+
+        function getUserInfo() {
+            vkBridge.send("VKWebAppGetUserInfo", {})
+                .then(data => {
+                    console.log(`ID игрока: ${data.id}`);
+                })
+                .catch(error => console.log(error));
+        }
+
+        function subscribeToEvents() {
+            vkBridge.subscribe(e => {
+                if (e.detail.type === 'VKWebAppViewHide') {
+                    console.log('Пользователь закрыл окно приложения');
+                }
+            });
+        }
+
+        function AddToFavourite() {
+            console.log("Click Add to favourite");
+            vkBridge.send("VKWebAppAddToFavorites");
+        }
+
+        function PostGameOnTheWall() {
+            console.log("Click PostGameOnTheWall");
+            vkBridge.send("VKWebAppShowWallPostBox", {
+                "message": "Привет! Я хочу рассказать тебе о захватывающей новой игре под названием \"Game title\"! Это runner-platform'ер от 3-го лица, где тебе предстоит набрать как можно больше очков. В игре ты сможешь испытать свои реакцию и ловкость, а также просто хорошо провести время. Я уже начал играть и я в восторге от нее! Я уверен, что тебе она тоже понравится. Ты можешь попробовать побить мой рекорд и стать лучшим игроком \"Game title\"! \n\nК тому же, если ты пригласишь своих друзей в игру, вы сможете сразиться друг с другом и узнать, кто из вас настоящий чемпион! Не упусти свой шанс стать лучшим - переходи в игру \"Game title\" и начни играть уже сегодня!",
+                "attachments": "https://vk.com/app51636904_271077376"
+            });
+        }
+
+        function Share() {
+            console.log("Click share button");
+            vkBridge.send("VKWebAppShare", { "link": "https://vk.com/app51636904_271077376" });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("DOMContentLoaded");
+
+            getUserInfo();
+            subscribeToEvents();
+
+            document.getElementById("play-button").addEventListener("click", function () {
+                // hide all other buttons
+                document.getElementById("but1").style.display = "none";
+                document.getElementById("but2").style.display = "none";
+                document.getElementById("but3").style.display = "none";
+                document.getElementById("")
+                // start the game script
+                var script = document.createElement("script");
+                script.src = "JamRunner.UE4.js";
+                document.body.appendChild(script);
+                document.getElementById("play-button").style.display = "none";
+                document.getElementById("fullscreen_request").style.position = "relative";
+                document.getElementById("fullscreen_request").style.left = "-220px";
+            });
+
+            document.getElementById("fullscreen_request").addEventListener("click", function () {
+                vkBridge.send("VKWebAppFullscreenEnable");
+            });
+        });
+    </script>
+
 </head>
 <body>
-
-<div class="wrapper" id="mainarea">
-	<div class="alert alert-warning centered-axis-xy" style="min-height: 20px; display:none;" role="alert" id="compilingmessage">
-		<div id='loadTasks'> </div>
-	</div>
-	<!-- The "tabindex=0" specifier on the canvas is important to allow it to capture keyboard focus when clicking on it with a mouse -->
-	<canvas tabindex=0 id="canvas" class="emscripten" oncontextmenu="event.preventDefault()" style="display:none;">
-</div>
-<div class="row buttonarea text-center" id="buttonrow">
-	<div class="col-sm-2 text-center"></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="try { Module['pauseMainLoop'](); } catch(e) {console.error(e);}">Pause</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="try { Module['resumeMainLoop'](); } catch(e) {console.error(e);}">Resume</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="var w = document.getElementById('logwindow'); w.style.display = w.style.display ? '' : 'none';">Toggle Log</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id='clear_indexeddb' onclick="try { deleteIndexedDBStorage(); } catch(e) {console.error(e);}">Clear IndexedDB</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="fullscreen_request">FullScreen</button></div>
-	<div class="col-sm-2 text-center"></div>
-	<div class="col-sm-2 text-center"></div>
-</div>
-<div class="texthalf text-normal jumbotron " id="logwindow" style='display:none'></div>
-
-<script src="JamRunner.UE4.js"></script>
+    <div class="wrapper" id="mainarea">
+        <div class="alert alert-warning centered-axis-xy" style="min-height: 20px; display:none;" role="alert" id="compilingmessage">
+            <div id='loadTasks'> </div>
+        </div>
+        <!-- The "tabindex=0" specifier on the canvas is important to allow it to capture keyboard focus when clicking on it with a mouse -->
+        <canvas tabindex=0 id="canvas" class="emscripten" oncontextmenu="event.preventDefault()" style="display:none;"></canvas>
+    </div>
+    <div class="row buttonarea text-center" id="buttonrow">
+        <div class="col-sm-2 text-center"></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" style="display:none;"></button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="try { Module['pauseMainLoop'](); } catch(e) {console.error(e);}">Pause</button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="try { Module['resumeMainLoop'](); } catch(e) {console.error(e);}">Resume</button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" style="display:none;"></button></div>
+        <div class="col-sm-2 text-center"></div>
+    </div>
+    <div class="row buttonarea text-center" id="buttonrow2">
+        <div class="col-sm-2 text-center"></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="but1" onclick="AddToFavourite();">Add to favourites</button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="but2" onclick="PostGameOnTheWall();">Post on the wall</button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="but3" onclick="Share()">Share</button></div>
+        <div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="fullscreen_request">Enable fullscreen</button></div>
+        <div class="col-sm-2 text-center"></div>
+    </div>
+    <div class="row buttonarea text-center" id="buttonrow3">
+        <div class="col-sm-12 text-center"><button type="button" class="btn btn-primary" id="play-button"><img src="https://icon-library.com/images/play-png-icon/play-png-icon-12.jpg" alt="Кнопка «button»"></button></div>
+    </div>
 </body>
 </html>
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+KrivoshapkinDaniil.github.io/JamRunner.html at test2 · KrivoshapkinDaniil/KrivoshapkinDaniil.github.io
