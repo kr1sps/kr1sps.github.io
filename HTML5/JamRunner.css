@@ -123,3 +123,7 @@ html, body, .container {
   top: -350px;
   margin-left: 21px;
 }
+
+#exit-button {
+	transform: scale(0.2);
+}
