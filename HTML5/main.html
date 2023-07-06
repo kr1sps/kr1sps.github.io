@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Моя таблица</title>
+    <meta charset="UTF-8">
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Услуги</a></li>
+                <li><a href="#">Продукты</a></li>
+                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Блог</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <style>
+
+        html body{
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent;
+            font-weight: 400;
+        }
+
+        header {
+            background: linear-gradient(to bottom, #e5d8c1, #6a4e37);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin: 0 10px;
+        }
+
+        a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        body {
+            background-color: #fff;
+            font-family: 'o Light', cursive;
+            font-size: medium;
+            color: #472a1a;
+            position: relative;
+            min-width: 320px;
+        }
+
+        #info-table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        tr {
+            border-collapse: collapse;
+            padding-bottom: 5px;
+        }
+
+        #info-table td {
+            text-indent: initial;
+            text-align: center;
+            border-bottom: 5px solid #fffcfc;
+            vertical-align: middle;
+            margin-bottom: 5px;
+            width: 100px;
+            height: 100px;
+            background-color: #f2f2f2;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+<table id="info-table">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Название</th>
+        <th>Материал</th>
+        <th>Длина</th>
+        <th>Ширина</th>
+        <th>Толщина</th>
+        <th>Фото</th>
+        <th>Стоимость</th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+    </tbody>
+</table>
+
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+    // Функция для чтения файла .xlsx и добавления данных в таблицу
+    function readExcelFile() {
+        const file = "catalog.xlsx";
+        const req = new XMLHttpRequest();
+        req.open("GET", file, true);
+        req.responseType = "arraybuffer";
+
+        req.onload = function () {
+            const data = new Uint8Array(req.response);
+            const workbook = XLSX.read(data, {type: 'array'});
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+
+            // Проход по строкам данных и добавление их в таблицу
+            for (let i = 1; i < jsonData.length; i++) {
+                addTableRow(jsonData[i]);
+            }
+        };
+
+        req.send();
+    }
+
+    // Функция для добавления новой строки в таблицу
+    function addTableRow(data) {
+        const tableBody = document.getElementById("table-body");
+        const newRow = document.createElement("tr");
+
+        // Создание ячеек и заполнение их данными
+        for (let i = 0; i < data.length; i++) {
+            const cell = document.createElement("td");
+
+            // Если это столбец с фото, создаем элемент <img> и устанавливаем атрибут src
+            if (i === 6) {
+                const img = document.createElement("img");
+                img.src = data[i];
+                img.onload = function () {
+                    const width = this.width;
+                    const height = this.height;
+                    const maxWidth = 100; // Максимальная ширина изображения
+                    const maxHeight = (maxWidth / width) * height; // Вычисление высоты в соответствии с шириной
+                    this.style.maxWidth = maxWidth + "px";
+                    this.style.height = maxHeight + "px";
+                };
+                cell.appendChild(img);
+            } else {
+                cell.textContent = data[i];
+            }
+
+            newRow.appendChild(cell);
+        }
+
+        // Добавление новой строки в таблицу
+        tableBody.appendChild(newRow);
+    }
+
+    // Вызов функции для чтения файла и добавления данных в таблицу
+    readExcelFile();
+</script>
+</body>
+</html>
