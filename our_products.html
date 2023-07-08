@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Моя таблица</title>
+  <meta charset="UTF-8">
+  <header>
+    <nav class="nav-1">
+      <img src="path/to/image.jpg" alt="Картинка">
+      <nav class="nav-1-1">
+        <ul>
+          <li class="li2"><a href="#" onclick="openModal()">Заказать рассчет</a></li>
+          <li class="li2"><a href="online_calcul.html">Онлайн рассчет</a></li>
+          <li class="li2"><a href="page3.html">Ссылка 3</a></li>
+        </ul>
+      </nav>
+      <div class="div-1">
+        <a href="tel:+79990000000">+7 (999) 000-00-00</a>
+        <a href="https://t.me/telegramchat">Telegram чат</a>
+        <a href="mailto:site.gmail.com">site.gmail.com</a>
+      </div>
+      <br>
+    </nav>
+
+    <nav class="nav-2">
+      <ul>
+        <li><a href="main.html">Главная</a></li>
+        <li><a href="#">Продукция</a>
+          <ul class="submenu">
+            <li><a href="#">Столешницы</a></li>
+            <li><a href="#">Подоконники</a></li>
+            <li><a href="#">Ступени</a></li>
+            <li><a href="#">Камины</a></li>
+            <li><a href="#">Облицовка стен</a></li>
+            <li><a href="#">Облицовка<br> фасадов</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Материалы</a>
+          <ul class="submenu">
+            <li><a href="#">Кварцевый агломерат</a></li>
+            <li><a href="#">Кварцит</a></li>
+            <li><a href="#">Гранит</a></li>
+            <li><a href="#">Мрамор</a></li>
+            <li><a href="#">Оникс</a></li>
+          </ul>
+        </li>
+        <li><a href="our_products.html">Наши продукты</a>
+        </li>
+        <li><a href="contacts.html">Контакты</a></li>
+        <li><a href="about-company.html">О компании</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <style>
+
+    .nav-2 {
+      position: relative;
+      background: linear-gradient(to bottom, #e5d8c1, #6a4e37);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      margin: 0;
+    }
+
+    .nav-2::before,
+    .nav-2::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: #3c2f21;
+    }
+
+    .nav-2::before {
+      left: 0;
+      top: 0;
+    }
+
+    .nav-2::after {
+      right: 0;
+      bottom: 0;
+    }
+
+    .nav-2 {
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-2 li {
+      position: relative;
+      margin: auto;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      background: linear-gradient(to bottom, #e5d8c1, #836452FF);
+      border: 1px solid #ccc;
+      text-align: center;
+      padding-bottom: 5px;
+    }
+
+    .nav-2 li:hover .submenu {
+      display: block;
+    }
+
+    .submenu li {
+      font-size: 12px;
+    }
+
+    .nav-2 ul li a {
+      position: relative;
+      display: inline-block;
+      padding: 10px;
+      color: #333;
+    }
+
+    .nav-2 ul li a:hover::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 1px solid #333;
+    }
+
+    .nav-2 ul li a:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .li2 a:hover {
+      color: #ff8700; /* цвет ссылок при наведении */
+    }
+
+    .down-mains { /* разделы снизу */
+      display: flex;
+      margin: auto;
+    }
+
+    .down-mains-li {
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+
+
+    html body {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      font-size: 100%;
+      vertical-align: baseline;
+      background: transparent;
+      font-weight: 400;
+    }
+
+    .nav-1 {
+      position: relative;
+      background-color: #fff; /* цвет фона - белый */
+      color: #4c2f27; /* цвет текста - темно-коричневый */
+    }
+
+    .nav-1 img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .li2 {
+      margin: 0 10px;
+    }
+
+    .li2 a {
+      color: #4c2f27;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .div-1 a {
+      color: #4c2f27;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-1 div {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .nav-1 div a {
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    .nav-1-1 {
+      display: flex;
+      justify-content: center;
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      margin: 0 10px;
+    }
+
+    a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    body {
+      background-color: #fff;
+      font-family: 'o Light', cursive;
+      font-size: medium;
+      color: #472a1a;
+      position: relative;
+      min-width: 320px;
+    }
+
+    #info-table {
+      margin: auto;
+      border-collapse: collapse;
+    }
+
+    tr {
+      border-collapse: collapse;
+      padding-bottom: 5px;
+    }
+
+    #info-table td {
+      text-indent: initial;
+      text-align: center;
+      border-bottom: 5px solid #fffcfc;
+      vertical-align: middle;
+      margin-bottom: 5px;
+      width: 100px;
+      height: 100px;
+      background-color: #f2f2f2;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+</body>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Разделы сайта</h4>
+        <ul>
+          <div class="down-mains">
+            <li class="down-mains-li"><a href="#">Главная</a></li>
+            <li class="down-mains-li"><a href="#">О нас</a></li>
+            <li class="down-mains-li"><a href="#">Услуги</a></li>
+            <li class="down-mains-li"><a href="contacts.html">Контакты</a></li>
+          </div>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h4>Контакты</h4>
+        <ul>
+          <div class="down-mains">
+            <li class="down-mains-li">Телефон: <a href="tel:+79990000000">+7 (999) 000-00-00</a></li>
+            <li class="down-mains-li">Email: <a href="mailto:site.gmail.com">site.gmail.com</a></li>
+          </div>
+        </ul>
+        <ul>
+          <div class="down-mains">
+            <li>Адрес: г. Москва, ул. Название улицы, д. 1, офис 101</li>
+          </div>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h4>Принимаем к оплате</h4>
+        <ul>
+          <div class="down-mains">
+            <li><img src="visa.png" alt="Visa"></li>
+            <li><img src="mastercard.png" alt="Mastercard"></li>
+            <li><img src="maestro.png" alt="Maestro"></li>
+          </div>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h4>Мы в социальных сетях</h4>
+        <ul class="social-media">
+          <div class="down-mains">
+            <li class="down-mains-li"><a href="https://t.me/telegramchat">Telegram чат</a></li>
+            <li class="down-mains-li"><a href="#">Вконтакте</a></li>
+            <li class="down-mains-li"><a href="#">Instagram</a></li>
+          </div>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="small">&copy; 2023 Название вашей компании. Все права защищены.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background-color: #f0f0f0; /* цвет фона */
+    padding: 40px 0; /* отступы сверху и снизу */
+  }
+
+  footer h4 {
+    color: #333; /* цвет заголовков */
+    font-weight: bold; /* жирный шрифт */
+    margin-bottom: 20px; /* отступ снизу */
+    text-align: center; /* выравнивание по центру */
+  }
+
+  footer ul {
+    list-style: none; /* убираем маркеры списка */
+    margin: 0;
+    padding: 0;
+  }
+
+  footer li {
+    margin-bottom: 10px; /* отступ снизу между элементами списка */
+  }
+
+  .down-mains-li a:hover {
+    color: #ff8c00; /* цвет ссылок при наведении */
+  }
+
+  footer a {
+    color: #333; /* цвет ссылок */
+    font-weight: bold;
+    text-decoration: none; /* убираем подчеркивание */
+  }
+
+  footer a:hover {
+    color: #ff8c00; /* цвет ссылок при наведении */
+  }
+
+  footer ul.social-media li {
+    display: inline-block; /* располагаем элементы списка в одной строке */
+    margin-right: 10px; /* отступ справа между элементами списка */
+  }
+
+  footer ul.social-media li:last-child {
+    margin-right: 0; /* убираем отступ справа у последнего элемента списка */
+  }
+
+  footer ul.social-media li a {
+    color: #333; /* цвет ссылок */
+    font-size: 24px; /* размер иконок */
+  }
+
+  footer p.small {
+    font-size: 12px; /* размер текста */
+    margin-top: 20px; /* отступ сверху */
+    text-align: center; /* выравнивание по центру */
+  }
+</style>
+</html>

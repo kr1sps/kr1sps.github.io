@@ -260,24 +260,133 @@
     </style>
 </head>
 
-<body>
-<table id="info-table">
-    <thead>
-    <tr>
-        <th>№</th>
-        <th>Название</th>
-        <th>Материал</th>
-        <th>Длина</th>
-        <th>Ширина</th>
-        <th>Толщина</th>
-        <th>Фото</th>
-        <th>Стоимость</th>
-    </tr>
-    </thead>
-    <tbody id="table-body">
-    </tbody>
-</table>
+<body class = body-1>
+<br>
+    <h2 class="first-string">РАССЧИТАТЬ СТОИМОСТЬ СТОЛЕШНИЦЫ ИЗ КВАРЦЕВОГО КАМНЯ</h2>
+<br>
+
+    <p class="string-about">Предлагаем Вам рассчитать стоимость столешницы
+        из кварцевого камня на нашем онлайн калькуляторе. Поэкспериментируйте с
+        выбором материала и размерами столешницы, чтобы заранее спланировать бюджет
+        на наиболее подходящий по стоимости декор для будущей столешницы. Обращаем внимание,
+        что калькулятор рассчитывает конечную стоимость изделия «под ключ», т.е. с замером,
+        доставкой и монтажом в черте СПб.</p>
+<div class="center">
+    <h3 class="string-select">Выберите материал для расчета:</h3>
+    <br>
+    <div class="radio-buttons">
+        <input type="radio" id="material1" name="material" value="material1">
+        <label for="material1">Камень 1</label>
+        <input type="radio" id="material2" name="material" value="material2">
+        <label for="material2">Камень 2</label>
+        <input type="radio" id="material3" name="material" value="material3">
+        <label for="material3">Камень 3</label>
+    </div>
+    <br>
+    <h3 class="string-select">Выберите форму и толщину столешницы:</h3>
+    <br>
+    <p class="form">Форма: Толщина:</p>
+    <br>
+    <div class = "str">
+
+    <div class="buttons-container-form">
+        <div class="radio-button">
+            <input type="radio" id="size1" name="size" value="size1">
+            <label for="size1">П - образная</label>
+        </div>
+        <div class="radio-button">
+            <input type="radio" id="size2" name="size" value="size2">
+            <label for="size2">Г - образная</label>
+        </div>
+        <div class="radio-button">
+            <input type="radio" id="size3" name="size" value="size3">
+            <label for="size3">Прямая столешница</label>
+        </div>
+    </div>
+
+
+    <div class="buttons-container-tolsh">
+        <div class="radio-button">
+            <input type="radio" id="size4" name="size" value="size4">
+            <label for="size4">2 см</label>
+        </div>
+        <div class="radio-button">
+            <input type="radio" id="size5" name="size" value="size5">
+            <label for="size5">4см</label>
+        </div>
+    </div>
+    </div>
+    <br>
+    <h3 class="string-length">РАССЧИТАТЬ СТОИМОСТЬ СТОЛЕШНИЦЫ ИЗ КВАРЦЕВОГО КАМНЯ</h3>
+    <br>
+
+    <p class="string-about">Предлагаем Вам рассчитать стоимость столешницы
+        из кварцевого камня на нашем онлайн калькуляторе. Поэкспериментируйте с
+        выбором материала и размерами столешницы, чтобы заранее спланировать бюджет
+        на наиболее подходящий по стоимости декор для будущей столешницы. Обращаем внимание,
+        что калькулятор рассчитывает конечную стоимость изделия «под ключ», т.е. с замером,
+        доставкой и монтажом в черте СПб.</p>
+
+</div>
 </body>
+
+<style>
+    .str {
+        display: flex;
+    }
+    .form {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        word-spacing: 200px;
+    }
+
+    .buttons-container-form {
+        display: flex;
+        flex-direction: column;
+        margin-left: -50px;
+    }
+
+    .body-1 .first-string {
+        max-width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .body-1 .string-about {
+        max-width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .body-1 .center .string-select {
+        max-width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buttons-container-tolsh {
+        display: flex;
+        flex-direction: column;
+        margin-left: 200px;
+    }
+
+    .radio-button {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .radio-button input[type="radio"] {
+        margin-right: 10px;
+    }
+
+</style>
+
 
 <footer>
     <div class="container">
@@ -360,10 +469,6 @@
         margin-bottom: 10px; /* отступ снизу между элементами списка */
     }
 
-    .down-mains-li a:hover {
-        color: #ff8c00; /* цвет ссылок при наведении */
-    }
-
     footer a {
         color: #333; /* цвет ссылок */
         font-weight: bold;
@@ -371,6 +476,10 @@
     }
 
     footer a:hover {
+        color: #ff8c00; /* цвет ссылок при наведении */
+    }
+
+    .down-mains-li a:hover {
         color: #ff8c00; /* цвет ссылок при наведении */
     }
 
@@ -394,65 +503,3 @@
         text-align: center; /* выравнивание по центру */
     }
 </style>
-
-<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-<script>
-    // Функция для чтения файла .xlsx и добавления данных в таблицу
-    function readExcelFile() {
-        const file = "catalog.xlsx";
-        const req = new XMLHttpRequest();
-        req.open("GET", file, true);
-        req.responseType = "arraybuffer";
-
-        req.onload = function () {
-            const data = new Uint8Array(req.response);
-            const workbook = XLSX.read(data, {type: 'array'});
-            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-
-            // Проход по строкам данных и добавление их в таблицу
-            for (let i = 1; i < jsonData.length; i++) {
-                addTableRow(jsonData[i]);
-            }
-        };
-
-        req.send();
-    }
-
-    // Функция для добавления новой строки в таблицу
-    function addTableRow(data) {
-        const tableBody = document.getElementById("table-body");
-        const newRow = document.createElement("tr");
-
-        // Создание ячеек и заполнение их данными
-        for (let i = 0; i < data.length; i++) {
-            const cell = document.createElement("td");
-
-            // Если это столбец с фото, создаем элемент <img> и устанавливаем атрибут src
-            if (i === 6) {
-                const img = document.createElement("img");
-                img.src = data[i];
-                img.onload = function () {
-                    const width = this.width;
-                    const height = this.height;
-                    const maxWidth = 100; // Максимальная ширина изображения
-                    const maxHeight = (maxWidth / width) * height; // Вычисление высоты в соответствии с шириной
-                    this.style.maxWidth = maxWidth + "px";
-                    this.style.height = maxHeight + "px";
-                };
-                cell.appendChild(img);
-            } else {
-                cell.textContent = data[i];
-            }
-
-            newRow.appendChild(cell);
-        }
-
-        // Добавление новой строки в таблицу
-        tableBody.appendChild(newRow);
-    }
-
-    // Вызов функции для чтения файла и добавления данных в таблицу
-    readExcelFile();
-</script>
-</html>
