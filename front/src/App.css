@@ -1,0 +1,77 @@
+.app-layout {
+  background: transparent !important;
+}
+
+.ant-layout-header {
+  backdrop-filter: blur(12px);
+  background: rgba(var(--bg-rgb), 0.75) !important;
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), #ff79c6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+  transition: transform 0.2s;
+}
+
+.logo-text:hover {
+  transform: scale(1.02);
+}
+
+.hero-gradient {
+  background: linear-gradient(120deg, var(--accent-bg) 0%, transparent 80%);
+  border-radius: 32px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 4px;
+}
+
+.glass-card {
+  background: rgba(var(--bg-rgb), 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  transition: all 0.3s;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .ant-layout-header {
+    padding: 0 16px;
+  }
+  .logo-text {
+    font-size: 1.2rem;
+  }
+}
