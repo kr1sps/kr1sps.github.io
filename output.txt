@@ -1,0 +1,5779 @@
+================================================================================
+Файл: eslint.config.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\eslint.config.js
+================================================================================
+
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+  },
+])
+
+
+================================================================================
+Файл: index.html
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\index.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>backlabs</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+
+================================================================================
+Файл: package.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\package.json
+================================================================================
+
+{
+  "name": "backlabs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.1.1",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.1.18",
+    "@tanstack/react-query": "^5.96.2",
+    "antd": "^6.3.5",
+    "bcrypt": "^6.0.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "^7.14.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^24.12.2",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.58.0",
+    "vite": "^8.0.4"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
+
+
+================================================================================
+Файл: README.md
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\README.md
+================================================================================
+
+# React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
+
+
+================================================================================
+Файл: tsconfig.app.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\tsconfig.app.json
+================================================================================
+
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "esnext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"]
+}
+
+================================================================================
+Файл: tsconfig.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\tsconfig.json
+================================================================================
+
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"]
+}
+
+================================================================================
+Файл: tsconfig.node.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\tsconfig.node.json
+================================================================================
+
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023"],
+    "module": "esnext",
+    "types": ["node"],
+    "skipLibCheck": true,
+
+    /* Критически важная настройка */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["vite.config.ts"]
+}
+
+================================================================================
+Файл: vite.config.d.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\vite.config.d.ts
+================================================================================
+
+declare const _default: import("vite").UserConfig;
+export default _default;
+
+
+================================================================================
+Файл: vite.config.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\vite.config.js
+================================================================================
+
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+export default defineConfig({
+    plugins: [react()],
+    server: {
+        port: 5173,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+                secure: false,
+            }
+        }
+    }
+});
+
+
+================================================================================
+Файл: vite.config.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\vite.config.ts
+================================================================================
+
+import { defineConfig } from 'vite/dist/node';
+import react from '@vitejs/plugin-react/dist';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
+});
+
+================================================================================
+Файл: src\App.css
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\App.css
+================================================================================
+
+.app-layout {
+  background: transparent !important;
+}
+
+.ant-layout-header {
+  backdrop-filter: blur(12px);
+  background: rgba(var(--bg-rgb), 0.75) !important;
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), #ff79c6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+  transition: transform 0.2s;
+}
+
+.logo-text:hover {
+  transform: scale(1.02);
+}
+
+.hero-gradient {
+  background: linear-gradient(120deg, var(--accent-bg) 0%, transparent 80%);
+  border-radius: 32px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 4px;
+}
+
+.glass-card {
+  background: rgba(var(--bg-rgb), 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  transition: all 0.3s;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .ant-layout-header {
+    padding: 0 16px;
+  }
+  .logo-text {
+    font-size: 1.2rem;
+  }
+}
+
+================================================================================
+Файл: src\App.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\App.tsx
+================================================================================
+
+import { Routes, Route } from 'react-router-dom';
+import { Layout } from 'antd';
+import MainLayout from './components/layout/MainLayout';
+import HomePage from './pages/HomePage';
+import ProductListPage from './pages/ProductListPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import NotFoundPage from './pages/NotFoundPage';
+import { PrivateRoute } from './routes/PrivateRoute';
+
+function App() {
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="products" element={<ProductListPage />} />
+          <Route path="product/:id" element={<ProductDetailPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="cart" element={<CartPage />} />
+            <Route path="checkout" element={<CheckoutPage />} />
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </Layout>
+  );
+}
+
+export default App;
+
+================================================================================
+Файл: src\index.css
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\index.css
+================================================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text: #2c2a2e;
+  --text-h: #0a0812;
+  --bg: #fefefe;
+  --bg-secondary: #f8f9fc;
+  --border: #eef2f6;
+  --code-bg: #f1f2f6;
+  --accent: #aa3bff;
+  --accent-light: #c77dff;
+  --accent-glow: rgba(170, 59, 255, 0.2);
+  --accent-bg: rgba(170, 59, 255, 0.08);
+  --accent-border: rgba(170, 59, 255, 0.3);
+  --social-bg: rgba(241, 242, 246, 0.6);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+  --shadow-primary: 0 8px 20px rgba(170, 59, 255, 0.25);
+  --gradient-bg: radial-gradient(circle at 10% 20%, rgba(170, 59, 255, 0.03) 0%, rgba(255, 255, 255, 0) 70%);
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #c9cfdf;
+    --text-h: #ffffff;
+    --bg: #0f0f14;
+    --bg-secondary: #18181f;
+    --border: #262630;
+    --code-bg: #1e1e26;
+    --accent: #c084fc;
+    --accent-light: #d9a7ff;
+    --accent-glow: rgba(192, 132, 252, 0.25);
+    --accent-bg: rgba(192, 132, 252, 0.1);
+    --accent-border: rgba(192, 132, 252, 0.4);
+    --social-bg: rgba(36, 36, 44, 0.7);
+    --gradient-bg: radial-gradient(circle at 10% 20%, rgba(192, 132, 252, 0.06) 0%, rgba(0, 0, 0, 0) 80%);
+  }
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  background-image: var(--gradient-bg);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 1400px;
+  max-width: 94%;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-light);
+}
+
+/* Глобальные анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.fade-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Стили для заголовков */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading);
+  font-weight: 600;
+  color: var(--text-h);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* Стили для кнопок и ссылок */
+a {
+  transition: all 0.2s ease;
+}
+
+.ant-btn-primary {
+  box-shadow: var(--shadow-primary);
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.ant-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(170, 59, 255, 0.3);
+}
+
+/* Адаптивные отступы */
+@media (max-width: 768px) {
+  #root {
+    padding: 0.5rem;
+    max-width: 100%;
+  }
+}
+
+================================================================================
+Файл: src\main.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\main.tsx
+================================================================================
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ConfigProvider, theme } from 'antd'
+import ruRU from 'antd/locale/ru_RU'
+import App from './App'
+import './index.css'
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 5,
+            refetchOnWindowFocus: false,
+            retry: 1,
+        },
+    },
+})
+
+const antdTheme = {
+    algorithm: theme.defaultAlgorithm,
+    token: {
+        colorPrimary: '#aa3bff',
+        colorInfo: '#aa3bff',
+        borderRadius: 16,
+        fontFamily: "'Inter', system-ui, 'Segoe UI', Roboto, sans-serif",
+        boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+    },
+    components: {
+        Card: {
+            borderRadiusLG: 24,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.05)',
+        },
+        Button: {
+            borderRadius: 40,
+            controlHeight: 40,
+        },
+        Input: {
+            borderRadius: 12,
+        },
+        Select: {
+            borderRadius: 12,
+        },
+        Table: {
+            borderRadius: 20,
+        },
+    },
+}
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+      <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+              <ConfigProvider locale={ruRU} theme={antdTheme}>
+                  <App />
+              </ConfigProvider>
+          </QueryClientProvider>
+      </BrowserRouter>
+  </React.StrictMode>,
+)
+
+================================================================================
+Файл: src\components\layout\MainLayout.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\components\layout\MainLayout.js
+================================================================================
+
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Layout, Menu, Button, Space, Typography } from 'antd';
+import { HomeOutlined, ShoppingCartOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useAuthStore } from '../../store/authStore';
+const { Header, Content, Footer } = Layout;
+const { Text } = Typography;
+const MainLayout = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { user, logout } = useAuthStore();
+    const menuItems = [
+        {
+            key: '/products',
+            icon: _jsx(HomeOutlined, {}),
+            label: _jsx(Link, { to: "/products", children: "\u041A\u0430\u0442\u0430\u043B\u043E\u0433" }),
+        },
+        {
+            key: '/cart',
+            icon: _jsx(ShoppingCartOutlined, {}),
+            label: _jsx(Link, { to: "/cart", children: "\u041A\u043E\u0440\u0437\u0438\u043D\u0430" }),
+        },
+    ];
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+    return (_jsxs(Layout, { children: [_jsxs(Header, { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' }, children: [_jsxs("div", { style: { display: 'flex', alignItems: 'center' }, children: [_jsx("div", { className: "logo", style: { color: 'white', marginRight: '20px', fontSize: '20px' }, children: "TechStore" }), _jsx(Menu, { theme: "dark", mode: "horizontal", selectedKeys: [location.pathname], items: menuItems, style: { flex: 1, minWidth: 0 } })] }), _jsx(Space, { children: user ? (_jsxs(_Fragment, { children: [_jsx(Text, { style: { color: 'white' }, children: user.name }), _jsx(Button, { type: "text", icon: _jsx(LogoutOutlined, {}), onClick: handleLogout, style: { color: 'white' }, children: "\u0412\u044B\u0439\u0442\u0438" })] })) : (_jsx(Button, { type: "link", icon: _jsx(UserOutlined, {}), onClick: () => navigate('/login'), style: { color: 'white' }, children: "\u0412\u043E\u0439\u0442\u0438" })) })] }), _jsx(Content, { style: { padding: '24px 50px' }, children: _jsx(Outlet, {}) }), _jsxs(Footer, { style: { textAlign: 'center' }, children: ["\u041B\u0430\u0431\u043E\u0440\u0430\u0442\u043E\u0440\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u044B \u043F\u043E \u0432\u0435\u0431-\u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0435 \u00A9", new Date().getFullYear()] })] }));
+};
+export default MainLayout;
+
+
+================================================================================
+Файл: src\components\layout\MainLayout.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\components\layout\MainLayout.tsx
+================================================================================
+
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Layout, Menu, Button, Space, Typography, Avatar, Dropdown } from 'antd';
+import {
+  HomeOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
+import { useAuthStore } from '../../store/authStore';
+import type { MenuProps } from 'antd';
+import { useOrderEvents } from '../../hooks/useOrderEvents.ts';
+
+const { Header, Content, Footer } = Layout;
+const { Text } = Typography;
+
+const MainLayout = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
+  useOrderEvents();
+
+  const menuItems = [
+    {
+      key: '/products',
+      icon: <HomeOutlined />,
+      label: <Link to="/products">Каталог</Link>,
+    },
+    {
+      key: '/cart',
+      icon: <ShoppingCartOutlined />,
+      label: <Link to="/cart">Корзина</Link>,
+    },
+  ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const userMenuItems: MenuProps['items'] = [
+    {
+      key: 'profile',
+      label: 'Профиль',
+      icon: <UserOutlined />,
+    },
+    {
+      key: 'logout',
+      label: 'Выйти',
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
+    },
+  ];
+
+  return (
+    <Layout className="app-layout" style={{ minHeight: '100vh', background: 'transparent' }}>
+      <Header
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          background: 'rgba(15, 15, 20, 0.75)',
+          backdropFilter: 'blur(12px)',
+          borderBottom: '1px solid var(--border)',
+          padding: '0 32px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div
+            className="logo-text"
+            style={{ cursor: 'pointer', marginRight: '40px' }}
+            onClick={() => navigate('/products')}
+          >
+            🛍️ TechStore
+          </div>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            selectedKeys={[location.pathname]}
+            items={menuItems}
+            style={{
+              flex: 1,
+              minWidth: 0,
+              background: 'transparent',
+              borderBottom: 'none',
+            }}
+          />
+        </div>
+        <Space>
+          {user ? (
+            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow>
+              <Space style={{ cursor: 'pointer' }}>
+                <Avatar
+                  style={{ backgroundColor: '#aa3bff', verticalAlign: 'middle' }}
+                  size="default"
+                  icon={<UserOutlined />}
+                />
+                <Text style={{ color: 'white', fontWeight: 500 }}>{user.name}</Text>
+              </Space>
+            </Dropdown>
+          ) : (
+            <Button
+              type="primary"
+              icon={<UserOutlined />}
+              onClick={() => navigate('/login')}
+              shape="round"
+            >
+              Войти
+            </Button>
+          )}
+        </Space>
+      </Header>
+      <Content style={{ padding: '32px 24px', minHeight: '70vh' }}>
+        <div className="fade-up">
+          <Outlet />
+        </div>
+      </Content>
+      <Footer
+        style={{
+          textAlign: 'center',
+          background: 'transparent',
+          borderTop: '1px solid var(--border)',
+          marginTop: '2rem',
+        }}
+      >
+        <Space direction="vertical" size="small">
+          <Text type="secondary">Лабораторные работы по веб-разработке</Text>
+          <Text type="secondary">© {new Date().getFullYear()} TechStore — инновационный маркетплейс</Text>
+        </Space>
+      </Footer>
+    </Layout>
+  );
+};
+
+export default MainLayout;
+
+================================================================================
+Файл: src\features\auth\services\authService.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\auth\services\authService.js
+================================================================================
+
+import { apiClient } from '../../../lib/api-client';
+export const authService = {
+    async login(data) {
+        const response = await apiClient.post('/auth/login', data);
+        return response.data;
+    },
+    async register(data) {
+        const response = await apiClient.post('/auth/register', data);
+        return response.data;
+    },
+    async getProfile() {
+        const response = await apiClient.get('/auth/profile');
+        return response.data;
+    },
+};
+
+
+================================================================================
+Файл: src\features\auth\services\authService.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\auth\services\authService.ts
+================================================================================
+
+import { apiClient } from '../../../lib/api-client';
+import type { LoginRequest, RegisterRequest, AuthResponse, User } from '../../../shared/types';
+
+export const authService = {
+  async login(data: LoginRequest): Promise<AuthResponse> {
+    const response = await apiClient.post<AuthResponse>('/auth/login', data);
+    return response.data;
+  },
+
+  async register(data: RegisterRequest): Promise<AuthResponse> {
+    const response = await apiClient.post<AuthResponse>('/auth/register', data);
+    return response.data;
+  },
+
+  async getProfile(): Promise<User> {
+    const response = await apiClient.get<User>('/auth/profile');
+    return response.data;
+  },
+};
+
+================================================================================
+Файл: src\features\cart\logic\cartCalculations.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\cart\logic\cartCalculations.js
+================================================================================
+
+/**
+ * Вычисляет итоговую сумму корзины
+ */
+export const calculateTotalPrice = (items) => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+};
+/**
+ * Вычисляет общее количество товаров в корзине
+ */
+export const calculateTotalQuantity = (items) => {
+    return items.reduce((total, item) => total + item.quantity, 0);
+};
+/**
+ * Применяет скидку (процент) к сумме
+ */
+export const applyDiscount = (price, discountPercent) => {
+    if (discountPercent < 0 || discountPercent > 100) {
+        throw new Error('Процент скидки должен быть от 0 до 100');
+    }
+    return price * (1 - discountPercent / 100);
+};
+/**
+ * Форматирует цену в рубли
+ */
+export const formatPrice = (price) => {
+    return new Intl.NumberFormat('ru-RU', {
+        style: 'currency',
+        currency: 'RUB',
+        minimumFractionDigits: 0,
+    }).format(price);
+};
+/**
+ * Проверяет, можно ли добавить товар в корзину (не превышает ли запрашиваемое количество сток)
+ */
+export const canAddToCart = (currentQuantity, addQuantity, maxStock) => {
+    return currentQuantity + addQuantity <= maxStock;
+};
+/**
+ * Создаёт новый элемент корзины или обновляет существующий
+ */
+export const mergeCartItem = (existingItems, newItem) => {
+    const existingItemIndex = existingItems.findIndex(item => item.productId === newItem.productId);
+    if (existingItemIndex === -1) {
+        // Товара ещё нет в корзине - добавляем новый
+        return [...existingItems, { ...newItem }];
+    }
+    // Товар уже есть - обновляем количество
+    const updatedItems = [...existingItems];
+    const currentItem = updatedItems[existingItemIndex];
+    const newQuantity = currentItem.quantity + newItem.quantity;
+    // Проверяем, не превышает ли новое количество максимально доступное
+    if (newQuantity > newItem.maxQuantity) {
+        throw new Error(`Нельзя добавить больше ${newItem.maxQuantity} шт.`);
+    }
+    updatedItems[existingItemIndex] = {
+        ...currentItem,
+        quantity: newQuantity,
+    };
+    return updatedItems;
+};
+/**
+ * Удаляет товар из корзины по productId
+ */
+export const removeCartItem = (items, productId) => {
+    return items.filter(item => item.productId !== productId);
+};
+/**
+ * Изменяет количество конкретного товара в корзине
+ */
+export const updateCartItemQuantity = (items, productId, newQuantity) => {
+    if (newQuantity <= 0) {
+        return removeCartItem(items, productId);
+    }
+    const itemIndex = items.findIndex(item => item.productId === productId);
+    if (itemIndex === -1)
+        return items;
+    const item = items[itemIndex];
+    if (newQuantity > item.maxQuantity) {
+        throw new Error(`Доступно только ${item.maxQuantity} шт.`);
+    }
+    const updatedItems = [...items];
+    updatedItems[itemIndex] = { ...item, quantity: newQuantity };
+    return updatedItems;
+};
+/**
+ * Очищает корзину
+ */
+export const clearCart = () => {
+    return [];
+};
+/**
+ * Проверяет, применим ли промокод (упрощённая логика)
+ */
+export const validatePromoCode = (code) => {
+    // Для демонстрации бизнес-логики: фиксированные промокоды
+    const promoCodes = {
+        'SALE10': 10,
+        'SALE20': 20,
+        'WELCOME': 5,
+    };
+    const upperCode = code.toUpperCase();
+    if (promoCodes[upperCode] !== undefined) {
+        return { valid: true, discountPercent: promoCodes[upperCode] };
+    }
+    return { valid: false, discountPercent: 0 };
+};
+
+
+================================================================================
+Файл: src\features\cart\logic\cartCalculations.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\cart\logic\cartCalculations.ts
+================================================================================
+
+import type {CartItem} from '../../../shared/types'
+
+/**
+ * Вычисляет итоговую сумму корзины
+ */
+export const calculateTotalPrice = (items: CartItem[]): number => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0)
+}
+
+/**
+ * Вычисляет общее количество товаров в корзине
+ */
+export const calculateTotalQuantity = (items: CartItem[]): number => {
+    return items.reduce((total, item) => total + item.quantity, 0)
+}
+
+/**
+ * Применяет скидку (процент) к сумме
+ */
+export const applyDiscount = (price: number, discountPercent: number): number => {
+    if (discountPercent < 0 || discountPercent > 100) {
+        throw new Error('Процент скидки должен быть от 0 до 100')
+    }
+    return price * (1 - discountPercent / 100)
+}
+
+/**
+ * Форматирует цену в рубли
+ */
+export const formatPrice = (price: number): string => {
+    return new Intl.NumberFormat('ru-RU', {
+        style: 'currency',
+        currency: 'RUB',
+        minimumFractionDigits: 0,
+    }).format(price)
+}
+
+/**
+ * Проверяет, можно ли добавить товар в корзину (не превышает ли запрашиваемое количество сток)
+ */
+export const canAddToCart = (currentQuantity: number, addQuantity: number, maxStock: number): boolean => {
+    return currentQuantity + addQuantity <= maxStock
+}
+
+/**
+ * Создаёт новый элемент корзины или обновляет существующий
+ */
+export const mergeCartItem = (
+    existingItems: CartItem[],
+    newItem: Omit<CartItem, 'quantity'> & { quantity: number }
+): CartItem[] => {
+    const existingItemIndex = existingItems.findIndex(item => item.productId === newItem.productId)
+
+    if (existingItemIndex === -1) {
+        return [...existingItems, {...newItem}]
+    }
+
+    const updatedItems = [...existingItems]
+    const currentItem = updatedItems[existingItemIndex]
+    const newQuantity = currentItem.quantity + newItem.quantity
+
+    if (newQuantity > newItem.maxQuantity) {
+        throw new Error(`Нельзя добавить больше ${newItem.maxQuantity} шт.`)
+    }
+
+    updatedItems[existingItemIndex] = {
+        ...currentItem,
+        quantity: newQuantity,
+    }
+
+    return updatedItems
+}
+
+/**
+ * Удаляет товар из корзины по productId
+ */
+export const removeCartItem = (items: CartItem[], productId: string): CartItem[] => {
+    return items.filter(item => item.productId !== productId)
+}
+
+/**
+ * Изменяет количество конкретного товара в корзине
+ */
+export const updateCartItemQuantity = (
+    items: CartItem[],
+    productId: string,
+    newQuantity: number
+): CartItem[] => {
+    if (newQuantity <= 0) {
+        return removeCartItem(items, productId)
+    }
+
+    const itemIndex = items.findIndex(item => item.productId === productId)
+    if (itemIndex === -1) return items
+
+    const item = items[itemIndex]
+    if (newQuantity > item.maxQuantity) {
+        throw new Error(`Доступно только ${item.maxQuantity} шт.`)
+    }
+
+    const updatedItems = [...items]
+    updatedItems[itemIndex] = {...item, quantity: newQuantity}
+    return updatedItems
+}
+
+/**
+ * Очищает корзину
+ */
+export const clearCart = (): CartItem[] => {
+    return []
+}
+
+/**
+ * Проверяет, применим ли промокод (упрощённая логика)
+ */
+export const validatePromoCode = (code: string): { valid: boolean; discountPercent: number } => {
+    const promoCodes: Record<string, number> = {
+        'SALE10': 10,
+        'SALE20': 20,
+        'WELCOME': 5,
+    }
+
+    const upperCode = code.toUpperCase()
+    if (promoCodes[upperCode] !== undefined) {
+        return {valid: true, discountPercent: promoCodes[upperCode]}
+    }
+    return {valid: false, discountPercent: 0}
+}
+
+================================================================================
+Файл: src\features\cart\logic\cartValidation.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\cart\logic\cartValidation.js
+================================================================================
+
+/**
+ * Валидирует всю корзину на предмет превышения доступного количества
+ */
+export const validateCartStock = (items, currentStockMap // productId -> актуальный stock
+) => {
+    const errors = [];
+    items.forEach(item => {
+        const availableStock = currentStockMap.get(item.productId) ?? 0;
+        if (item.quantity > availableStock) {
+            errors.push({
+                productId: item.productId,
+                message: `Доступно только ${availableStock} шт. товара "${item.name}"`,
+            });
+        }
+    });
+    return errors;
+};
+/**
+ * Проверяет минимальную сумму заказа (например, для бесплатной доставки)
+ */
+export const isMinimumOrderAmountMet = (total, minimum) => {
+    return total >= minimum;
+};
+
+
+================================================================================
+Файл: src\features\cart\logic\cartValidation.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\cart\logic\cartValidation.ts
+================================================================================
+
+import type {CartItem} from '../../../shared/types'
+
+export interface CartValidationError {
+    productId: string
+    message: string
+}
+
+/**
+ * Валидирует всю корзину на предмет превышения доступного количества
+ */
+export const validateCartStock = (
+    items: CartItem[],
+    currentStockMap: Map<string, number> // productId -> актуальный stock
+): CartValidationError[] => {
+    const errors: CartValidationError[] = []
+
+    items.forEach(item => {
+        const availableStock = currentStockMap.get(item.productId) ?? 0
+        if (item.quantity > availableStock) {
+            errors.push({
+                productId: item.productId,
+                message: `Доступно только ${availableStock} шт. товара "${item.name}"`,
+            })
+        }
+    })
+
+    return errors
+}
+
+/**
+ * Проверяет минимальную сумму заказа (например, для бесплатной доставки)
+ */
+export const isMinimumOrderAmountMet = (total: number, minimum: number): boolean => {
+    return total >= minimum
+}
+
+================================================================================
+Файл: src\features\orders\logic\orderCalculations.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\orders\logic\orderCalculations.js
+================================================================================
+
+/**
+ * Фильтрует массив товаров на клиенте согласно заданным критериям
+ */
+export const filterProducts = (products, filter) => {
+    return products.filter(product => {
+        // Фильтр по категории
+        if (filter.categoryId && product.categoryId !== filter.categoryId) {
+            return false;
+        }
+        // Фильтр по цене (минимальная)
+        if (filter.minPrice !== undefined && product.price < filter.minPrice) {
+            return false;
+        }
+        // Фильтр по цене (максимальная)
+        if (filter.maxPrice !== undefined && product.price > filter.maxPrice) {
+            return false;
+        }
+        // Фильтр "только в наличии"
+        if (filter.inStock && product.stock <= 0) {
+            return false;
+        }
+        // Поиск по названию или описанию
+        if (filter.search) {
+            const searchLower = filter.search.toLowerCase();
+            const nameMatch = product.name.toLowerCase().includes(searchLower);
+            const descMatch = product.description.toLowerCase().includes(searchLower);
+            if (!nameMatch && !descMatch) {
+                return false;
+            }
+        }
+        return true;
+    });
+};
+// @ts-ignore
+export var SortOption;
+(function (SortOption) {
+    SortOption["PRICE_ASC"] = "price_asc";
+    SortOption["PRICE_DESC"] = "price_desc";
+    SortOption["NAME_ASC"] = "name_asc";
+    SortOption["NAME_DESC"] = "name_desc";
+    SortOption["NEWEST"] = "newest";
+})(SortOption || (SortOption = {}));
+/**
+ * Сортирует массив товаров
+ */
+export const sortProducts = (products, sortBy) => {
+    const sorted = [...products];
+    switch (sortBy) {
+        case SortOption.PRICE_ASC:
+            return sorted.sort((a, b) => a.price - b.price);
+        case SortOption.PRICE_DESC:
+            return sorted.sort((a, b) => b.price - a.price);
+        case SortOption.NAME_ASC:
+            return sorted.sort((a, b) => a.name.localeCompare(b.name));
+        case SortOption.NAME_DESC:
+            return sorted.sort((a, b) => b.name.localeCompare(a.name));
+        case SortOption.NEWEST:
+            // Предполагаем, что более новые товары имеют больший timestamp в createdAt
+            return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        default:
+            return sorted;
+    }
+};
+/**
+ * Пагинация массива товаров (клиентская)
+ */
+export const paginateProducts = (products, page, limit) => {
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const paginatedData = products.slice(start, end);
+    return {
+        data: paginatedData,
+        total: products.length,
+        page,
+        limit,
+        totalPages: Math.ceil(products.length / limit),
+    };
+};
+
+
+================================================================================
+Файл: src\features\orders\logic\orderCalculations.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\orders\logic\orderCalculations.ts
+================================================================================
+
+import type {Product, ProductFilter} from '../../../shared/types'
+
+/**
+ * Фильтрует массив товаров на клиенте согласно заданным критериям
+ */
+export const filterProducts = (products: Product[], filter: ProductFilter): Product[] => {
+    return products.filter(product => {
+        // Фильтр по категории
+        if (filter.categoryId && product.categoryId !== filter.categoryId) {
+            return false
+        }
+
+        if (filter.minPrice !== undefined && product.price < filter.minPrice) {
+            return false
+        }
+
+        if (filter.maxPrice !== undefined && product.price > filter.maxPrice) {
+            return false
+        }
+
+        if (filter.inStock && product.stock <= 0) {
+            return false
+        }
+
+        if (filter.search) {
+            const searchLower = filter.search.toLowerCase()
+            const nameMatch = product.name.toLowerCase().includes(searchLower)
+            const descMatch = product.description.toLowerCase().includes(searchLower)
+            if (!nameMatch && !descMatch) {
+                return false
+            }
+        }
+
+        return true
+    })
+}
+
+export enum SortOption {
+    PRICE_ASC = 'price_asc',
+    PRICE_DESC = 'price_desc',
+    NAME_ASC = 'name_asc',
+    NAME_DESC = 'name_desc',
+    NEWEST = 'newest',
+}
+
+/**
+ * Сортирует массив товаров
+ */
+export const sortProducts = (products: Product[], sortBy: SortOption): Product[] => {
+    const sorted = [...products]
+
+    switch (sortBy) {
+        case SortOption.PRICE_ASC:
+            return sorted.sort((a, b) => a.price - b.price)
+        case SortOption.PRICE_DESC:
+            return sorted.sort((a, b) => b.price - a.price)
+        case SortOption.NAME_ASC:
+            return sorted.sort((a, b) => a.name.localeCompare(b.name))
+        case SortOption.NAME_DESC:
+            return sorted.sort((a, b) => b.name.localeCompare(a.name))
+        case SortOption.NEWEST:
+            // Предполагаем, что более новые товары имеют больший timestamp в createdAt
+            return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        default:
+            return sorted
+    }
+}
+
+/**
+ * Пагинация массива товаров (клиентская)
+ */
+export const paginateProducts = (
+    products: Product[],
+    page: number,
+    limit: number
+): { data: Product[]; total: number; page: number; limit: number; totalPages: number } => {
+    const start = (page - 1) * limit
+    const end = start + limit
+    const paginatedData = products.slice(start, end)
+
+    return {
+        data: paginatedData,
+        total: products.length,
+        page,
+        limit,
+        totalPages: Math.ceil(products.length / limit),
+    }
+}
+
+================================================================================
+Файл: src\features\orders\services\orderService.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\orders\services\orderService.js
+================================================================================
+
+import { apiClient } from '../../../lib/api-client';
+export const orderService = {
+    async createOrder(payload) {
+        const response = await apiClient.post('/orders', payload);
+        return response.data;
+    },
+    async getOrders(status) {
+        const params = status ? { status } : {};
+        const response = await apiClient.get('/orders', { params });
+        return response.data;
+    },
+    async getOrderById(id) {
+        const response = await apiClient.get(`/orders/${id}`);
+        return response.data;
+    },
+    async cancelOrder(id) {
+        const response = await apiClient.delete(`/orders/${id}`);
+        return response.data;
+    },
+};
+
+
+================================================================================
+Файл: src\features\orders\services\orderService.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\orders\services\orderService.ts
+================================================================================
+
+import { apiClient } from '../../../lib/api-client';
+import type { Order, CreateOrderPayload } from '../../../shared/types';
+
+export const orderService = {
+  async createOrder(payload: CreateOrderPayload): Promise<Order> {
+    const response = await apiClient.post<Order>('/orders', payload);
+    return response.data;
+  },
+
+  async getOrders(status?: string): Promise<Order[]> {
+    const params = status ? { status } : {};
+    const response = await apiClient.get<Order[]>('/orders', { params });
+    return response.data;
+  },
+
+  async getOrderById(id: string): Promise<Order> {
+    const response = await apiClient.get<Order>(`/orders/${id}`);
+    return response.data;
+  },
+
+  async cancelOrder(id: string): Promise<Order> {
+    const response = await apiClient.delete<Order>(`/orders/${id}`);
+    return response.data;
+  },
+};
+
+
+================================================================================
+Файл: src\features\products\components\ProductCard.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\components\ProductCard.tsx
+================================================================================
+
+import { Card, Button, Typography, Space, Tag, Badge, message } from 'antd';
+import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import type { Product } from '../../../shared/types';
+import { formatPrice } from '../../cart/logic/cartCalculations';
+import { useCartStore } from '../../../store/cartStore';
+
+const { Meta } = Card;
+const { Text, Paragraph } = Typography;
+
+interface ProductCardProps {
+  product: Product;
+}
+
+const ProductCard = ({ product }: ProductCardProps) => {
+  const navigate = useNavigate();
+  const addItem = useCartStore((state) => state.addItem);
+  const isOutOfStock = product.stock <= 0;
+
+  const handleAddToCart = () => {
+    if (isOutOfStock) return;
+
+    addItem({
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      maxQuantity: product.stock,
+      imageUrl: product.imageUrls[0],
+      quantity: 1,
+    });
+
+    message.success(`${product.name} добавлен в корзину`);
+  };
+
+  return (
+    <Badge.Ribbon
+      text={product.stock > 0 && product.stock < 5 ? 'Осталось мало' : ''}
+      color="orange"
+      style={{ display: product.stock > 0 && product.stock < 5 ? 'block' : 'none' }}
+    >
+      <Card
+        hoverable
+        cover={
+          <div style={{ overflow: 'hidden', borderRadius: '20px 20px 0 0' }}>
+            <img
+              alt={product.name}
+              src={product.imageUrls[0] || 'https://via.placeholder.com/300?text=No+Image'}
+              style={{
+                height: 220,
+                objectFit: 'cover',
+                transition: 'transform 0.4s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+            />
+          </div>
+        }
+        actions={[
+          <Button
+            key="details"
+            type="text"
+            icon={<EyeOutlined />}
+            onClick={() => navigate(`/product/${product.id}`)}
+          >
+            Подробнее
+          </Button>,
+          <Button
+            key="addToCart"
+            type="text"
+            icon={<ShoppingCartOutlined />}
+            onClick={handleAddToCart}
+            disabled={isOutOfStock}
+          >
+            В корзину
+          </Button>,
+        ]}
+        style={{
+          borderRadius: 24,
+          boxShadow: 'var(--shadow-sm)',
+          transition: 'all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        bodyStyle={{ flex: 1, padding: '20px 16px' }}
+      >
+        <Meta
+          title={
+            <Text strong ellipsis style={{ fontSize: '1.1rem' }}>
+              {product.name}
+            </Text>
+          }
+          description={
+            <Space direction="vertical" size="small" style={{ width: '100%', marginTop: 8 }}>
+              <Paragraph ellipsis={{ rows: 2 }} type="secondary" style={{ marginBottom: 8 }}>
+                {product.description}
+              </Paragraph>
+              <Text strong style={{ fontSize: '1.4rem', color: 'var(--accent)' }}>
+                {formatPrice(product.price)}
+              </Text>
+              {isOutOfStock ? (
+                <Tag color="red" bordered={false}>
+                  Нет в наличии
+                </Tag>
+              ) : (
+                <Tag color="green" bordered={false}>
+                  В наличии: {product.stock} шт.
+                </Tag>
+              )}
+            </Space>
+          }
+        />
+      </Card>
+    </Badge.Ribbon>
+  );
+};
+
+export default ProductCard;
+
+================================================================================
+Файл: src\features\products\components\ProductFilterPanel.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\components\ProductFilterPanel.js
+================================================================================
+
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Card, Input, Select, Slider, Switch, Space, Button, Row, Col } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { SortOption } from '../logic/productFilters';
+import { useCategories } from '../hooks/useProducts';
+const { Option } = Select;
+const ProductFilterPanel = ({ filter, sort, onFilterChange, onSortChange, onReset, }) => {
+    const { data: categories } = useCategories();
+    const handleSearchChange = (value) => {
+        onFilterChange({ ...filter, search: value || undefined });
+    };
+    const handleCategoryChange = (value) => {
+        onFilterChange({ ...filter, categoryId: value || undefined });
+    };
+    const handleInStockChange = (checked) => {
+        onFilterChange({ ...filter, inStock: checked || undefined });
+    };
+    const handlePriceRangeChange = (values) => {
+        onFilterChange({
+            ...filter,
+            minPrice: values[0],
+            maxPrice: values[1],
+        });
+    };
+    const handleSortChange = (value) => {
+        onSortChange(value);
+    };
+    return (_jsx(Card, { title: "\u0424\u0438\u043B\u044C\u0442\u0440\u044B \u0438 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430", style: { marginBottom: 24 }, children: _jsxs(Row, { gutter: [16, 16], children: [_jsx(Col, { xs: 24, md: 8, children: _jsx(Input, { placeholder: "\u041F\u043E\u0438\u0441\u043A \u043F\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044E \u0438\u043B\u0438 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044E", prefix: _jsx(SearchOutlined, {}), value: filter.search || '', onChange: (e) => handleSearchChange(e.target.value), allowClear: true }) }), _jsx(Col, { xs: 24, md: 8, children: _jsx(Select, { placeholder: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F", style: { width: '100%' }, value: filter.categoryId || undefined, onChange: handleCategoryChange, allowClear: true, children: categories?.map(cat => (_jsx(Option, { value: cat.id, children: cat.name }, cat.id))) }) }), _jsx(Col, { xs: 24, md: 8, children: _jsxs(Space, { children: [_jsx(Switch, { checked: filter.inStock || false, onChange: handleInStockChange }), _jsx("span", { children: "\u0422\u043E\u043B\u044C\u043A\u043E \u0432 \u043D\u0430\u043B\u0438\u0447\u0438\u0438" })] }) }), _jsxs(Col, { xs: 24, md: 12, children: [_jsx("div", { children: "\u0414\u0438\u0430\u043F\u0430\u0437\u043E\u043D \u0446\u0435\u043D (\u20BD):" }), _jsx(Slider, { range: true, min: 0, max: 200000, step: 1000, value: [filter.minPrice || 0, filter.maxPrice || 200000], onChange: handlePriceRangeChange, tooltip: { formatter: (value) => `${value} ₽` } })] }), _jsx(Col, { xs: 24, md: 6, children: _jsxs(Select, { placeholder: "\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430", style: { width: '100%' }, value: sort, onChange: handleSortChange, children: [_jsx(Option, { value: SortOption.NEWEST, children: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u043D\u043E\u0432\u044B\u0435" }), _jsx(Option, { value: SortOption.PRICE_ASC, children: "\u0426\u0435\u043D\u0430: \u043F\u043E \u0432\u043E\u0437\u0440\u0430\u0441\u0442\u0430\u043D\u0438\u044E" }), _jsx(Option, { value: SortOption.PRICE_DESC, children: "\u0426\u0435\u043D\u0430: \u043F\u043E \u0443\u0431\u044B\u0432\u0430\u043D\u0438\u044E" }), _jsx(Option, { value: SortOption.NAME_ASC, children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435: \u0410-\u042F" }), _jsx(Option, { value: SortOption.NAME_DESC, children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435: \u042F-\u0410" })] }) }), _jsx(Col, { xs: 24, md: 6, children: _jsx(Button, { onClick: onReset, children: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u0444\u0438\u043B\u044C\u0442\u0440\u044B" }) })] }) }));
+};
+export default ProductFilterPanel;
+
+
+================================================================================
+Файл: src\features\products\components\ProductFilterPanel.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\components\ProductFilterPanel.tsx
+================================================================================
+
+import { Card, Input, Select, Slider, Switch, Space, Button, Row, Col, Divider } from 'antd';
+import { SearchOutlined, FilterOutlined, ReloadOutlined } from '@ant-design/icons';
+import type { ProductFilter } from '../../../shared/types';
+import { SortOption } from '../logic/productFilters';
+import { useCategories } from '../hooks/useProducts';
+
+const { Option } = Select;
+
+interface ProductFilterPanelProps {
+    filter: ProductFilter;
+    sort: SortOption;
+    onFilterChange: (filter: ProductFilter) => void;
+    onSortChange: (sort: SortOption) => void;
+    onReset: () => void;
+}
+
+const ProductFilterPanel = ({
+                                filter,
+                                sort,
+                                onFilterChange,
+                                onSortChange,
+                                onReset,
+                            }: ProductFilterPanelProps) => {
+    const { data: categories } = useCategories();
+
+    const handleSearchChange = (value: string) => {
+        onFilterChange({ ...filter, search: value || undefined });
+    };
+
+    const handleCategoryChange = (value: string) => {
+        onFilterChange({ ...filter, categoryId: value || undefined });
+    };
+
+    const handleInStockChange = (checked: boolean) => {
+        onFilterChange({ ...filter, inStock: checked || undefined });
+    };
+
+    const handlePriceRangeChange = (values: number[]) => {
+        onFilterChange({
+            ...filter,
+            minPrice: values[0],
+            maxPrice: values[1],
+        });
+    };
+
+    const handleSortChange = (value: SortOption) => {
+        onSortChange(value);
+    };
+
+    return (
+      <Card
+        style={{
+            marginBottom: 32,
+            borderRadius: 28,
+            background: 'var(--bg-secondary)',
+            border: '1px solid var(--border)',
+        }}
+        bodyStyle={{ padding: '24px' }}
+      >
+          <Space align="center" style={{ marginBottom: 20 }}>
+              <FilterOutlined style={{ fontSize: 20, color: 'var(--accent)' }} />
+              <span style={{ fontWeight: 600, fontSize: 18 }}>Фильтры и сортировка</span>
+          </Space>
+          <Divider style={{ margin: '12px 0 20px' }} />
+          <Row gutter={[24, 20]}>
+              <Col xs={24} md={8}>
+                  <Input
+                    placeholder="Поиск по названию или описанию"
+                    prefix={<SearchOutlined />}
+                    value={filter.search || ''}
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    allowClear
+                    size="large"
+                    style={{ borderRadius: 40 }}
+                  />
+              </Col>
+              <Col xs={24} md={6}>
+                  <Select
+                    placeholder="Категория"
+                    style={{ width: '100%', borderRadius: 40 }}
+                    size="large"
+                    value={filter.categoryId || undefined}
+                    onChange={handleCategoryChange}
+                    allowClear
+                  >
+                      {categories?.map((cat) => (
+                        <Option key={cat.id} value={cat.id}>
+                            {cat.name}
+                        </Option>
+                      ))}
+                  </Select>
+              </Col>
+              <Col xs={24} md={5}>
+                  <Space align="center">
+                      <Switch
+                        checked={filter.inStock || false}
+                        onChange={handleInStockChange}
+                        style={{ backgroundColor: filter.inStock ? '#aa3bff' : undefined }}
+                      />
+                      <span>Только в наличии</span>
+                  </Space>
+              </Col>
+              <Col xs={24} md={12}>
+                  <div style={{ marginBottom: 8, fontWeight: 500 }}>Диапазон цен (₽):</div>
+                  <Slider
+                    range
+                    min={0}
+                    max={200000}
+                    step={1000}
+                    value={[filter.minPrice || 0, filter.maxPrice || 200000]}
+                    onChange={handlePriceRangeChange}
+                    tooltip={{ formatter: (value?: number) => `${value} ₽` }}
+                    trackStyle={[{ backgroundColor: '#aa3bff' }, { backgroundColor: '#aa3bff' }]}
+                    handleStyle={[{ borderColor: '#aa3bff' }, { borderColor: '#aa3bff' }]}
+                  />
+              </Col>
+              <Col xs={24} md={6}>
+                  <Select
+                    placeholder="Сортировка"
+                    style={{ width: '100%', borderRadius: 40 }}
+                    size="large"
+                    value={sort}
+                    onChange={handleSortChange}
+                  >
+                      <Option value={SortOption.NEWEST}>✨ Сначала новые</Option>
+                      <Option value={SortOption.PRICE_ASC}>💰 Цена: по возрастанию</Option>
+                      <Option value={SortOption.PRICE_DESC}>💰 Цена: по убыванию</Option>
+                      <Option value={SortOption.NAME_ASC}>🔤 Название: А-Я</Option>
+                      <Option value={SortOption.NAME_DESC}>🔤 Название: Я-А</Option>
+                  </Select>
+              </Col>
+              <Col xs={24} md={4}>
+                  <Button icon={<ReloadOutlined />} onClick={onReset} size="large" block>
+                      Сбросить
+                  </Button>
+              </Col>
+          </Row>
+      </Card>
+    );
+};
+
+export default ProductFilterPanel;
+
+================================================================================
+Файл: src\features\products\hooks\useProducts.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\hooks\useProducts.js
+================================================================================
+
+import { useQuery } from '@tanstack/react-query';
+import { productService } from '../services/productService';
+import { keepPreviousData } from '@tanstack/react-query';
+export const productKeys = {
+    all: ['products'],
+    lists: () => [...productKeys.all, 'list'],
+    list: (filters, sort) => [...productKeys.lists(), { filters, sort }],
+    details: () => [...productKeys.all, 'detail'],
+    detail: (id) => [...productKeys.details(), id],
+    categories: ['categories'],
+};
+export const useProducts = (filter, sort) => {
+    return useQuery({
+        queryKey: productKeys.list(filter || {}, sort),
+        queryFn: () => productService.getProducts(filter, sort),
+        placeholderData: keepPreviousData,
+    });
+};
+export const useProduct = (id) => {
+    return useQuery({
+        queryKey: productKeys.detail(id),
+        queryFn: () => productService.getProductById(id),
+        enabled: !!id,
+    });
+};
+export const useCategories = () => {
+    return useQuery({
+        queryKey: productKeys.categories,
+        queryFn: () => productService.getCategories(),
+    });
+};
+
+
+================================================================================
+Файл: src\features\products\hooks\useProducts.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\hooks\useProducts.ts
+================================================================================
+
+import { useQuery } from '@tanstack/react-query';
+import { productService } from '../services/productService';
+import type { ProductFilter } from '../../../shared/types';
+import { SortOption } from '../logic/productFilters';
+import { keepPreviousData } from '@tanstack/react-query';
+
+export const productKeys = {
+  all: ['products'] as const,
+  lists: () => [...productKeys.all, 'list'] as const,
+  list: (filters: ProductFilter, sort?: SortOption) => [...productKeys.lists(), { filters, sort }] as const,
+  details: () => [...productKeys.all, 'detail'] as const,
+  detail: (id: string) => [...productKeys.details(), id] as const,
+  categories: ['categories'] as const,
+};
+
+export const useProducts = (filter?: ProductFilter, sort?: SortOption) => {
+  return useQuery({
+    queryKey: productKeys.list(filter || {}, sort),
+    queryFn: () => productService.getProducts(filter, sort),
+    placeholderData: keepPreviousData,
+  });
+};
+
+export const useProduct = (id: string) => {
+  return useQuery({
+    queryKey: productKeys.detail(id),
+    queryFn: () => productService.getProductById(id),
+    enabled: !!id,
+  });
+};
+
+export const useCategories = () => {
+  return useQuery({
+    queryKey: productKeys.categories,
+    queryFn: () => productService.getCategories(),
+  });
+};
+
+================================================================================
+Файл: src\features\products\logic\productFilters.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\logic\productFilters.ts
+================================================================================
+
+import type {Product, ProductFilter} from '../../../shared/types'
+
+/**
+ * Фильтрует массив товаров на клиенте согласно заданным критериям
+ */
+export const filterProducts = (products: Product[], filter: ProductFilter): Product[] => {
+    return products.filter(product => {
+        // Фильтр по категории
+        if (filter.categoryId && product.categoryId !== filter.categoryId) {
+            return false
+        }
+
+        // Фильтр по цене (минимальная)
+        if (filter.minPrice !== undefined && product.price < filter.minPrice) {
+            return false
+        }
+
+        // Фильтр по цене (максимальная)
+        if (filter.maxPrice !== undefined && product.price > filter.maxPrice) {
+            return false
+        }
+
+        // Фильтр "только в наличии"
+        if (filter.inStock && product.stock <= 0) {
+            return false
+        }
+
+        // Поиск по названию или описанию
+        if (filter.search) {
+            const searchLower = filter.search.toLowerCase()
+            const nameMatch = product.name.toLowerCase().includes(searchLower)
+            const descMatch = product.description.toLowerCase().includes(searchLower)
+            if (!nameMatch && !descMatch) {
+                return false
+            }
+        }
+
+        return true
+    })
+}
+
+// @ts-ignore
+export enum SortOption {
+    PRICE_ASC = 'price_asc',
+    PRICE_DESC = 'price_desc',
+    NAME_ASC = 'name_asc',
+    NAME_DESC = 'name_desc',
+    NEWEST = 'newest',
+}
+
+/**
+ * Сортирует массив товаров
+ */
+export const sortProducts = (products: Product[], sortBy: SortOption): Product[] => {
+    const sorted = [...products]
+
+    switch (sortBy) {
+        case SortOption.PRICE_ASC:
+            return sorted.sort((a, b) => a.price - b.price)
+        case SortOption.PRICE_DESC:
+            return sorted.sort((a, b) => b.price - a.price)
+        case SortOption.NAME_ASC:
+            return sorted.sort((a, b) => a.name.localeCompare(b.name))
+        case SortOption.NAME_DESC:
+            return sorted.sort((a, b) => b.name.localeCompare(a.name))
+        case SortOption.NEWEST:
+            // Предполагаем, что более новые товары имеют больший timestamp в createdAt
+            return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        default:
+            return sorted
+    }
+}
+
+/**
+ * Пагинация массива товаров (клиентская)
+ */
+export const paginateProducts = (
+    products: Product[],
+    page: number,
+    limit: number
+): { data: Product[]; total: number; page: number; limit: number; totalPages: number } => {
+    const start = (page - 1) * limit
+    const end = start + limit
+    const paginatedData = products.slice(start, end)
+
+    return {
+        data: paginatedData,
+        total: products.length,
+        page,
+        limit,
+        totalPages: Math.ceil(products.length / limit),
+    }
+}
+
+================================================================================
+Файл: src\features\products\services\productService.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\services\productService.js
+================================================================================
+
+import { apiClient } from '../../../lib/api-client';
+export const productService = {
+    async getCategories() {
+        const response = await apiClient.get('/categories');
+        return response.data;
+    },
+    async getProducts(filter, sort) {
+        const params = { ...filter };
+        if (sort) {
+            params.sort = sort;
+        }
+        const response = await apiClient.get('/products', { params });
+        return response.data;
+    },
+    async getProductById(id) {
+        const response = await apiClient.get(`/products/${id}`);
+        return response.data;
+    },
+    async createProduct(data) {
+        const response = await apiClient.post('/products', data);
+        return response.data;
+    },
+    async updateProduct(id, data) {
+        const response = await apiClient.patch(`/products/${id}`, data);
+        return response.data;
+    },
+    async deleteProduct(id) {
+        await apiClient.delete(`/products/${id}`);
+    },
+};
+
+
+================================================================================
+Файл: src\features\products\services\productService.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\features\products\services\productService.ts
+================================================================================
+
+import { apiClient } from '../../../lib/api-client';
+import type { Product, Category, PaginatedResponse, ProductFilter } from '../../../shared/types';
+import { SortOption } from '../logic/productFilters';
+
+export const productService = {
+  async getCategories(): Promise<Category[]> {
+    const response = await apiClient.get<Category[]>('/categories');
+    return response.data;
+  },
+
+  async getProducts(filter?: ProductFilter, sort?: SortOption): Promise<PaginatedResponse<Product>> {
+    const params: any = { ...filter };
+    if (sort) {
+      params.sort = sort;
+    }
+    const response = await apiClient.get<PaginatedResponse<Product>>('/products', { params });
+    return response.data;
+  },
+
+  async getProductById(id: string): Promise<Product> {
+    const response = await apiClient.get<Product>(`/products/${id}`);
+    return response.data;
+  },
+
+  async createProduct(data: Partial<Product>): Promise<Product> {
+    const response = await apiClient.post<Product>('/products', data);
+    return response.data;
+  },
+
+  async updateProduct(id: string, data: Partial<Product>): Promise<Product> {
+    const response = await apiClient.patch<Product>(`/products/${id}`, data);
+    return response.data;
+  },
+
+  async deleteProduct(id: string): Promise<void> {
+    await apiClient.delete(`/products/${id}`);
+  },
+};
+
+
+================================================================================
+Файл: src\hooks\useOrderEvents.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\hooks\useOrderEvents.ts
+================================================================================
+
+import { useEffect, useRef } from 'react';
+import { message } from 'antd';
+import { useAuthStore } from '../store/authStore';
+
+export const useOrderEvents = () => {
+  const { user } = useAuthStore();
+  const eventSourceRef = useRef<EventSource | null>(null);
+
+  useEffect(() => {
+    if (!user || user.role !== 'admin') {
+      return;
+    }
+
+    const eventSource = new EventSource('/api/orders/events');
+
+    eventSource.onopen = () => {
+      console.log('SSE connection opened');
+    };
+
+    eventSource.addEventListener('created', (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        message.success({
+          content: `Новый заказ #${data.order.id} на сумму ${data.order.total} ₽`,
+          duration: 5,
+        });
+      } catch (error) {
+        console.error('Failed to parse SSE event:', error);
+      }
+    });
+
+    eventSource.addEventListener('updated', (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        message.info({
+          content: `Статус заказа #${data.order.id} изменён на "${data.order.status}"`,
+          duration: 5,
+        });
+      } catch (error) {
+        console.error('Failed to parse SSE event:', error);
+      }
+    });
+
+    eventSource.addEventListener('cancelled', (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        message.warning({
+          content: `Заказ #${data.order.id} отменён`,
+          duration: 5,
+        });
+      } catch (error) {
+        console.error('Failed to parse SSE event:', error);
+      }
+    });
+
+    eventSource.onerror = (error) => {
+      console.error('SSE connection error:', error);
+    };
+
+    eventSourceRef.current = eventSource;
+
+    return () => {
+      eventSource.close();
+      console.log('SSE connection closed');
+    };
+  }, [user]);
+};
+
+================================================================================
+Файл: src\lib\api-client.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\lib\api-client.js
+================================================================================
+
+import axios from 'axios';
+export const apiClient = axios.create({
+    baseURL: '/api',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+});
+apiClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+apiClient.interceptors.response.use((response) => response, (error) => {
+    if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+    }
+    return Promise.reject(error);
+});
+
+
+================================================================================
+Файл: src\lib\api-client.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\lib\api-client.ts
+================================================================================
+
+import axios from 'axios';
+
+export const apiClient = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+    }
+    return Promise.reject(error);
+  }
+);
+
+
+================================================================================
+Файл: src\pages\CartPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\CartPage.tsx
+================================================================================
+
+import { Table, Button, InputNumber, Space, Typography, Card, Empty, Popconfirm, Divider } from 'antd';
+import { DeleteOutlined, ShoppingOutlined, ClearOutlined } from '@ant-design/icons';
+import { useCartStore } from '../store/cartStore';
+import { formatPrice } from '../features/cart/logic/cartCalculations';
+import { useNavigate } from 'react-router-dom';
+import type { ColumnsType } from 'antd/es/table';
+import type { CartItem } from '../shared/types';
+
+const { Title, Text } = Typography;
+
+const CartPage = () => {
+  const navigate = useNavigate();
+  const { items, totalQuantity, totalPrice, updateQuantity, removeItem, clearCart } = useCartStore();
+
+  const handleQuantityChange = (productId: string, value: number | null) => {
+    if (value) {
+      updateQuantity(productId, value);
+    }
+  };
+
+  const columns: ColumnsType<CartItem> = [
+    {
+      title: 'Товар',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, item) => (
+        <Space size={16}>
+          <img
+            src={item.imageUrl || 'https://via.placeholder.com/80'}
+            alt={item.name}
+            style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 16 }}
+          />
+          <Text strong>{item.name}</Text>
+        </Space>
+      ),
+    },
+    {
+      title: 'Цена',
+      dataIndex: 'price',
+      key: 'price',
+      align: 'right',
+      render: (price: number) => <Text>{formatPrice(price)}</Text>,
+    },
+    {
+      title: 'Количество',
+      dataIndex: 'quantity',
+      key: 'quantity',
+      align: 'center',
+      render: (quantity: number, item) => (
+        <InputNumber
+          min={1}
+          max={item.maxQuantity}
+          value={quantity}
+          onChange={(value) => handleQuantityChange(item.productId, value)}
+          size="middle"
+          style={{ width: 90 }}
+        />
+      ),
+    },
+    {
+      title: 'Сумма',
+      key: 'total',
+      align: 'right',
+      render: (_, item) => <Text strong>{formatPrice(item.price * item.quantity)}</Text>,
+    },
+    {
+      title: '',
+      key: 'action',
+      align: 'center',
+      render: (_, item) => (
+        <Popconfirm
+          title="Удалить товар из корзины?"
+          onConfirm={() => removeItem(item.productId)}
+          okText="Да"
+          cancelText="Нет"
+        >
+          <Button type="text" danger icon={<DeleteOutlined />} />
+        </Popconfirm>
+      ),
+    },
+  ];
+
+  if (items.length === 0) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: 80 }}>
+        <Empty description="Корзина пуста" image={Empty.PRESENTED_IMAGE_SIMPLE}>
+          <Button type="primary" onClick={() => navigate('/products')} shape="round" size="large">
+            Перейти к покупкам
+          </Button>
+        </Empty>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <Title level={2} style={{ marginBottom: 24 }}>
+        🛒 Корзина
+      </Title>
+      <Table
+        columns={columns}
+        dataSource={items}
+        rowKey="productId"
+        pagination={false}
+        scroll={{ x: 800 }}
+        style={{ background: 'transparent' }}
+        components={{
+          header: {
+            cell: (props: any) => <th {...props}
+                                      style={{ ...props.style, background: 'var(--bg-secondary)', fontWeight: 600 }} />,
+          },
+        }}
+      />
+      <Divider />
+      <Card style={{ borderRadius: 28, marginTop: 24, background: 'var(--bg-secondary)' }}>
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>{}
+            <Text style={{ color: 'white' }}>Всего товаров:</Text>
+            <Text style={{ color: 'white' }} strong>{totalQuantity} шт.</Text>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Text style={{ color: 'white', fontSize: 20 }}>Итого:</Text>
+            <Text strong style={{ fontSize: 28, color: 'var(--accent)' }}>
+              {formatPrice(totalPrice)}
+            </Text>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 16 }}>
+            <Button icon={<ClearOutlined />} onClick={clearCart} size="large">
+              Очистить корзину
+            </Button>
+            <Space>
+              <Button onClick={() => navigate('/products')} size="large">
+                Продолжить покупки
+              </Button>
+              <Button type="primary" icon={<ShoppingOutlined />} onClick={() => navigate('/checkout')} size="large">
+                Оформить заказ
+              </Button>
+            </Space>
+          </div>
+        </Space>
+      </Card>
+    </div>
+  );
+};
+
+export default CartPage;
+
+================================================================================
+Файл: src\pages\CheckoutPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\CheckoutPage.tsx
+================================================================================
+
+import {Typography} from 'antd'
+
+const {Title} = Typography
+
+const CheckoutPage = () => {
+    return (
+        <div>
+            <Title level={2}>Оформление заказа</Title>
+            <p>Здесь будет форма оформления заказа.</p>
+        </div>
+    )
+}
+
+export default CheckoutPage
+
+================================================================================
+Файл: src\pages\HomePage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\HomePage.tsx
+================================================================================
+
+import {Navigate} from 'react-router-dom'
+
+export default function HomePage() {
+    return <Navigate to="/products" replace/>;
+}
+
+
+================================================================================
+Файл: src\pages\LoginPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\LoginPage.tsx
+================================================================================
+
+import { useState } from 'react';
+import { Form, Input, Button, Card, Typography, Alert, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
+import { authService } from '../features/auth/services/authService';
+
+const { Title } = Typography;
+
+const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+
+  const onFinish = async (values: { email: string; password: string }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await authService.login(values);
+      login(response.user, response.accessToken);
+      message.success('Вход выполнен успешно');
+      navigate('/products');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Ошибка входа');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: 400, margin: '100px auto' }}>
+      <Card>
+        <Title level={3} style={{ textAlign: 'center' }}>Вход</Title>
+        {error && <Alert message={error} type="error" showIcon style={{ marginBottom: 16 }} />}
+        <Form name="login" onFinish={onFinish} size="large">
+          <Form.Item name="email" rules={[{ required: true, message: 'Введите email' }]}>
+            <Input prefix={<UserOutlined />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item name="password" rules={[{ required: true, message: 'Введите пароль' }]}>
+            <Input.Password prefix={<LockOutlined />} placeholder="Пароль" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading} block>
+              Войти
+            </Button>
+          </Form.Item>
+          <div style={{ textAlign: 'center' }}>
+            Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+          </div>
+        </Form>
+      </Card>
+    </div>
+  );
+};
+
+export default LoginPage;
+
+================================================================================
+Файл: src\pages\NotFoundPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\NotFoundPage.tsx
+================================================================================
+
+import { Button, Result } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
+const NotFoundPage = () => {
+  const navigate = useNavigate();
+
+  return (
+    <Result
+      status="404"
+      title="404"
+      subTitle="Извините, страница не найдена."
+      extra={
+        <Button type="primary" onClick={() => navigate('/')} shape="round">
+          На главную
+        </Button>
+      }
+      style={{ background: 'transparent', padding: '60px 0' }}
+    />
+  );
+};
+
+export default NotFoundPage;
+
+================================================================================
+Файл: src\pages\ProductDetailPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\ProductDetailPage.tsx
+================================================================================
+
+import { useParams, useNavigate } from 'react-router-dom';
+import { Row, Col, Card, Button, InputNumber, Spin, Alert, Typography, Image, Space, Tag } from 'antd';
+import { ShoppingCartOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { useProduct } from '../features/products/hooks/useProducts';
+import { useCartStore } from '../store/cartStore';
+import { formatPrice } from '../features/cart/logic/cartCalculations';
+import { notification as staticMessage } from 'antd';
+
+const { Title, Paragraph, Text } = Typography;
+
+const ProductDetailPage = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { data: product, isLoading, error } = useProduct(id || '');
+  const addItem = useCartStore(state => state.addItem);
+  const [quantity, setQuantity] = useState(1);
+
+  if (isLoading) return <Spin size="large" style={{ display: 'block', margin: '100px auto' }} />;
+  if (error || !product) return <Alert message="Товар не найден" type="error" showIcon />;
+
+  const handleAddToCart = () => {
+    console.log("13123213")
+    addItem({
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      maxQuantity: product.stock,
+      imageUrl: product.imageUrls[0],
+      quantity,
+    });
+
+    staticMessage.success({
+      message: 'Добавлено в корзину',
+      description: `${product.name} добавлен в корзину`,
+      duration: 3,});
+  };
+
+  const isOutOfStock = product.stock <= 0;
+
+  return (
+    <div>
+      <Button
+        type="link"
+        icon={<ArrowLeftOutlined />}
+        onClick={() => navigate(-1)}
+        style={{ marginBottom: 16 }}
+      >
+        Назад
+      </Button>
+
+      <Row gutter={[32, 32]}>
+        <Col xs={24} md={12}>
+          <Image
+            src={product.imageUrls[0] || 'https://via.placeholder.com/500'}
+            alt={product.name}
+            style={{ width: '100%', objectFit: 'cover' }}
+          />
+        </Col>
+        <Col xs={24} md={12}>
+          <Card
+            title={<Title level={2}>{product.name}</Title>}
+            extra={<Tag color="blue">SKU: {product.sku}</Tag>}
+          >
+            <Paragraph>{product.description}</Paragraph>
+            <Space direction="vertical" size="large" style={{ width: '100%', marginTop: 24 }}>
+              <Text strong style={{ fontSize: 24 }}>
+                {formatPrice(product.price)}
+              </Text>
+              {isOutOfStock ? (
+                <Tag color="red">Нет в наличии</Tag>
+              ) : (
+                <Tag color="green">В наличии: {product.stock} шт.</Tag>
+              )}
+              {!isOutOfStock && (
+                <Space>
+                  <InputNumber
+                    min={1}
+                    max={product.stock}
+                    value={quantity}
+                    onChange={value => setQuantity(value || 1)}
+                  />
+                  <Button
+                    type="primary"
+                    icon={<ShoppingCartOutlined />}
+                    onClick={handleAddToCart}
+                  >
+                    Добавить в корзину
+                  </Button>
+                </Space>
+              )}
+            </Space>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default ProductDetailPage;
+
+================================================================================
+Файл: src\pages\ProductListPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\ProductListPage.tsx
+================================================================================
+
+import { useState } from 'react';
+import { Row, Col, Pagination, Spin, Alert, Empty, Typography } from 'antd';
+import { useProducts } from '../features/products/hooks/useProducts';
+import ProductCard from '../features/products/components/ProductCard';
+import ProductFilterPanel from '../features/products/components/ProductFilterPanel';
+import type { ProductFilter } from '../shared/types';
+import { SortOption } from '../features/products/logic/productFilters';
+
+const { Title, Paragraph } = Typography;
+const DEFAULT_PAGE_SIZE = 12;
+
+const ProductListPage = () => {
+    const [filter, setFilter] = useState<ProductFilter>({
+        page: 1,
+        limit: DEFAULT_PAGE_SIZE,
+    });
+    const [sort, setSort] = useState<SortOption>(SortOption.NEWEST);
+    const { data, isLoading, error, isFetching } = useProducts(filter, sort);
+
+    const handleFilterChange = (newFilter: ProductFilter) => {
+        setFilter((prev) => ({
+            ...prev,
+            ...newFilter,
+            page: 1,
+        }));
+    };
+
+    const handleSortChange = (newSort: SortOption) => {
+        setSort(newSort);
+        setFilter((prev) => ({ ...prev, page: 1 }));
+    };
+
+    const handlePageChange = (page: number, pageSize: number) => {
+        setFilter((prev) => ({ ...prev, page, limit: pageSize }));
+    };
+
+    const handleReset = () => {
+        setFilter({ page: 1, limit: DEFAULT_PAGE_SIZE });
+        setSort(SortOption.NEWEST);
+    };
+
+    if (error) {
+        return <Alert message="Ошибка загрузки товаров" type="error" showIcon />;
+    }
+
+    return (
+      <div>
+          <div className="hero-gradient" style={{ marginBottom: 32, textAlign: 'center' }}>
+              <Title level={1} style={{ marginBottom: 8 }}>
+                  Добро пожаловать в TechStore
+              </Title>
+              <Paragraph style={{ fontSize: 18, maxWidth: 600, margin: '0 auto' }}>
+                  Гаджеты, которые меняют жизнь. Эксклюзивные модели по лучшим ценам.
+              </Paragraph>
+          </div>
+
+          <ProductFilterPanel
+            filter={filter}
+            sort={sort}
+            onFilterChange={handleFilterChange}
+            onSortChange={handleSortChange}
+            onReset={handleReset}
+          />
+
+          <Spin spinning={isLoading || isFetching} tip="Загрузка товаров...">
+              {data?.data.length === 0 ? (
+                <Empty description="Товары не найдены" style={{ margin: '40px 0' }} />
+              ) : (
+                <>
+                    <Row gutter={[24, 32]}>
+                        {data?.data.map((product) => (
+                          <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
+                              <ProductCard product={product} />
+                          </Col>
+                        ))}
+                    </Row>
+
+                    {data && data.totalPages > 1 && (
+                      <div style={{ marginTop: 48, textAlign: 'center' }}>
+                          <Pagination
+                            current={data.page}
+                            pageSize={data.limit}
+                            total={data.total}
+                            onChange={handlePageChange}
+                            showSizeChanger
+                            pageSizeOptions={['12', '24', '48']}
+                            showTotal={(total) => `Всего ${total} товаров`}
+                          />
+                      </div>
+                    )}
+                </>
+              )}
+          </Spin>
+      </div>
+    );
+};
+
+export default ProductListPage;
+
+================================================================================
+Файл: src\pages\RegisterPage.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\pages\RegisterPage.tsx
+================================================================================
+
+import { useState } from 'react';
+import { Form, Input, Button, Card, Typography, Alert, message } from 'antd';
+import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined, HomeOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '../features/auth/services/authService';
+import { useAuthStore } from '../store/authStore';
+
+const { Title } = Typography;
+
+const RegisterPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+
+  const onFinish = async (values: any) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await authService.register(values);
+      login(response.user, response.accessToken);
+      message.success('Регистрация успешна');
+      navigate('/products');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Ошибка регистрации');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: 500, margin: '50px auto' }}>
+      <Card>
+        <Title level={3} style={{ textAlign: 'center' }}>Регистрация</Title>
+        {error && <Alert message={error} type="error" showIcon style={{ marginBottom: 16 }} />}
+        <Form name="register" onFinish={onFinish} size="large">
+          <Form.Item name="name" rules={[{ required: true, message: 'Введите имя' }]}>
+            <Input prefix={<UserOutlined />} placeholder="Имя" />
+          </Form.Item>
+          <Form.Item name="email" rules={[{ required: true, message: 'Введите email', type: 'email' }]}>
+            <Input prefix={<MailOutlined />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item name="password" rules={[{ required: true, message: 'Введите пароль', min: 6 }]}>
+            <Input.Password prefix={<LockOutlined />} placeholder="Пароль (мин. 6 символов)" />
+          </Form.Item>
+          <Form.Item name="phone" rules={[{ required: false }]}>
+            <Input prefix={<PhoneOutlined />} placeholder="Телефон (необязательно)" />
+          </Form.Item>
+          <Form.Item name="address" rules={[{ required: false }]}>
+            <Input prefix={<HomeOutlined />} placeholder="Адрес (необязательно)" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading} block>
+              Зарегистрироваться
+            </Button>
+          </Form.Item>
+          <div style={{ textAlign: 'center' }}>
+            Уже есть аккаунт? <Link to="/login">Войти</Link>
+          </div>
+        </Form>
+      </Card>
+    </div>
+  );
+};
+
+export default RegisterPage;
+
+================================================================================
+Файл: src\routes\PrivateRoute.tsx
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\routes\PrivateRoute.tsx
+================================================================================
+
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
+
+interface PrivateRouteProps {
+  allowedRoles?: string[];
+}
+
+export const PrivateRoute = ({ allowedRoles }: PrivateRouteProps) => {
+  const { user } = useAuthStore();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/products" replace />;
+  }
+
+  return <Outlet />;
+};
+
+================================================================================
+Файл: src\services\authService.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\services\authService.js
+================================================================================
+
+"use strict";
+
+
+================================================================================
+Файл: src\services\authService.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\services\authService.ts
+================================================================================
+
+
+
+================================================================================
+Файл: src\services\orderService.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\services\orderService.js
+================================================================================
+
+"use strict";
+
+
+================================================================================
+Файл: src\services\orderService.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\services\orderService.ts
+================================================================================
+
+
+
+================================================================================
+Файл: src\services\productService.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\services\productService.js
+================================================================================
+
+const mockProducts = [
+    { id: '1', name: 'Ноутбук Pro', description: 'Мощный ноутбук', price: 120000, categoryId: 'cat1', stock: 10 },
+    { id: '2', name: 'Мышь беспроводная', description: 'Эргономичная', price: 3500, categoryId: 'cat2', stock: 25 },
+];
+const mockCategories = [
+    { id: 'cat1', name: 'Ноутбуки' },
+    { id: 'cat2', name: 'Периферия' },
+];
+// Имитация задержки сети
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+export const productService = {
+    getProducts: async () => {
+        await delay(300);
+        return [...mockProducts];
+    },
+    getProductById: async (id) => {
+        await delay(200);
+        return mockProducts.find(p => p.id === id);
+    },
+    getCategories: async () => {
+        await delay(200);
+        return [...mockCategories];
+    },
+    // Позже здесь будут реальные axios-запросы
+};
+
+
+================================================================================
+Файл: src\services\productService.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\services\productService.ts
+================================================================================
+
+import type { Product, Category } from '../types/product';
+
+const mockProducts: Product[] = [
+    { id: '1', name: 'Ноутбук Pro', description: 'Мощный ноутбук', price: 120000, categoryId: 'cat1', stock: 10 },
+    { id: '2', name: 'Мышь беспроводная', description: 'Эргономичная', price: 3500, categoryId: 'cat2', stock: 25 },
+];
+
+const mockCategories: Category[] = [
+    { id: 'cat1', name: 'Ноутбуки' },
+    { id: 'cat2', name: 'Периферия' },
+];
+
+// Имитация задержки сети
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const productService = {
+    getProducts: async (): Promise<Product[]> => {
+        await delay(300);
+        return [...mockProducts];
+    },
+    getProductById: async (id: string): Promise<Product | undefined> => {
+        await delay(200);
+        return mockProducts.find(p => p.id === id);
+    },
+    getCategories: async (): Promise<Category[]> => {
+        await delay(200);
+        return [...mockCategories];
+    },
+    // Позже здесь будут реальные axios-запросы
+};
+
+================================================================================
+Файл: src\shared\types\cart.types.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\cart.types.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\shared\types\cart.types.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\cart.types.ts
+================================================================================
+
+import type { ID } from './common.types'
+
+export interface CartItem {
+    productId: ID
+    name: string
+    price: number
+    quantity: number
+    imageUrl?: string
+    maxQuantity: number // максимальное доступное количество (stock)
+}
+
+export interface Cart {
+    items: CartItem[]
+    totalQuantity: number
+    totalPrice: number
+}
+
+// Для добавления в корзину
+export interface AddToCartPayload {
+    productId: ID
+    quantity: number
+}
+
+================================================================================
+Файл: src\shared\types\common.types.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\common.types.js
+================================================================================
+
+// @ts-ignore
+export var UserRole;
+(function (UserRole) {
+    UserRole["ADMIN"] = "admin";
+    UserRole["CUSTOMER"] = "customer";
+})(UserRole || (UserRole = {}));
+// @ts-ignore
+export var OrderStatus;
+(function (OrderStatus) {
+    OrderStatus["PENDING"] = "pending";
+    OrderStatus["PAID"] = "paid";
+    OrderStatus["SHIPPED"] = "shipped";
+    OrderStatus["DELIVERED"] = "delivered";
+    OrderStatus["CANCELLED"] = "cancelled";
+})(OrderStatus || (OrderStatus = {}));
+
+
+================================================================================
+Файл: src\shared\types\common.types.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\common.types.ts
+================================================================================
+
+export type ID = string
+
+export type Timestamp = string // ISO 8601
+
+export interface BaseEntity {
+    id: ID
+    createdAt: Timestamp
+    updatedAt: Timestamp
+}
+
+// @ts-ignore
+export enum UserRole {
+    ADMIN = 'admin',
+    CUSTOMER = 'customer',
+}
+
+// @ts-ignore
+export enum OrderStatus {
+    PENDING = 'pending',
+    PAID = 'paid',
+    SHIPPED = 'shipped',
+    DELIVERED = 'delivered',
+    CANCELLED = 'cancelled',
+}
+
+================================================================================
+Файл: src\shared\types\index.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\index.js
+================================================================================
+
+export * from './common.types';
+export * from './user.types';
+export * from './product.types';
+export * from './cart.types';
+export * from './order.types';
+
+
+================================================================================
+Файл: src\shared\types\index.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\index.ts
+================================================================================
+
+export * from './common.types'
+export * from './user.types'
+export * from './product.types'
+export * from './cart.types'
+export * from './order.types'
+
+================================================================================
+Файл: src\shared\types\order.types.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\order.types.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\shared\types\order.types.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\order.types.ts
+================================================================================
+
+import type { BaseEntity, ID, OrderStatus } from './common.types'
+
+export interface OrderItem {
+    productId: ID
+    name: string
+    price: number // цена на момент заказа
+    quantity: number
+}
+
+export interface Order extends BaseEntity {
+    userId: ID
+    items: OrderItem[]
+    total: number
+    status: OrderStatus
+    shippingAddress: string
+    phone: string
+    comment?: string
+}
+
+export interface CreateOrderPayload {
+    items: Omit<OrderItem, 'name' | 'price'>[] // только productId и quantity
+    shippingAddress: string
+    phone: string
+    comment?: string
+}
+
+================================================================================
+Файл: src\shared\types\product.types.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\product.types.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\shared\types\product.types.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\product.types.ts
+================================================================================
+
+import type {BaseEntity, ID} from './common.types'
+
+export interface Category extends BaseEntity {
+    name: string
+    description?: string
+    parentId?: ID | null
+}
+
+export interface Product extends BaseEntity {
+    name: string
+    description: string
+    price: number
+    stock: number
+    categoryId: ID
+    imageUrls: string[]
+    sku: string
+    isActive: boolean
+}
+
+// Для фильтрации товаров в каталоге
+export interface ProductFilter {
+    categoryId?: ID
+    minPrice?: number
+    maxPrice?: number
+    inStock?: boolean
+    search?: string
+    page?: number
+    limit?: number
+}
+
+export interface PaginatedResponse<T> {
+    data: T[]
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+}
+
+================================================================================
+Файл: src\shared\types\user.types.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\user.types.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\shared\types\user.types.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\shared\types\user.types.ts
+================================================================================
+
+import {type BaseEntity, UserRole } from './common.types'
+
+export interface User extends BaseEntity {
+    email: string
+    name: string
+    role: UserRole
+    phone?: string
+    address?: string
+}
+
+export interface LoginRequest {
+    email: string
+    password: string
+}
+
+export interface RegisterRequest {
+    email: string
+    password: string
+    name: string
+    phone?: string
+    address?: string
+}
+
+export interface AuthResponse {
+    accessToken: string
+    user: User
+}
+
+================================================================================
+Файл: src\store\authStore.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\store\authStore.js
+================================================================================
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+export const useAuthStore = create()(persist((set) => ({
+    user: null,
+    token: null,
+    login: (user, token) => {
+        localStorage.setItem('token', token);
+        set({ user, token });
+    },
+    logout: () => {
+        localStorage.removeItem('token');
+        set({ user: null, token: null });
+    },
+}), { name: 'auth-storage' }));
+
+
+================================================================================
+Файл: src\store\authStore.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\store\authStore.ts
+================================================================================
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import type { User } from '../shared/types';
+
+interface AuthState {
+  user: User | null;
+  token: string | null;
+  login: (user: User, token: string) => void;
+  logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
+      login: (user, token) => {
+        localStorage.setItem('token', token);
+        set({ user, token });
+      },
+      logout: () => {
+        localStorage.removeItem('token');
+        set({ user: null, token: null });
+      },
+    }),
+    { name: 'auth-storage' },
+  ),
+);
+
+
+================================================================================
+Файл: src\store\cartStore.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\store\cartStore.js
+================================================================================
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { calculateTotalPrice, calculateTotalQuantity, mergeCartItem, removeCartItem, updateCartItemQuantity, clearCart, } from '../features/cart/logic/cartCalculations';
+export const useCartStore = create()(persist((set, get) => ({
+    items: [],
+    totalQuantity: 0,
+    totalPrice: 0,
+    addItem: (newItem) => {
+        const currentItems = get().items;
+        try {
+            const updatedItems = mergeCartItem(currentItems, newItem);
+            set({
+                items: updatedItems,
+                totalQuantity: calculateTotalQuantity(updatedItems),
+                totalPrice: calculateTotalPrice(updatedItems),
+            });
+        }
+        catch (error) {
+            console.error('Ошибка добавления в корзину:', error);
+            // Можно добавить уведомление пользователю через toast
+        }
+    },
+    removeItem: (productId) => {
+        const currentItems = get().items;
+        const updatedItems = removeCartItem(currentItems, productId);
+        set({
+            items: updatedItems,
+            totalQuantity: calculateTotalQuantity(updatedItems),
+            totalPrice: calculateTotalPrice(updatedItems),
+        });
+    },
+    updateQuantity: (productId, quantity) => {
+        const currentItems = get().items;
+        try {
+            const updatedItems = updateCartItemQuantity(currentItems, productId, quantity);
+            set({
+                items: updatedItems,
+                totalQuantity: calculateTotalQuantity(updatedItems),
+                totalPrice: calculateTotalPrice(updatedItems),
+            });
+        }
+        catch (error) {
+            console.error('Ошибка обновления количества:', error);
+        }
+    },
+    clearCart: () => {
+        set({
+            items: clearCart(),
+            totalQuantity: 0,
+            totalPrice: 0,
+        });
+    },
+}), {
+    name: 'cart-storage', // ключ в localStorage
+}));
+
+
+================================================================================
+Файл: src\store\cartStore.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\store\cartStore.ts
+================================================================================
+
+import {create} from 'zustand'
+import {persist} from 'zustand/middleware'
+import type {CartItem} from '../shared/types'
+import {
+    calculateTotalPrice,
+    calculateTotalQuantity,
+    mergeCartItem,
+    removeCartItem,
+    updateCartItemQuantity,
+    clearCart,
+} from '../features/cart/logic/cartCalculations'
+
+interface CartState {
+    items: CartItem[]
+    totalQuantity: number
+    totalPrice: number
+
+    // Actions
+    addItem: (item: Omit<CartItem, 'quantity'> & { quantity: number }) => void
+    removeItem: (productId: string) => void
+    updateQuantity: (productId: string, quantity: number) => void
+    clearCart: () => void
+}
+
+export const useCartStore = create<CartState>()(
+    persist(
+        (set, get) => ({
+            items: [],
+            totalQuantity: 0,
+            totalPrice: 0,
+
+            addItem: (newItem) => {
+                const currentItems = get().items
+                try {
+                    const updatedItems = mergeCartItem(currentItems, newItem)
+                    set({
+                        items: updatedItems,
+                        totalQuantity: calculateTotalQuantity(updatedItems),
+                        totalPrice: calculateTotalPrice(updatedItems),
+                    })
+                } catch (error) {
+                    console.error('Ошибка добавления в корзину:', error)
+                    // Можно добавить уведомление пользователю через toast
+                }
+            },
+
+            removeItem: (productId) => {
+                const currentItems = get().items
+                const updatedItems = removeCartItem(currentItems, productId)
+                set({
+                    items: updatedItems,
+                    totalQuantity: calculateTotalQuantity(updatedItems),
+                    totalPrice: calculateTotalPrice(updatedItems),
+                })
+            },
+
+            updateQuantity: (productId, quantity) => {
+                const currentItems = get().items
+                try {
+                    const updatedItems = updateCartItemQuantity(currentItems, productId, quantity)
+                    set({
+                        items: updatedItems,
+                        totalQuantity: calculateTotalQuantity(updatedItems),
+                        totalPrice: calculateTotalPrice(updatedItems),
+                    })
+                } catch (error) {
+                    console.error('Ошибка обновления количества:', error)
+                }
+            },
+
+            clearCart: () => {
+                set({
+                    items: clearCart(),
+                    totalQuantity: 0,
+                    totalPrice: 0,
+                })
+            },
+        }),
+        {
+            name: 'cart-storage', // ключ в localStorage
+        }
+    )
+)
+
+================================================================================
+Файл: src\types\order.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\types\order.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\types\order.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\types\order.ts
+================================================================================
+
+export interface OrderItem {
+    productId: string;
+    quantity: number;
+    price: number; // цена на момент заказа
+}
+
+export interface Order {
+    id: string;
+    userId: string;
+    items: OrderItem[];
+    total: number;
+    status: 'pending' | 'paid' | 'shipped';
+    createdAt: string;
+}
+
+================================================================================
+Файл: src\types\product.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\types\product.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\types\product.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\types\product.ts
+================================================================================
+
+export interface Product {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    categoryId: string;
+    imageUrl?: string;
+    stock: number;
+}
+
+export interface Category {
+    id: string;
+    name: string;
+}
+
+================================================================================
+Файл: src\types\user.js
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\types\user.js
+================================================================================
+
+export {};
+
+
+================================================================================
+Файл: src\types\user.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\front\src\types\user.ts
+================================================================================
+
+export type UserRole = 'admin' | 'customer';
+
+export interface User {
+    id: string;
+    email: string;
+    name: string;
+    role: UserRole;
+}
+
+export interface AuthResponse {
+    accessToken: string;
+    user: User;
+}
+
+================================================================================
+Файл: .env
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\.env
+================================================================================
+
+# .env
+DB_HOST=localhost
+DB_PORT=1228
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=backlabs_db
+JWT_SECRET=hgkjhkjfshdf982347skdfhz123132dfsfjhskfkkkahsdfg
+
+================================================================================
+Файл: .gitignore
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\.gitignore
+================================================================================
+
+# compiled output
+/dist
+/node_modules
+/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+================================================================================
+Файл: .prettierrc
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\.prettierrc
+================================================================================
+
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+
+
+================================================================================
+Файл: data-source.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\data-source.ts
+================================================================================
+
+// data-source.ts
+import { DataSource } from 'typeorm';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+export const AppDataSource = new DataSource({
+  type: 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '1228', 10),
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD || 'postgres',
+  database: process.env.DB_DATABASE || 'backlabs_db',
+  entities: ['src/**/*.entity{.ts,.js}'],
+  synchronize: false,
+  logging: true,
+});
+
+
+================================================================================
+Файл: docker-compose.yml
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\docker-compose.yml
+================================================================================
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: backlabs_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: backlabs_db
+    ports:
+      - "1228:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+================================================================================
+Файл: nest-cli.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\nest-cli.json
+================================================================================
+
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true
+  }
+}
+
+
+================================================================================
+Файл: package.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\package.json
+================================================================================
+
+{
+  "name": "backlabs-api",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed": "ts-node seed.ts",
+    "build:front": "cd ../backlabs && npm run build && copy dist\\* ..\\backlabs-api\\public\\",
+    "prebuild": "npm run build:front"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.3",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/mapped-types": "^2.1.1",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.2.6",
+    "@nestjs/typeorm": "^11.0.1",
+    "bcrypt": "^6.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "passport-jwt": "^4.0.1",
+    "pg": "^8.20.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.28"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.0",
+    "@types/supertest": "^7.0.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^17.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
+
+
+================================================================================
+Файл: README.md
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\README.md
+================================================================================
+
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
+
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Project setup
+
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Run tests
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Deployment
+
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
+```
+
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
+## Resources
+
+Check out a few resources that may come in handy when working with NestJS:
+
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+================================================================================
+Файл: seed.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\seed.ts
+================================================================================
+
+// seed.ts
+import { AppDataSource } from './data-source';
+import { User, UserRole } from './src/users/entities/user.entity';
+import { Category } from './src/categories/entities/category.entity';
+import { Product } from './src/products/entities/product.entity';
+import * as bcrypt from 'bcrypt';
+
+async function seed() {
+  await AppDataSource.initialize();
+  console.log('Data Source has been initialized!');
+
+  const userRepository = AppDataSource.getRepository(User);
+  const categoryRepository = AppDataSource.getRepository(Category);
+  const productRepository = AppDataSource.getRepository(Product);
+
+  const existingUsers = await userRepository.count();
+  if (existingUsers > 0) {
+    console.log('Database already contains data. Skipping seed.');
+    await AppDataSource.destroy();
+    return;
+  }
+
+  const adminPassword = await bcrypt.hash('admin123', 10);
+  const userPassword = await bcrypt.hash('user123', 10);
+
+  const admin = userRepository.create({
+    email: 'admin@example.com',
+    password: adminPassword,
+    name: 'Admin',
+    role: UserRole.ADMIN,
+    phone: '+79001112233',
+    address: 'Москва, Кремль',
+  });
+
+  const customer = userRepository.create({
+    email: 'user@example.com',
+    password: userPassword,
+    name: 'Иван Петров',
+    role: UserRole.CUSTOMER,
+    phone: '+79004445566',
+    address: 'Санкт-Петербург, Невский пр., 1',
+  });
+
+  const savedUsers = await userRepository.save([admin, customer]);
+  console.log(`Users created: ${savedUsers.length}`);
+
+  // 2. Создаём категории
+  const laptops = categoryRepository.create({
+    name: 'Ноутбуки',
+    description: 'Портативные компьютеры',
+  });
+
+  const smartphones = categoryRepository.create({
+    name: 'Смартфоны',
+    description: 'Мобильные телефоны',
+  });
+
+  const accessories = categoryRepository.create({
+    name: 'Аксессуары',
+    description: 'Чехлы, наушники, зарядки',
+  });
+
+  const savedCategories = await categoryRepository.save([
+    laptops,
+    smartphones,
+    accessories,
+  ]);
+  console.log(`Categories created: ${savedCategories.length}`);
+
+  // Получаем сохранённые категории с ID
+  const [catLaptops, catSmartphones, catAccessories] = savedCategories;
+
+  // 3. Создаём товары
+  const products = productRepository.create([
+    {
+      name: 'Ноутбук Acer Aspire 5',
+      description: 'Ноутбук с процессором Intel Core i5, 8 ГБ ОЗУ, SSD 512 ГБ',
+      price: 54990,
+      stock: 15,
+      categoryId: catLaptops.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'ACER-ASP5-001',
+      isActive: true,
+    },
+    {
+      name: 'MacBook Air 13"',
+      description: 'Apple M1, 8 ГБ ОЗУ, SSD 256 ГБ',
+      price: 89990,
+      stock: 8,
+      categoryId: catLaptops.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'APPLE-MBA-001',
+      isActive: true,
+    },
+    {
+      name: 'Смартфон Samsung Galaxy S23',
+      description: 'Флагманский смартфон с отличной камерой',
+      price: 74990,
+      stock: 22,
+      categoryId: catSmartphones.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'SAMS-S23-001',
+      isActive: true,
+    },
+    {
+      name: 'iPhone 15 Pro',
+      description: 'Apple A17 Pro, 256 ГБ',
+      price: 124990,
+      stock: 5,
+      categoryId: catSmartphones.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'APPLE-IP15P-001',
+      isActive: true,
+    },
+    {
+      name: 'Наушники Sony WH-1000XM5',
+      description: 'Беспроводные наушники с шумоподавлением',
+      price: 32990,
+      stock: 30,
+      categoryId: catAccessories.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'SONY-WHXM5-001',
+      isActive: true,
+    },
+    {
+      name: 'Чехол для iPhone 15 Pro',
+      description: 'Силиконовый чехол MagSafe',
+      price: 3990,
+      stock: 100,
+      categoryId: catAccessories.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'CASE-IP15-001',
+      isActive: true,
+    },
+    {
+      name: 'Ноутбук Lenovo ThinkPad X1',
+      description: 'Бизнес-ноутбук с Intel Core i7',
+      price: 119990,
+      stock: 0,
+      categoryId: catLaptops.id,
+      imageUrls: ['https://via.placeholder.com/300'],
+      sku: 'LENOVO-TPX1-001',
+      isActive: true,
+    },
+  ]);
+
+  const savedProducts = await productRepository.save(products);
+  console.log(`Products created: ${savedProducts.length}`);
+
+  console.log('Seeding completed successfully!');
+  await AppDataSource.destroy();
+}
+
+seed().catch((error) => {
+  console.error('Error during seeding:', error);
+  process.exit(1);
+});
+
+
+================================================================================
+Файл: tsconfig.build.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\tsconfig.build.json
+================================================================================
+
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
+
+
+================================================================================
+Файл: tsconfig.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\tsconfig.json
+================================================================================
+
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false
+  }
+}
+
+
+================================================================================
+Файл: src\app.controller.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\app.controller.ts
+================================================================================
+
+import { Controller, Get } from '@nestjs/common';
+
+@Controller()
+export class AppController {
+  @Get()
+  getHello(): string {
+    return 'Backlabs API is running!';
+  }
+}
+
+
+================================================================================
+Файл: src\app.module.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\app.module.ts
+================================================================================
+
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import databaseConfig from './config/database.config';
+import { AppController } from './app.controller';
+import { ProductsModule } from './products/products.module';
+import { CategoriesModule } from './categories/categories.module';
+import { OrdersModule } from './orders/orders.module';
+import { AuthModule } from './auth/auth.module';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [databaseConfig],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): TypeOrmModuleOptions => {
+        const dbConfig = configService.get('database') as
+          | TypeOrmModuleOptions
+          | undefined;
+        if (!dbConfig) {
+          throw new Error('Database configuration is missing');
+        }
+        return dbConfig;
+      },
+    }),
+    ProductsModule,
+    CategoriesModule,
+    OrdersModule,
+    AuthModule,
+  ],
+  controllers: [AppController],
+  providers: [],
+})
+export class AppModule {}
+
+
+================================================================================
+Файл: src\main.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\main.ts
+================================================================================
+
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+
+  app.setGlobalPrefix('api');
+
+  const config = new DocumentBuilder()
+    .setTitle('Backlabs API')
+    .setDescription('API для интернет-магазина')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .addTag('products')
+    .addTag('categories')
+    .addTag('auth')
+    .addTag('orders')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(3000);
+}
+bootstrap();
+
+
+================================================================================
+Файл: src\auth\auth.controller.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\auth.controller.ts
+================================================================================
+
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { LoginDto } from '../users/dto/login.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+
+@ApiTags('auth')
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'User login' })
+  @ApiResponse({ status: 200, description: 'Login successful.' })
+  login(@Body() loginDto: LoginDto) {
+    return this.authService.login(loginDto);
+  }
+
+  @Post('register')
+  @ApiOperation({ summary: 'User registration' })
+  @ApiResponse({ status: 201, description: 'Registration successful.' })
+  register(@Body() createUserDto: CreateUserDto) {
+    return this.authService.register(createUserDto);
+  }
+}
+
+
+================================================================================
+Файл: src\auth\auth.module.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\auth.module.ts
+================================================================================
+
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { User } from '../users/entities/user.entity';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET') || 'secretKey',
+        signOptions: { expiresIn: '7d' },
+      }),
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy],
+  exports: [AuthService],
+})
+export class AuthModule {}
+
+
+================================================================================
+Файл: src\auth\auth.service.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\auth.service.ts
+================================================================================
+
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { User } from '../users/entities/user.entity';
+import { LoginDto } from '../users/dto/login.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+
+export type SafeUser = Omit<User, 'password' | 'hashPassword'>;
+
+@Injectable()
+export class AuthService {
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private jwtService: JwtService,
+  ) {}
+
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<SafeUser | null> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: _password, ...result } = user;
+      return result as SafeUser;
+    }
+    return null;
+  }
+
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ accessToken: string; user: SafeUser }> {
+    const user = await this.validateUser(loginDto.email, loginDto.password);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    return {
+      accessToken: this.jwtService.sign(payload),
+      user,
+    };
+  }
+
+  async register(
+    createUserDto: CreateUserDto,
+  ): Promise<{ accessToken: string; user: SafeUser }> {
+    const existing = await this.userRepository.findOne({
+      where: { email: createUserDto.email },
+    });
+    if (existing) {
+      throw new ConflictException('Email already exists');
+    }
+
+    const user = this.userRepository.create(createUserDto);
+    await this.userRepository.save(user);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _password, ...result } = user;
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    return {
+      accessToken: this.jwtService.sign(payload),
+      user: result as SafeUser,
+    };
+  }
+}
+
+
+================================================================================
+Файл: src\auth\decorators\roles.decorator.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\decorators\roles.decorator.ts
+================================================================================
+
+import { SetMetadata } from '@nestjs/common';
+import { UserRole } from '../../users/entities/user.entity';
+
+export const ROLES_KEY = 'roles';
+export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles);
+
+
+================================================================================
+Файл: src\auth\decorators\user.decorator.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\decorators\user.decorator.ts
+================================================================================
+
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
+export const User = createParamDecorator(
+  (data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return request.user;
+  },
+);
+
+
+================================================================================
+Файл: src\auth\guards\jwt-auth.guard.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\guards\jwt-auth.guard.ts
+================================================================================
+
+import { Injectable } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {}
+
+
+================================================================================
+Файл: src\auth\guards\roles.guard.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\guards\roles.guard.ts
+================================================================================
+
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { UserRole } from '../../users/entities/user.entity';
+
+@Injectable()
+export class RolesGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const requiredRoles = this.reflector.get<UserRole[]>(
+      'roles',
+      context.getHandler(),
+    );
+    if (!requiredRoles) {
+      return true;
+    }
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+    if (!user) {
+      throw new ForbiddenException('No user found');
+    }
+    return requiredRoles.includes(user.role);
+  }
+}
+
+
+================================================================================
+Файл: src\auth\strategies\jwt.strategy.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\auth\strategies\jwt.strategy.ts
+================================================================================
+
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(private configService: ConfigService) {
+    super({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: configService.get<string>('JWT_SECRET') || 'secretKey',
+    });
+  }
+
+  validate(payload: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+    return { id: payload.sub, email: payload.email, role: payload.role };
+  }
+}
+
+
+================================================================================
+Файл: src\categories\categories.controller.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\categories\categories.controller.ts
+================================================================================
+
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
+import { CategoriesService } from './categories.service';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../users/entities/user.entity';
+import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+
+@ApiTags('categories')
+@Controller('categories')
+export class CategoriesController {
+  constructor(private readonly categoriesService: CategoriesService) {}
+
+  @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create category (admin only)' })
+  create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoriesService.create(createCategoryDto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all categories' })
+  findAll() {
+    return this.categoriesService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get category by ID' })
+  findOne(@Param('id') id: string) {
+    return this.categoriesService.findOne(id);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update category (admin only)' })
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
+    return this.categoriesService.update(id, updateCategoryDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete category (admin only)' })
+  remove(@Param('id') id: string) {
+    return this.categoriesService.remove(id);
+  }
+}
+
+
+================================================================================
+Файл: src\categories\categories.module.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\categories\categories.module.ts
+================================================================================
+
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoriesService } from './categories.service';
+import { CategoriesController } from './categories.controller';
+import { Category } from './entities/category.entity';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Category])],
+  controllers: [CategoriesController],
+  providers: [CategoriesService],
+  exports: [CategoriesService, TypeOrmModule],
+})
+export class CategoriesModule {}
+
+
+================================================================================
+Файл: src\categories\categories.service.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\categories\categories.service.ts
+================================================================================
+
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Category } from './entities/category.entity';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+
+@Injectable()
+export class CategoriesService {
+  constructor(
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
+  ) {}
+
+  create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+    const category = this.categoryRepository.create(createCategoryDto);
+    return this.categoryRepository.save(category);
+  }
+
+  findAll(): Promise<Category[]> {
+    return this.categoryRepository.find({ relations: ['parent', 'children'] });
+  }
+
+  async findOne(id: string): Promise<Category> {
+    const category = await this.categoryRepository.findOne({
+      where: { id },
+      relations: ['parent', 'children'],
+    });
+    if (!category) {
+      throw new NotFoundException(`Category with ID ${id} not found`);
+    }
+    return category;
+  }
+
+  async update(
+    id: string,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<Category> {
+    const category = await this.findOne(id);
+    Object.assign(category, updateCategoryDto);
+    return this.categoryRepository.save(category);
+  }
+
+  async remove(id: string): Promise<void> {
+    const category = await this.findOne(id);
+    await this.categoryRepository.remove(category);
+  }
+}
+
+
+================================================================================
+Файл: src\categories\dto\create-category.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\categories\dto\create-category.dto.ts
+================================================================================
+
+import { IsString, IsOptional, IsUUID } from 'class-validator';
+
+export class CreateCategoryDto {
+  @IsString()
+  name: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @IsUUID()
+  @IsOptional()
+  parentId?: string;
+}
+
+
+================================================================================
+Файл: src\categories\dto\update-category.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\categories\dto\update-category.dto.ts
+================================================================================
+
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateCategoryDto } from './create-category.dto';
+
+export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {}
+
+
+================================================================================
+Файл: src\categories\entities\category.entity.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\categories\entities\category.entity.ts
+================================================================================
+
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
+
+import { Product } from '../../products/entities/product.entity';
+
+@Entity('categories')
+export class Category {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  description: string;
+
+  @ManyToOne(() => Category, (category) => category.children, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'parentId' })
+  parent: Category;
+
+  @Column({ nullable: true })
+  parentId: string;
+
+  @OneToMany(() => Category, (category) => category.parent)
+  children: Category[];
+
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+
+
+================================================================================
+Файл: src\config\database.config.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\config\database.config.ts
+================================================================================
+
+import { registerAs } from '@nestjs/config';
+
+export default registerAs('database', () => ({
+  type: 'postgres' as const,
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '1228', 10),
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD || 'postgres',
+  database: process.env.DB_DATABASE || 'backlabs_db',
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  synchronize: true,
+  logging: true,
+}));
+
+
+================================================================================
+Файл: src\events\events.module.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\events\events.module.ts
+================================================================================
+
+import { Module } from '@nestjs/common';
+import { EventsService } from './events.service';
+
+@Module({
+  providers: [EventsService],
+  exports: [EventsService],
+})
+export class EventsModule {}
+
+
+================================================================================
+Файл: src\events\events.service.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\events\events.service.ts
+================================================================================
+
+import { Injectable } from '@nestjs/common';
+import { Subject } from 'rxjs';
+
+export interface OrderEvent {
+  type: 'created' | 'updated' | 'cancelled';
+  order: any;
+}
+
+@Injectable()
+export class EventsService {
+  // Subject для отправки событий о заказах
+  private orderSubject = new Subject<OrderEvent>();
+
+  emitOrderEvent(event: OrderEvent) {
+    this.orderSubject.next(event);
+  }
+
+  getOrderEvents() {
+    return this.orderSubject.asObservable();
+  }
+}
+
+
+================================================================================
+Файл: src\orders\orders.controller.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\orders.controller.ts
+================================================================================
+
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  Query,
+  Req,
+} from '@nestjs/common';
+import { OrdersService } from './orders.service';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { OrderStatus } from './entities/order.entity';
+import { UserRole } from '../users/entities/user.entity';
+import { Sse } from '@nestjs/common';
+import { Observable, map } from 'rxjs';
+import { EventsService, OrderEvent } from '../events/events.service';
+
+interface RequestWithUser {
+  user?: {
+    id: string;
+    role: UserRole;
+  };
+}
+
+@Controller('orders')
+export class OrdersController {
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly eventsService: EventsService,
+  ) {}
+
+  @Post()
+  create(@Body() createOrderDto: CreateOrderDto, @Req() req: RequestWithUser) {
+    const userId = req.user?.id || 'temp-user-id';
+    return this.ordersService.create(userId, createOrderDto);
+  }
+
+  @Sse('events')
+  getOrderEvents(): Observable<{ data: string; type?: string; id?: string }> {
+    return this.eventsService.getOrderEvents().pipe(
+      map((event: OrderEvent) => ({
+        data: JSON.stringify(event),
+        type: event.type,
+        id: event.order.id,
+      })),
+    );
+  }
+
+  @Get()
+  findAll(@Query('status') status?: OrderStatus, @Req() req?: RequestWithUser) {
+    const userId = req?.user?.id;
+    const role = req?.user?.role || UserRole.CUSTOMER;
+    return this.ordersService.findAll(userId, role, status);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string, @Req() req?: RequestWithUser) {
+    const userId = req?.user?.id;
+    const role = req?.user?.role || UserRole.CUSTOMER;
+    return this.ordersService.findOne(id, userId, role);
+  }
+
+  @Patch(':id/status')
+  updateStatus(
+    @Param('id') id: string,
+    @Body() updateOrderStatusDto: UpdateOrderStatusDto,
+    @Req() req?: RequestWithUser,
+  ) {
+    const role = req?.user?.role || UserRole.CUSTOMER;
+    return this.ordersService.updateStatus(id, updateOrderStatusDto, role);
+  }
+
+  @Delete(':id')
+  cancel(@Param('id') id: string, @Req() req?: RequestWithUser) {
+    const userId = req?.user?.id || 'temp-user-id';
+    const role = req?.user?.role || UserRole.CUSTOMER;
+    return this.ordersService.cancel(id, userId, role);
+  }
+}
+
+
+================================================================================
+Файл: src\orders\orders.module.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\orders.module.ts
+================================================================================
+
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrdersService } from './orders.service';
+import { OrdersController } from './orders.controller';
+import { Order } from './entities/order.entity';
+import { OrderItem } from './entities/order-item.entity';
+import { Product } from '../products/entities/product.entity';
+import { ProductsModule } from '../products/products.module';
+import { EventsModule } from '../events/events.module';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([Order, OrderItem, Product]),
+    ProductsModule,
+    EventsModule,
+  ],
+  controllers: [OrdersController],
+  providers: [OrdersService],
+  exports: [OrdersService],
+})
+export class OrdersModule {}
+
+
+================================================================================
+Файл: src\orders\orders.service.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\orders.service.ts
+================================================================================
+
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, In } from 'typeorm';
+import { Order, OrderStatus } from './entities/order.entity';
+import { OrderItem } from './entities/order-item.entity';
+import { Product } from '../products/entities/product.entity';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { UserRole } from '../users/entities/user.entity';
+import { EventsService } from '../events/events.service';
+
+@Injectable()
+export class OrdersService {
+  constructor(
+    @InjectRepository(Order)
+    private orderRepository: Repository<Order>,
+    @InjectRepository(OrderItem)
+    private orderItemRepository: Repository<OrderItem>,
+    @InjectRepository(Product)
+    private productRepository: Repository<Product>,
+    private eventsService: EventsService,
+  ) {}
+
+  async create(userId: string, createOrderDto: CreateOrderDto): Promise<Order> {
+    const { items, shippingAddress, phone, comment } = createOrderDto;
+
+    const productIds = items.map((item) => item.productId);
+
+    const products = await this.productRepository.findBy({
+      id: In(productIds),
+    });
+
+    if (products.length !== productIds.length) {
+      const foundIds = products.map((p) => p.id);
+      const missingIds = productIds.filter((id) => !foundIds.includes(id));
+      throw new BadRequestException(
+        `Products with IDs ${missingIds.join(', ')} not found`,
+      );
+    }
+
+    const productMap = new Map(products.map((p) => [p.id, p]));
+
+    let total = 0;
+    const orderItemsData: Array<{
+      productId: string;
+      name: string;
+      price: number;
+      quantity: number;
+    }> = [];
+
+    for (const item of items) {
+      const product = productMap.get(item.productId);
+      if (!product) {
+        throw new BadRequestException(`Product ${item.productId} not found`);
+      }
+
+      if (!product.isActive) {
+        throw new BadRequestException(`Product ${product.name} is not active`);
+      }
+
+      if (product.stock < item.quantity) {
+        throw new BadRequestException(
+          `Insufficient stock for product ${product.name}. Available: ${product.stock}, requested: ${item.quantity}`,
+        );
+      }
+
+      const itemTotal = product.price * item.quantity;
+      total += itemTotal;
+
+      orderItemsData.push({
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: item.quantity,
+      });
+    }
+
+    const queryRunner =
+      this.orderRepository.manager.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const order = this.orderRepository.create({
+        userId,
+        total,
+        shippingAddress,
+        phone,
+        comment,
+        status: OrderStatus.PENDING,
+      });
+
+      const savedOrder = await queryRunner.manager.save(order);
+
+      const orderItems = orderItemsData.map((data) =>
+        this.orderItemRepository.create({
+          ...data,
+          orderId: savedOrder.id,
+        }),
+      );
+
+      this.eventsService.emitOrderEvent({
+        type: 'created',
+        order: savedOrder,
+      });
+
+      await queryRunner.manager.save(orderItems);
+
+      for (const item of items) {
+        const product = productMap.get(item.productId);
+        if (!product) {
+          throw new BadRequestException(
+            `Product ${item.productId} not found during stock update`,
+          );
+        }
+        product.stock -= item.quantity;
+        await queryRunner.manager.save(product);
+      }
+
+      await queryRunner.commitTransaction();
+
+      return this.findOne(savedOrder.id, userId, UserRole.CUSTOMER);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async findAll(
+    userId?: string,
+    role?: UserRole,
+    status?: OrderStatus,
+  ): Promise<Order[]> {
+    const query = this.orderRepository
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.items', 'items')
+      .orderBy('order.createdAt', 'DESC');
+
+    if (role !== UserRole.ADMIN) {
+      if (!userId) {
+        throw new ForbiddenException('User ID is required for non-admin users');
+      }
+      query.andWhere('order.userId = :userId', { userId });
+    }
+
+    if (status) {
+      query.andWhere('order.status = :status', { status });
+    }
+
+    return query.getMany();
+  }
+
+  async findOne(id: string, userId?: string, role?: UserRole): Promise<Order> {
+    const order = await this.orderRepository.findOne({
+      where: { id },
+      relations: ['items'],
+    });
+
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+
+    if (role !== UserRole.ADMIN && order.userId !== userId) {
+      throw new ForbiddenException('You can only view your own orders');
+    }
+
+    return order;
+  }
+
+  async updateStatus(
+    id: string,
+    updateOrderStatusDto: UpdateOrderStatusDto,
+    role: UserRole,
+  ): Promise<Order> {
+    if (role !== UserRole.ADMIN) {
+      throw new ForbiddenException('Only admin can update order status');
+    }
+
+    const order = await this.findOne(id);
+    order.status = updateOrderStatusDto.status;
+    return this.orderRepository.save(order);
+  }
+
+  async cancel(id: string, userId: string, role: UserRole): Promise<Order> {
+    const order = await this.findOne(id, userId, role);
+
+    if (role !== UserRole.ADMIN && order.userId !== userId) {
+      throw new ForbiddenException('You can only cancel your own orders');
+    }
+
+    if (order.status !== OrderStatus.PENDING) {
+      throw new BadRequestException(
+        `Order cannot be cancelled because it is ${order.status}`,
+      );
+    }
+
+    const queryRunner =
+      this.orderRepository.manager.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      for (const item of order.items) {
+        const orderItem = item;
+        const product = await this.productRepository.findOneBy({
+          id: orderItem.productId,
+        });
+        if (product) {
+          product.stock += orderItem.quantity;
+          await queryRunner.manager.save(product);
+        }
+      }
+
+      order.status = OrderStatus.CANCELLED;
+      const savedOrder = await queryRunner.manager.save(order);
+
+      this.eventsService.emitOrderEvent({
+        type: 'updated',
+        order: savedOrder,
+      });
+
+      await queryRunner.commitTransaction();
+      return savedOrder;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+}
+
+
+================================================================================
+Файл: src\orders\dto\create-order-item.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\dto\create-order-item.dto.ts
+================================================================================
+
+import { IsUUID, IsInt, Min } from 'class-validator';
+
+export class CreateOrderItemDto {
+  @IsUUID()
+  productId: string;
+
+  @IsInt()
+  @Min(1)
+  quantity: number;
+}
+
+
+================================================================================
+Файл: src\orders\dto\create-order.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\dto\create-order.dto.ts
+================================================================================
+
+import {
+  IsArray,
+  IsString,
+  IsOptional,
+  ValidateNested,
+  IsPhoneNumber,
+  IsNotEmpty,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateOrderItemDto } from './create-order-item.dto';
+
+export class CreateOrderDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateOrderItemDto)
+  items: CreateOrderItemDto[];
+
+  @IsString()
+  @IsNotEmpty()
+  shippingAddress: string;
+
+  @IsString()
+  @IsPhoneNumber('RU')
+  phone: string;
+
+  @IsString()
+  @IsOptional()
+  comment?: string;
+}
+
+
+================================================================================
+Файл: src\orders\dto\order-response.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\dto\order-response.dto.ts
+================================================================================
+
+import { Expose, Type } from 'class-transformer';
+import { OrderStatus } from '../entities/order.entity';
+
+export class OrderItemResponseDto {
+  @Expose()
+  id: string;
+
+  @Expose()
+  productId: string;
+
+  @Expose()
+  name: string;
+
+  @Expose()
+  price: number;
+
+  @Expose()
+  quantity: number;
+}
+
+export class OrderResponseDto {
+  @Expose()
+  id: string;
+
+  @Expose()
+  userId: string;
+
+  @Expose()
+  @Type(() => OrderItemResponseDto)
+  items: OrderItemResponseDto[];
+
+  @Expose()
+  total: number;
+
+  @Expose()
+  status: OrderStatus;
+
+  @Expose()
+  shippingAddress: string;
+
+  @Expose()
+  phone: string;
+
+  @Expose()
+  comment?: string;
+
+  @Expose()
+  createdAt: Date;
+
+  @Expose()
+  updatedAt: Date;
+}
+
+
+================================================================================
+Файл: src\orders\dto\update-order-status.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\dto\update-order-status.dto.ts
+================================================================================
+
+import { IsEnum } from 'class-validator';
+import { OrderStatus } from '../entities/order.entity';
+
+export class UpdateOrderStatusDto {
+  @IsEnum(OrderStatus)
+  status: OrderStatus;
+}
+
+
+================================================================================
+Файл: src\orders\entities\order-item.entity.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\entities\order-item.entity.ts
+================================================================================
+
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Order } from './order.entity';
+import { Product } from '../../products/entities/product.entity';
+
+@Entity('order_items')
+export class OrderItem {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  orderId: string;
+
+  @ManyToOne(() => Order, (order) => order.items)
+  @JoinColumn({ name: 'orderId' })
+  order: Order;
+
+  @Column()
+  productId: string;
+
+  @ManyToOne(() => Product, { eager: true })
+  @JoinColumn({ name: 'productId' })
+  product: Product;
+
+  @Column()
+  name: string; // название товара на момент заказа
+
+  @Column('decimal', { precision: 10, scale: 2 })
+  price: number; // цена на момент заказа
+
+  @Column('int')
+  quantity: number;
+}
+
+
+================================================================================
+Файл: src\orders\entities\order.entity.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\orders\entities\order.entity.ts
+================================================================================
+
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { OrderItem } from './order-item.entity';
+
+export enum OrderStatus {
+  PENDING = 'pending',
+  PAID = 'paid',
+  SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
+  CANCELLED = 'cancelled',
+}
+
+@Entity('orders')
+export class Order {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  userId: string;
+
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'userId' })
+  user: User;
+
+  @OneToMany(() => OrderItem, (item) => item.order, {
+    cascade: true,
+    eager: true,
+  })
+  items: OrderItem[];
+
+  @Column('decimal', { precision: 10, scale: 2 })
+  total: number;
+
+  @Column({
+    type: 'enum',
+    enum: OrderStatus,
+    default: OrderStatus.PENDING,
+  })
+  status: OrderStatus;
+
+  @Column()
+  shippingAddress: string;
+
+  @Column()
+  phone: string;
+
+  @Column({ nullable: true })
+  comment: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+
+
+================================================================================
+Файл: src\products\products.controller.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\products.controller.ts
+================================================================================
+
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ProductsService } from './products.service';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { QueryProductDto } from './dto/query-product.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../users/entities/user.entity';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
+
+@ApiTags('products')
+@Controller('products')
+export class ProductsController {
+  constructor(private readonly productsService: ProductsService) {}
+
+  @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create a new product (admin only)' })
+  @ApiResponse({ status: 201, description: 'Product created successfully.' })
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productsService.create(createProductDto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all products with filtering and pagination' })
+  findAll(@Query() query: QueryProductDto) {
+    return this.productsService.findAll(query);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get product by ID' })
+  findOne(@Param('id') id: string) {
+    return this.productsService.findOne(id);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update product (admin only)' })
+  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.update(id, updateProductDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete product (admin only)' })
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.productsService.remove(id);
+  }
+}
+
+
+================================================================================
+Файл: src\products\products.module.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\products.module.ts
+================================================================================
+
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsService } from './products.service';
+import { ProductsController } from './products.controller';
+import { Product } from './entities/product.entity';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Product])],
+  controllers: [ProductsController],
+  providers: [ProductsService],
+  exports: [ProductsService, TypeOrmModule],
+})
+export class ProductsModule {}
+
+
+================================================================================
+Файл: src\products\products.service.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\products.service.ts
+================================================================================
+
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, ILike, Between, FindOptionsOrder } from 'typeorm';
+import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { QueryProductDto } from './dto/query-product.dto';
+
+@Injectable()
+export class ProductsService {
+  constructor(
+    @InjectRepository(Product)
+    private productRepository: Repository<Product>,
+  ) {}
+
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    const existing = await this.productRepository.findOneBy({
+      sku: createProductDto.sku,
+    });
+    if (existing) {
+      throw new BadRequestException(
+        `Product with SKU ${createProductDto.sku} already exists`,
+      );
+    }
+    const product = this.productRepository.create(createProductDto);
+    return this.productRepository.save(product);
+  }
+
+  async findAll(query: QueryProductDto): Promise<{
+    data: Product[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }> {
+    const {
+      categoryId,
+      minPrice,
+      maxPrice,
+      inStock,
+      search,
+      page = 1,
+      limit = 12,
+      sort,
+    } = query;
+
+    const where: any = { isActive: true };
+
+    if (categoryId) where.categoryId = categoryId;
+    if (minPrice !== undefined && maxPrice !== undefined) {
+      where.price = Between(minPrice, maxPrice);
+    } else if (minPrice !== undefined) {
+      where.price = Between(minPrice, 999999999);
+    } else if (maxPrice !== undefined) {
+      where.price = Between(0, maxPrice);
+    }
+    if (inStock) where.stock = Between(1, 999999); // только в наличии
+    if (search) {
+      where.name = ILike(`%${search}%`);
+    }
+
+    // Сортировка
+    let order: FindOptionsOrder<Product> = { createdAt: 'DESC' }; // по умолчанию новые
+    if (sort) {
+      const [field, direction] = sort.split('_');
+      if (field === 'price') {
+        order = { price: direction === 'asc' ? 'ASC' : 'DESC' };
+      } else if (field === 'name') {
+        order = { name: direction === 'asc' ? 'ASC' : 'DESC' };
+      } else if (sort === 'newest') {
+        order = { createdAt: 'DESC' };
+      }
+    }
+
+    const [data, total] = await this.productRepository.findAndCount({
+      where,
+      order,
+      skip: (page - 1) * limit,
+      take: limit,
+      relations: ['category'],
+    });
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async findOne(id: string): Promise<Product> {
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: ['category'],
+    });
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    return product;
+  }
+
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    const product = await this.findOne(id);
+    Object.assign(product, updateProductDto);
+    return this.productRepository.save(product);
+  }
+
+  async remove(id: string): Promise<void> {
+    const product = await this.findOne(id);
+    await this.productRepository.remove(product);
+  }
+}
+
+
+================================================================================
+Файл: src\products\dto\create-product.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\dto\create-product.dto.ts
+================================================================================
+
+import {
+  IsString,
+  IsNumber,
+  IsOptional,
+  IsUUID,
+  IsArray,
+  IsBoolean,
+  Min,
+  IsNotEmpty,
+} from 'class-validator';
+
+export class CreateProductDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @IsNumber()
+  @Min(0)
+  price: number;
+
+  @IsNumber()
+  @Min(0)
+  stock: number;
+
+  @IsUUID()
+  categoryId: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  imageUrls: string[];
+
+  @IsString()
+  @IsNotEmpty()
+  sku: string;
+
+  @IsBoolean()
+  @IsOptional()
+  isActive?: boolean;
+}
+
+================================================================================
+Файл: src\products\dto\query-product.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\dto\query-product.dto.ts
+================================================================================
+
+import {
+  IsOptional,
+  IsUUID,
+  IsNumber,
+  IsBoolean,
+  IsString,
+  Min,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class QueryProductDto {
+  @IsOptional()
+  @IsUUID()
+  categoryId?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  minPrice?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  maxPrice?: number;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  @IsBoolean()
+  inStock?: boolean;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  page?: number = 1;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  limit?: number = 12;
+
+  @IsOptional()
+  @IsString()
+  sort?: string;
+}
+
+
+================================================================================
+Файл: src\products\dto\update-product.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\dto\update-product.dto.ts
+================================================================================
+
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateProductDto } from './create-product.dto';
+
+export class UpdateProductDto extends PartialType(CreateProductDto) {}
+
+
+================================================================================
+Файл: src\products\entities\product.entity.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\products\entities\product.entity.ts
+================================================================================
+
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Category } from '../../categories/entities/category.entity';
+
+@Entity('products')
+export class Product {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  name: string;
+
+  @Column('text')
+  description: string;
+
+  @Column('decimal', { precision: 10, scale: 2 })
+  price: number;
+
+  @Column('int')
+  stock: number;
+
+  @Column()
+  categoryId: string;
+
+  @ManyToOne(() => Category, (category) => category.products, { eager: true })
+  @JoinColumn({ name: 'categoryId' })
+  category: Category;
+
+  @Column('simple-array')
+  imageUrls: string[];
+
+  @Column({ unique: true })
+  sku: string;
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+
+
+================================================================================
+Файл: src\users\dto\create-user.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\users\dto\create-user.dto.ts
+================================================================================
+
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
+import { UserRole } from '../entities/user.entity';
+
+export class CreateUserDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @MinLength(6)
+  @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
+  address?: string;
+
+  @IsOptional()
+  @IsEnum(UserRole)
+  role?: UserRole;
+}
+
+================================================================================
+Файл: src\users\dto\login.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\users\dto\login.dto.ts
+================================================================================
+
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+
+export class LoginDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
+
+
+================================================================================
+Файл: src\users\dto\update-user.dto.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\users\dto\update-user.dto.ts
+================================================================================
+
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateUserDto } from './create-user.dto';
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {}
+
+
+================================================================================
+Файл: src\users\entities\user.entity.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\src\users\entities\user.entity.ts
+================================================================================
+
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { Order } from '../../orders/entities/order.entity';
+
+export enum UserRole {
+  ADMIN = 'admin',
+  CUSTOMER = 'customer',
+}
+
+@Entity('users')
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  name: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.CUSTOMER,
+  })
+  role: UserRole;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @BeforeInsert()
+  async hashPassword() {
+    if (this.password) {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+  }
+}
+
+
+================================================================================
+Файл: test\app.e2e-spec.ts
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\test\app.e2e-spec.ts
+================================================================================
+
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import request from 'supertest';
+import { App } from 'supertest/types';
+import { AppModule } from '../src/app.module';
+
+describe('AppController (e2e)', () => {
+  let app: INestApplication<App>;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/ (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!');
+  });
+
+  afterEach(async () => {
+    await app.close();
+  });
+});
+
+
+================================================================================
+Файл: test\jest-e2e.json
+Полный путь: C:\Users\saltinskiy\WebstormProjects\backlabs\backlabs-api\test\jest-e2e.json
+================================================================================
+
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}
+
+

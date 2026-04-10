@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { useAuthStore } from '../../store/authStore';
 import type { MenuProps } from 'antd';
+import { useOrderEvents } from '../../hooks/useOrderEvents.ts';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -16,6 +17,7 @@ const MainLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  useOrderEvents();
 
   const menuItems = [
     {

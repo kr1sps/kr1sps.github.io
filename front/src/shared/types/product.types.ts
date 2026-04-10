@@ -1,4 +1,4 @@
-import type {BaseEntity, ID} from './common.types'
+import type { BaseEntity, ID } from './common.types'
 
 export interface Category extends BaseEntity {
     name: string
@@ -12,12 +12,12 @@ export interface Product extends BaseEntity {
     price: number
     stock: number
     categoryId: ID
+    category?: Category
     imageUrls: string[]
     sku: string
     isActive: boolean
 }
 
-// Для фильтрации товаров в каталоге
 export interface ProductFilter {
     categoryId?: ID
     minPrice?: number

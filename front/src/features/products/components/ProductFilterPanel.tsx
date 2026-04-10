@@ -109,9 +109,9 @@ const ProductFilterPanel = ({
                     step={1000}
                     value={[filter.minPrice || 0, filter.maxPrice || 200000]}
                     onChange={handlePriceRangeChange}
-                    tooltip={{ formatter: (value) => `${value} ₽` }}
-                    trackStyle={{ backgroundColor: '#aa3bff' }}
-                    handleStyle={{ borderColor: '#aa3bff' }}
+                    tooltip={{ formatter: (value?: number) => `${value} ₽` }}
+                    trackStyle={[{ backgroundColor: '#aa3bff' }, { backgroundColor: '#aa3bff' }]}
+                    handleStyle={[{ borderColor: '#aa3bff' }, { borderColor: '#aa3bff' }]}
                   />
               </Col>
               <Col xs={24} md={6}>

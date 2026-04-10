@@ -14,6 +14,9 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { OrderStatus } from './entities/order.entity';
 import { UserRole } from '../users/entities/user.entity';
+import { Sse } from '@nestjs/common';
+import { Observable, map } from 'rxjs';
+import { EventsService, OrderEvent } from '../events/events.service';
 
 interface RequestWithUser {
   user?: {
@@ -24,12 +27,26 @@ interface RequestWithUser {
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly eventsService: EventsService,
+  ) {}
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto, @Req() req: RequestWithUser) {
     const userId = req.user?.id || 'temp-user-id';
     return this.ordersService.create(userId, createOrderDto);
+  }
+
+  @Sse('events')
+  getOrderEvents(): Observable<{ data: string; type?: string; id?: string }> {
+    return this.eventsService.getOrderEvents().pipe(
+      map((event: OrderEvent) => ({
+        data: JSON.stringify(event),
+        type: event.type,
+        id: event.order.id,
+      })),
+    );
   }
 
   @Get()

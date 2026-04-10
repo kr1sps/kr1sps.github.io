@@ -12,6 +12,7 @@ import { Product } from '../products/entities/product.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { UserRole } from '../users/entities/user.entity';
+import { EventsService } from '../events/events.service';
 
 @Injectable()
 export class OrdersService {
@@ -22,6 +23,7 @@ export class OrdersService {
     private orderItemRepository: Repository<OrderItem>,
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
+    private eventsService: EventsService,
   ) {}
 
   async create(userId: string, createOrderDto: CreateOrderDto): Promise<Order> {
@@ -101,6 +103,11 @@ export class OrdersService {
           orderId: savedOrder.id,
         }),
       );
+
+      this.eventsService.emitOrderEvent({
+        type: 'created',
+        order: savedOrder,
+      });
 
       await queryRunner.manager.save(orderItems);
 
@@ -213,6 +220,11 @@ export class OrdersService {
 
       order.status = OrderStatus.CANCELLED;
       const savedOrder = await queryRunner.manager.save(order);
+
+      this.eventsService.emitOrderEvent({
+        type: 'updated',
+        order: savedOrder,
+      });
 
       await queryRunner.commitTransaction();
       return savedOrder;
