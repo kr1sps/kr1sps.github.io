@@ -8,7 +8,6 @@ export interface OrderEvent {
 
 @Injectable()
 export class EventsService {
-  // Subject для отправки событий о заказах
   private orderSubject = new Subject<OrderEvent>();
 
   emitOrderEvent(event: OrderEvent) {

@@ -7,12 +7,24 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import { AuthModule } from './auth/auth.module';
+import { CartModule } from './cart/cart.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { ComplexityPlugin } from './common/plugins/complexity.plugin';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [databaseConfig],
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+      playground: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -27,12 +39,17 @@ import { AuthModule } from './auth/auth.module';
         return dbConfig;
       },
     }),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 5000,
+    }),
     ProductsModule,
     CategoriesModule,
     OrdersModule,
     AuthModule,
+    CartModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [ComplexityPlugin],
 })
 export class AppModule {}

@@ -1,4 +1,3 @@
-// seed.ts
 import { AppDataSource } from './data-source';
 import { User, UserRole } from './src/users/entities/user.entity';
 import { Category } from './src/categories/entities/category.entity';
@@ -44,7 +43,6 @@ async function seed() {
   const savedUsers = await userRepository.save([admin, customer]);
   console.log(`Users created: ${savedUsers.length}`);
 
-  // 2. Создаём категории
   const laptops = categoryRepository.create({
     name: 'Ноутбуки',
     description: 'Портативные компьютеры',
@@ -67,10 +65,8 @@ async function seed() {
   ]);
   console.log(`Categories created: ${savedCategories.length}`);
 
-  // Получаем сохранённые категории с ID
   const [catLaptops, catSmartphones, catAccessories] = savedCategories;
 
-  // 3. Создаём товары
   const products = productRepository.create([
     {
       name: 'Ноутбук Acer Aspire 5',

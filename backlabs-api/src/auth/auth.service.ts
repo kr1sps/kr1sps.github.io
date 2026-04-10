@@ -1,7 +1,7 @@
 import {
   Injectable,
   UnauthorizedException,
-  ConflictException,
+  ConflictException, NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../users/entities/user.entity';
 import { LoginDto } from '../users/dto/login.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UpdateProfileDto } from '../users/dto/update-profile.dto';
 
 export type SafeUser = Omit<User, 'password' | 'hashPassword'>;
 
@@ -68,5 +69,19 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
       user: result as SafeUser,
     };
+  }
+
+  async updateProfile(
+    userId: string,
+    updateDto: UpdateProfileDto,
+  ): Promise<SafeUser> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) throw new NotFoundException('Пользователь не найден');
+
+    Object.assign(user, updateDto);
+    await this.userRepository.save(user);
+
+    const { password: _password, ...result } = user;
+    return result as SafeUser;
   }
 }

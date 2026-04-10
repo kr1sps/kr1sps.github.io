@@ -6,7 +6,7 @@ export interface CartItem {
     price: number
     quantity: number
     imageUrl?: string
-    maxQuantity: number // максимальное доступное количество (stock)
+    maxQuantity: number
 }
 
 export interface Cart {
@@ -15,7 +15,6 @@ export interface Cart {
     totalPrice: number
 }
 
-// Для добавления в корзину
 export interface AddToCartPayload {
     productId: ID
     quantity: number

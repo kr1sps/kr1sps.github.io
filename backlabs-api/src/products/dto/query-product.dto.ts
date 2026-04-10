@@ -6,7 +6,7 @@ import {
   IsString,
   Min,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 export class QueryProductDto {
   @IsOptional()
@@ -49,4 +49,9 @@ export class QueryProductDto {
   @IsOptional()
   @IsString()
   sort?: string;
+
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  showArchived?: boolean;
 }

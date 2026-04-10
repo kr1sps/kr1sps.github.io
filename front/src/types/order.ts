@@ -1,7 +1,7 @@
 export interface OrderItem {
     productId: string;
     quantity: number;
-    price: number; // цена на момент заказа
+    price: number;
 }
 
 export interface Order {

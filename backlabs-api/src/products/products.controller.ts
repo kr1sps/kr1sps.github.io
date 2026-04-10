@@ -8,6 +8,11 @@ import {
   Delete,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -23,11 +28,17 @@ import {
   ApiOperation,
   ApiResponse,
 } from '@nestjs/swagger';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { StorageService } from '../infrastructure/storage/storage.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly storageService: StorageService,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -40,6 +51,7 @@ export class ProductsController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   @ApiOperation({ summary: 'Get all products with filtering and pagination' })
   findAll(@Query() query: QueryProductDto) {
     return this.productsService.findAll(query);
@@ -67,5 +79,22 @@ export class ProductsController {
   @ApiOperation({ summary: 'Delete product (admin only)' })
   async remove(@Param('id') id: string): Promise<void> {
     await this.productsService.remove(id);
+  }
+
+  @Post('upload-image')
+  @UseInterceptors(FileInterceptor('image'))
+  async uploadProductImage(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
+          new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    const imageUrl = await this.storageService.uploadFile(file);
+    return { url: imageUrl };
   }
 }

@@ -3,7 +3,7 @@ import type { BaseEntity, ID, OrderStatus } from './common.types'
 export interface OrderItem {
     productId: ID
     name: string
-    price: number // цена на момент заказа
+    price: number
     quantity: number
 }
 
@@ -18,7 +18,7 @@ export interface Order extends BaseEntity {
 }
 
 export interface CreateOrderPayload {
-    items: Omit<OrderItem, 'name' | 'price'>[] // только productId и quantity
+    items: Omit<OrderItem, 'name' | 'price'>[]
     shippingAddress: string
     phone: string
     comment?: string

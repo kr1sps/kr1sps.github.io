@@ -5,10 +5,13 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
   LogoutOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons';
 import { useAuthStore } from '../../store/authStore';
 import type { MenuProps } from 'antd';
 import { useOrderEvents } from '../../hooks/useOrderEvents.ts';
+import { useEffect } from 'react';
+import { useCartStore } from '../../store/cartStore.ts';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -17,9 +20,16 @@ const MainLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const fetchCart = useCartStore((state) => state.fetchCart);
   useOrderEvents();
 
-  const menuItems = [
+  useEffect(() => {
+    if (user) {
+      fetchCart();
+    }
+  }, [user, fetchCart]);
+
+  const menuItems: MenuProps['items'] = [
     {
       key: '/products',
       icon: <HomeOutlined />,
@@ -32,6 +42,18 @@ const MainLayout = () => {
     },
   ];
 
+  if (user?.role === 'admin') {
+    menuItems.push({
+      key: '/product-list-admins',
+      icon: <DashboardOutlined />,
+      label: (
+        <Link to="/product-list-admins" style={{ color: '#aa3bff', fontWeight: 'bold' }}>
+          Админ Панель
+        </Link>
+      ),
+    });
+  }
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -42,6 +64,7 @@ const MainLayout = () => {
       key: 'profile',
       label: 'Профиль',
       icon: <UserOutlined />,
+      onClick: () => navigate('/profile'),
     },
     {
       key: 'logout',

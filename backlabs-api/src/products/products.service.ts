@@ -4,7 +4,13 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, ILike, Between, FindOptionsOrder } from 'typeorm';
+import {
+  Repository,
+  ILike,
+  Between,
+  FindOptionsOrder,
+  FindOptionsWhere,
+} from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -44,11 +50,16 @@ export class ProductsService {
       inStock,
       search,
       page = 1,
-      limit = 12,
+      limit = 24,
       sort,
+      showArchived,
     } = query;
 
-    const where: any = { isActive: true };
+    const where: FindOptionsWhere<Product> = {};
+
+    if (!showArchived) {
+      where.isActive = true;
+    }
 
     if (categoryId) where.categoryId = categoryId;
     if (minPrice !== undefined && maxPrice !== undefined) {
@@ -58,13 +69,12 @@ export class ProductsService {
     } else if (maxPrice !== undefined) {
       where.price = Between(0, maxPrice);
     }
-    if (inStock) where.stock = Between(1, 999999); // только в наличии
+    if (inStock) where.stock = Between(1, 999999);
     if (search) {
       where.name = ILike(`%${search}%`);
     }
 
-    // Сортировка
-    let order: FindOptionsOrder<Product> = { createdAt: 'DESC' }; // по умолчанию новые
+    let order: FindOptionsOrder<Product> = { createdAt: 'DESC' };
     if (sort) {
       const [field, direction] = sort.split('_');
       if (field === 'price') {
@@ -101,6 +111,7 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
+
     return product;
   }
 
@@ -110,11 +121,16 @@ export class ProductsService {
   ): Promise<Product> {
     const product = await this.findOne(id);
     Object.assign(product, updateProductDto);
+
     return this.productRepository.save(product);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string) {
     const product = await this.findOne(id);
-    await this.productRepository.remove(product);
+    if (!product) {
+      throw new NotFoundException('Product with ID ${id} not found');
+    }
+
+    return this.productRepository.delete(product.id);
   }
 }

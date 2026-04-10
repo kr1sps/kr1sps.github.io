@@ -10,7 +10,6 @@ const mockCategories: Category[] = [
     { id: 'cat2', name: 'Периферия' },
 ];
 
-// Имитация задержки сети
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const productService = {
@@ -26,5 +25,4 @@ export const productService = {
         await delay(200);
         return [...mockCategories];
     },
-    // Позже здесь будут реальные axios-запросы
 };

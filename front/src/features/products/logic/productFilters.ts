@@ -1,31 +1,23 @@
 import type {Product, ProductFilter} from '../../../shared/types'
 
-/**
- * Фильтрует массив товаров на клиенте согласно заданным критериям
- */
 export const filterProducts = (products: Product[], filter: ProductFilter): Product[] => {
     return products.filter(product => {
-        // Фильтр по категории
         if (filter.categoryId && product.categoryId !== filter.categoryId) {
             return false
         }
 
-        // Фильтр по цене (минимальная)
         if (filter.minPrice !== undefined && product.price < filter.minPrice) {
             return false
         }
 
-        // Фильтр по цене (максимальная)
         if (filter.maxPrice !== undefined && product.price > filter.maxPrice) {
             return false
         }
 
-        // Фильтр "только в наличии"
         if (filter.inStock && product.stock <= 0) {
             return false
         }
 
-        // Поиск по названию или описанию
         if (filter.search) {
             const searchLower = filter.search.toLowerCase()
             const nameMatch = product.name.toLowerCase().includes(searchLower)
@@ -39,7 +31,6 @@ export const filterProducts = (products: Product[], filter: ProductFilter): Prod
     })
 }
 
-// @ts-ignore
 export enum SortOption {
     PRICE_ASC = 'price_asc',
     PRICE_DESC = 'price_desc',
@@ -48,9 +39,7 @@ export enum SortOption {
     NEWEST = 'newest',
 }
 
-/**
- * Сортирует массив товаров
- */
+
 export const sortProducts = (products: Product[], sortBy: SortOption): Product[] => {
     const sorted = [...products]
 
@@ -64,16 +53,13 @@ export const sortProducts = (products: Product[], sortBy: SortOption): Product[]
         case SortOption.NAME_DESC:
             return sorted.sort((a, b) => b.name.localeCompare(a.name))
         case SortOption.NEWEST:
-            // Предполагаем, что более новые товары имеют больший timestamp в createdAt
             return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         default:
             return sorted
     }
 }
 
-/**
- * Пагинация массива товаров (клиентская)
- */
+
 export const paginateProducts = (
     products: Product[],
     page: number,

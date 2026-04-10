@@ -1,0 +1,60 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  children: [Category!]!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  parent: Category
+  parentId: ID
+  updatedAt: DateTime!
+}
+
+input CreateProductInput {
+  categoryId: String!
+  description: String!
+  imageUrls: [String!]! = []
+  name: String!
+  price: Float!
+  sku: String!
+  stock: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  archiveProduct(id: ID!): Product!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  returnFromArchive(id: ID!): Product!
+}
+
+type PaginatedProducts {
+  items: [Product!]!
+  totalCount: Int!
+  totalPages: Int!
+}
+
+type Product {
+  category: Category
+  createdAt: DateTime!
+  description: String!
+  id: ID!
+  imageUrls: [String!]!
+  isActive: Boolean!
+  name: String!
+  price: Float!
+  sku: String!
+  stock: Int!
+  updatedAt: DateTime!
+}
+
+type Query {
+  product(id: ID!): Product
+  products: [Product!]!
+}

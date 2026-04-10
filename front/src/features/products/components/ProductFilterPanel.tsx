@@ -55,11 +55,11 @@ const ProductFilterPanel = ({
             background: 'var(--bg-secondary)',
             border: '1px solid var(--border)',
         }}
-        bodyStyle={{ padding: '24px' }}
+        styles={{ body: { padding: '24px' } }}
       >
           <Space align="center" style={{ marginBottom: 20 }}>
-              <FilterOutlined style={{ fontSize: 20, color: 'var(--accent)' }} />
-              <span style={{ fontWeight: 600, fontSize: 18 }}>Фильтры и сортировка</span>
+              <FilterOutlined style={{ fontSize: 20, color: 'var(--accent-light)' }} />
+              <span style={{ fontWeight: 600, fontSize: 18, color: 'var(--accent-light)' }}>Фильтры и сортировка</span>
           </Space>
           <Divider style={{ margin: '12px 0 20px' }} />
           <Row gutter={[24, 20]}>
@@ -97,11 +97,11 @@ const ProductFilterPanel = ({
                         onChange={handleInStockChange}
                         style={{ backgroundColor: filter.inStock ? '#aa3bff' : undefined }}
                       />
-                      <span>Только в наличии</span>
+                      <span style={{ color: 'var(--accent-light)' }}>Только в наличии</span>
                   </Space>
               </Col>
               <Col xs={24} md={12}>
-                  <div style={{ marginBottom: 8, fontWeight: 500 }}>Диапазон цен (₽):</div>
+                  <div style={{ marginBottom: 8, fontWeight: 500, color: 'var(--accent-light)' }}>Диапазон цен (₽):</div>
                   <Slider
                     range
                     min={0}

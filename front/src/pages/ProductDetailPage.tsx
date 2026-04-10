@@ -13,40 +13,78 @@ import {
   Tag,
   Divider,
   message,
+  Upload,
 } from 'antd';
-import { ShoppingCartOutlined, ArrowLeftOutlined, TagOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, ArrowLeftOutlined, TagOutlined, UploadOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useProduct } from '../features/products/hooks/useProducts';
 import { useCartStore } from '../store/cartStore';
-import { formatPrice } from '../features/cart/logic/cartCalculations';
+import { useAuthStore } from '../store/authStore';
+import { apiClient } from '../lib/api-client';
+import { formatPrice } from '../utils/formatters';
 
 const { Title, Paragraph, Text } = Typography;
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
   const { data: product, isLoading, error } = useProduct(id || '');
+
+  const { user } = useAuthStore();
+  const isAdmin = user?.role === 'admin';
+
+  const cartItems = useCartStore((state) => state.items);
   const addItem = useCartStore((state) => state.addItem);
+
   const [quantity, setQuantity] = useState(1);
 
   if (isLoading) return <Spin size="large" style={{ display: 'block', margin: '100px auto' }} />;
   if (error || !product) return <Alert message="Товар не найден" type="error" showIcon />;
 
   const isOutOfStock = product.stock <= 0;
+  const currentCartItem = cartItems.find(item => item.productId === product.id);
+  const inCartQuantity = currentCartItem ? currentCartItem.quantity : 0;
+  const availableToAdd = product.stock - inCartQuantity;
+  const isLimitReached = availableToAdd <= 0;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    if (isLimitReached) return;
     try {
-      addItem({
-        productId: product.id,
-        name: product.name,
-        price: product.price,
-        maxQuantity: product.stock,
-        imageUrl: product.imageUrls[0],
-        quantity,
-      });
+      await addItem({ productId: product.id, quantity });
       message.success(`${quantity} шт. добавлено в корзину`);
+      setQuantity(1);
     } catch (error: any) {
       message.error(error.message || 'Не удалось добавить товар');
+    }
+  };
+
+  const handleImageUpload = async (options: any) => {
+    const { file, onSuccess, onError } = options;
+    const hideLoading = message.loading('Загрузка картинки в облако...', 0);
+
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const uploadRes = await apiClient.post('/products/upload-image', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const newImageUrl = uploadRes.data.url;
+
+      await apiClient.patch(`/products/${product.id}`, {
+        imageUrls: [newImageUrl],
+      });
+
+      hideLoading();
+      message.success('Фотография товара успешно обновлена!');
+      onSuccess("ok");
+
+      window.location.reload();
+    } catch (err: any) {
+      hideLoading();
+      onError(err);
+      message.error(err.response?.data?.message || 'Ошибка загрузки картинки');
     }
   };
 
@@ -61,11 +99,12 @@ const ProductDetailPage = () => {
         Вернуться в каталог
       </Button>
 
-      <Card style={{ borderRadius: 24, overflow: 'hidden' }} bodyStyle={{ padding: 0 }}>
+      <Card style={{ borderRadius: 24, overflow: 'hidden' }} styles={{ body: { padding: 0 } }}>
         <Row>
           <Col xs={24} md={12} style={{
             padding: '40px',
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             background: 'var(--bg-secondary)',
@@ -75,6 +114,20 @@ const ProductDetailPage = () => {
               alt={product.name}
               style={{ maxHeight: '400px', objectFit: 'contain', borderRadius: 16 }}
             />
+
+            {isAdmin && (
+              <div style={{ marginTop: 24 }}>
+                <Upload
+                  customRequest={handleImageUpload}
+                  showUploadList={false}
+                  accept="image/png, image/jpeg, image/jpg"
+                >
+                  <Button icon={<UploadOutlined />} type="dashed" size="large">
+                    Изменить фото (Admin)
+                  </Button>
+                </Upload>
+              </div>
+            )}
           </Col>
 
           <Col xs={24} md={12} style={{ padding: '40px' }}>
@@ -104,17 +157,21 @@ const ProductDetailPage = () => {
 
                 {isOutOfStock ? (
                   <Tag color="red" style={{ fontSize: '14px', padding: '4px 12px' }}>Нет в наличии</Tag>
+                ) : isLimitReached ? (
+                  <Tag color="orange" style={{ fontSize: '14px', padding: '4px 12px' }}>
+                    Вы добавили всё доступное количество в корзину
+                  </Tag>
                 ) : (
                   <Space direction="vertical" size="large" style={{ width: '100%' }}>
                     <Tag color="green" style={{ fontSize: '14px', padding: '4px 12px' }}>
-                      В наличии: {product.stock} шт.
+                      Доступно для заказа: {availableToAdd} шт. (из {product.stock})
                     </Tag>
 
                     <Space size="middle">
                       <InputNumber
                         size="large"
                         min={1}
-                        max={product.stock}
+                        max={availableToAdd}
                         value={quantity}
                         onChange={(value) => setQuantity(value || 1)}
                       />
@@ -131,7 +188,6 @@ const ProductDetailPage = () => {
                   </Space>
                 )}
               </div>
-
             </Space>
           </Col>
         </Row>

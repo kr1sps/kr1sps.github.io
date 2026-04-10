@@ -1,24 +1,26 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Order } from './order.entity';
+import { Cart } from './cart.entity';
 import { Product } from '../../products/entities/product.entity';
 
-@Entity('order_items')
-export class OrderItem {
+@Entity('cart_items')
+export class CartItem {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  orderId: string;
+  cartId: string;
 
-  @ManyToOne(() => Order, (order) => order.items)
-  @JoinColumn({ name: 'orderId' })
-  order: Order;
+  @ManyToOne(() => Cart, (cart: Cart) => cart.items as unknown as CartItem[], {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'cartId' })
+  cart: Cart;
 
   @Column()
   productId: string;
@@ -26,12 +28,6 @@ export class OrderItem {
   @ManyToOne(() => Product, { eager: true })
   @JoinColumn({ name: 'productId' })
   product: Product;
-
-  @Column()
-  name: string;
-
-  @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
 
   @Column('int')
   quantity: number;

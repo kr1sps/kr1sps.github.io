@@ -1,83 +1,97 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { cartService } from '../features/cart/services/cartService';
 import type { CartItem } from '../shared/types';
-import {
-  calculateTotalPrice,
-  calculateTotalQuantity,
-  mergeCartItem,
-  removeCartItem,
-  updateCartItemQuantity,
-  clearCart,
-} from '../features/cart/logic/cartCalculations';
 
 interface CartState {
   items: CartItem[];
   totalQuantity: number;
   totalPrice: number;
+  isLoading: boolean;
 
-  addItem: (item: Omit<CartItem, 'quantity'> & { quantity: number }) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
+  fetchCart: () => Promise<void>;
+  addItem: (item: { productId: string; quantity: number }) => Promise<void>;
+  removeItem: (productId: string) => Promise<void>;
+  updateQuantity: (productId: string, quantity: number) => Promise<void>;
+  clearCart: () => Promise<void>;
 }
 
-export const useCartStore = create<CartState>()(
-  persist(
-    (set, get) => ({
-      items: [],
-      totalQuantity: 0,
-      totalPrice: 0,
+const mapBackendCartToState = (data: any) => {
+  return {
+    items: (data.items || []).map((item: any) => ({
+      productId: item.productId,
+      name: item.product?.name || 'Товар больше недоступен',
+      price: Number(item.product?.price) || 0,
+      quantity: Number(item.quantity) || 1,
+      imageUrl: item.product?.imageUrls?.[0] || 'https://via.placeholder.com/80?text=Нет+фото',
+      maxQuantity: item.product?.stock || 0,
+    })),
+    totalQuantity: Number(data.totalQuantity) || 0,
+    totalPrice: Number(data.totalPrice) || 0,
+  };
+};
 
-      addItem: (newItem) => {
-        const currentItems = get().items;
-        try {
-          const updatedItems = mergeCartItem(currentItems, newItem);
-          set({
-            items: updatedItems,
-            totalQuantity: calculateTotalQuantity(updatedItems),
-            totalPrice: calculateTotalPrice(updatedItems),
-          });
-        } catch (error) {
-          console.error('Ошибка добавления в корзину:', error);
-          throw error;
-        }
-      },
+export const useCartStore = create<CartState>((set) => ({
+  items: [],
+  totalQuantity: 0,
+  totalPrice: 0,
+  isLoading: false,
 
-      removeItem: (productId) => {
-        const currentItems = get().items;
-        const updatedItems = removeCartItem(currentItems, productId);
-        set({
-          items: updatedItems,
-          totalQuantity: calculateTotalQuantity(updatedItems),
-          totalPrice: calculateTotalPrice(updatedItems),
-        });
-      },
+  fetchCart: async () => {
+    set({ isLoading: true });
+    try {
+      const data = await cartService.getCart();
+      set(mapBackendCartToState(data));
+    } catch (error) {
+      console.error('Ошибка загрузки корзины:', error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 
-      updateQuantity: (productId, quantity) => {
-        const currentItems = get().items;
-        try {
-          const updatedItems = updateCartItemQuantity(currentItems, productId, quantity);
-          set({
-            items: updatedItems,
-            totalQuantity: calculateTotalQuantity(updatedItems),
-            totalPrice: calculateTotalPrice(updatedItems),
-          });
-        } catch (error) {
-          console.error('Ошибка обновления количества:', error);
-          throw error;
-        }
-      },
+  addItem: async ({ productId, quantity }) => {
+    console.log('📦 [СТОР] Вызываю cartService.addItem...');
+    try {
+      const data = await cartService.addItem(productId, quantity);
+      set(mapBackendCartToState(data));
+    } catch (error: any) {
+      console.error('[СТОР] Ошибка:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.message || 'Ошибка добавления');
+    }
+  },
 
-      clearCart: () => {
-        set({
-          items: clearCart(),
-          totalQuantity: 0,
-          totalPrice: 0,
-        });
-      },
-    }),
-    {
-      name: 'cart-storage',
-    },
-  ),
-);
+  removeItem: async (productId) => {
+    set({ isLoading: true });
+    try {
+      const data = await cartService.removeItem(productId);
+      set(mapBackendCartToState(data));
+    } catch (error) {
+      console.error('Ошибка удаления товара:', error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  updateQuantity: async (productId, quantity) => {
+    set({ isLoading: true });
+    try {
+      const data = await cartService.updateQuantity(productId, quantity);
+      set(mapBackendCartToState(data));
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Ошибка обновления количества');
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  clearCart: async () => {
+    set({ isLoading: true });
+    try {
+      const data = await cartService.clearCart();
+      set(mapBackendCartToState(data));
+    } catch (error) {
+      console.error('Ошибка очистки корзины:', error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+}));

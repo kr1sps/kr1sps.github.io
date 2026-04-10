@@ -1,8 +1,24 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from '../users/dto/login.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UpdateProfileDto } from '../users/dto/update-profile.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -22,5 +38,13 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'Registration successful.' })
   register(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
+  }
+
+  @Patch('profile')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Обновить данные профиля' })
+  @ApiBearerAuth()
+  updateProfile(@Req() req: any, @Body() updateDto: UpdateProfileDto) {
+    return this.authService.updateProfile(req.user.id, updateDto);
   }
 }
