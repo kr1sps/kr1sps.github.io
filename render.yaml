@@ -13,7 +13,8 @@ services:
         value: production
       - key: PORT
         value: 10000
-      - fromDatabase:
+      - key: DATABASE_URL
+        fromDatabase:
           name: backlabs-db
           property: connectionString
       - key: JWT_SECRET
@@ -28,8 +29,8 @@ services:
         value: https://storage.yandexcloud.net
       - key: S3_REGION
         value: ru-central1
-
-  - type: web
+        
+  - type: static
     name: backlabs-front
     env: static
     plan: free
