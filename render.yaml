@@ -29,7 +29,7 @@ services:
       - key: S3_REGION
         value: ru-central1
 
-  - type: static
+  - type: web
     name: backlabs-front
     env: static
     plan: free
