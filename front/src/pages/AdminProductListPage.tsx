@@ -14,7 +14,7 @@ import {
   Select,
   Switch,
 } from 'antd';
-import { EditOutlined, ReloadOutlined, CiOutlined } from '@ant-design/icons';
+import { EditOutlined, ReloadOutlined, CiOutlined, PlusOutlined } from '@ant-design/icons';
 import { apiClient } from '../lib/api-client';
 import { formatPrice } from '../utils/formatters';
 import type { Product, Category } from '../shared/types';
@@ -61,6 +61,13 @@ export const AdminProductListPage = () => {
     fetchCategories();
   }, []);
 
+  const handleAddNew = () => {
+    setEditingProduct(null);
+    form.resetFields();
+    form.setFieldsValue({ isActive: true });
+    setIsModalOpen(true);
+  };
+
   const handleEdit = (record: Product) => {
     setEditingProduct(record);
     form.setFieldsValue({
@@ -75,24 +82,28 @@ export const AdminProductListPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleUpdate = async (values: any) => {
-    if (!editingProduct) return;
-
+  const handleSave = async (values: any) => {
     const payload = {
       ...values,
-      price: values.price !== undefined ? Number(values.price) : undefined,
-      stock: values.stock !== undefined ? Number(values.stock) : undefined,
+      price: Number(values.price),
+      stock: Number(values.stock),
     };
 
     try {
-      await apiClient.patch(`/products/${editingProduct.id}`, payload);
-      message.success('Товар успешно обновлён');
+      if (editingProduct) {
+        await apiClient.patch(`/products/${editingProduct.id}`, payload);
+        message.success('Товар успешно обновлён');
+      } else {
+        await apiClient.post('/products', payload);
+        message.success('Новый товар успешно создан');
+      }
+
       setIsModalOpen(false);
       form.resetFields();
       await fetchProducts();
     } catch (error: any) {
       message.error(
-        error.response?.data?.message || 'Ошибка при обновлении товара',
+        error.response?.data?.message || 'Ошибка при сохранении товара'
       );
     }
   };
@@ -194,9 +205,19 @@ export const AdminProductListPage = () => {
 
   return (
     <div style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: 16 }}>
-      <Title style={{ color: 'var(--accent)' }} level={2}>
-        Управление товарами
-      </Title>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+        <Title style={{ color: 'var(--accent)', margin: 0 }} level={2}>
+          Управление товарами
+        </Title>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={handleAddNew}
+          size="large"
+        >
+          Добавить новый товар
+        </Button>
+      </div>
 
       <Table
         columns={columns}
@@ -207,27 +228,27 @@ export const AdminProductListPage = () => {
       />
 
       <Modal
-        title="Редактирование товара"
+        title={editingProduct ? 'Редактирование товара' : 'Добавление нового товара'}
         open={isModalOpen}
         onCancel={() => {
           setIsModalOpen(false);
           form.resetFields();
         }}
         onOk={() => form.submit()}
-        okText="Сохранить изменения"
+        okText={editingProduct ? 'Сохранить изменения' : 'Создать товар'}
         cancelText="Отмена"
         width={700}
       >
         <Form
           form={form}
-          onFinish={handleUpdate}
+          onFinish={handleSave}
           layout="vertical"
           initialValues={{ isActive: true }}
         >
           <Form.Item
             name="name"
             label="Название товара"
-            rules={[{ required: true, message: 'Введите название' }]}
+            rules={[{ required: true, message: 'Введите название товара' }]}
           >
             <Input placeholder="Например: MacBook Air 13" />
           </Form.Item>
@@ -268,11 +289,19 @@ export const AdminProductListPage = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item name="sku" label="Артикул (SKU)">
+          <Form.Item
+            name="sku"
+            label="Артикул (SKU)"
+            rules={[{ required: true, message: 'Введите артикул' }]}
+          >
             <Input placeholder="ACER-ASP5-001" />
           </Form.Item>
 
-          <Form.Item name="isActive" label="Товар активен" valuePropName="checked">
+          <Form.Item
+            name="isActive"
+            label="Товар активен"
+            valuePropName="checked"
+          >
             <Switch />
           </Form.Item>
         </Form>
