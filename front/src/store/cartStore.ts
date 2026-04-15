@@ -49,7 +49,6 @@ export const useCartStore = create<CartState>((set) => ({
   },
 
   addItem: async ({ productId, quantity }) => {
-    console.log('📦 [СТОР] Вызываю cartService.addItem...');
     try {
       const data = await cartService.addItem(productId, quantity);
       set(mapBackendCartToState(data));
