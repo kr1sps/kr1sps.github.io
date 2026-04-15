@@ -39,8 +39,3 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://backlabs-api.onrender.com/api
-
-databases:
-  - name: backlabs-db
-    type: postgresql
-    plan: free
