@@ -42,5 +42,5 @@ services:
 
 databases:
   - name: backlabs-db
-    type: postgres
+    type: postgresql
     plan: free
