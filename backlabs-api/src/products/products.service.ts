@@ -32,7 +32,16 @@ export class ProductsService {
         `Product with SKU ${createProductDto.sku} already exists`,
       );
     }
-    const product = this.productRepository.create(createProductDto);
+
+    const product = this.productRepository.create({
+      ...createProductDto,
+      imageUrls:
+        createProductDto.imageUrls && createProductDto.imageUrls.length > 0
+          ? createProductDto.imageUrls
+          : ['https://via.placeholder.com/300?text=No+Photo'],
+      isActive: createProductDto.isActive ?? true,
+    });
+
     return this.productRepository.save(product);
   }
 

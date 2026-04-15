@@ -42,7 +42,9 @@ export class Product {
   category: Category;
 
   @Field(() => [String])
-  @Column('simple-array')
+  @Column('simple-array', {
+    default: ['https://via.placeholder.com/300?text=No+Image'],
+  })
   imageUrls: string[];
 
   @Field()

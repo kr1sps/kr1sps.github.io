@@ -31,7 +31,8 @@ export class CreateProductDto {
 
   @IsArray()
   @IsString({ each: true })
-  imageUrls: string[];
+  @IsOptional()
+  imageUrls?: string[];
 
   @IsString()
   @IsNotEmpty()

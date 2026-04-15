@@ -78,15 +78,25 @@ export const AdminProductListPage = () => {
       categoryId: record.categoryId,
       sku: record.sku,
       isActive: record.isActive,
+      imageUrls: record.imageUrls
     });
     setIsModalOpen(true);
   };
 
   const handleSave = async (values: any) => {
+    const imageUrls = values.imageUrls
+      ? [values.imageUrls]
+      : ['https://via.placeholder.com/300'];
+
     const payload = {
-      ...values,
+      name: values.name,
+      description: values.description,
       price: Number(values.price),
       stock: Number(values.stock),
+      categoryId: values.categoryId,
+      sku: values.sku,
+      isActive: values.isActive,
+      imageUrls: imageUrls,
     };
 
     try {
@@ -287,6 +297,16 @@ export const AdminProductListPage = () => {
                 </Option>
               ))}
             </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="imageUrls"
+            label="Ссылка на изображение"
+            rules={[{ required: true, message: 'Вставьте ссылку на картинку' }]}
+          >
+            <Input
+              placeholder="https://example.com/image.jpg"
+            />
           </Form.Item>
 
           <Form.Item
