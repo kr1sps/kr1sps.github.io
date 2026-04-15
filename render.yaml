@@ -4,7 +4,6 @@ services:
   - type: web
     name: backlabs-api
     env: node
-    plan: free
     rootDir: backlabs-api
     buildCommand: npm install && npm run build
     startCommand: npm run start:prod
@@ -33,7 +32,6 @@ services:
   - type: web
     name: backlabs-front
     env: static
-    plan: free
     rootDir: backlabs
     buildCommand: npm install && npm run build
     staticPublishPath: dist
