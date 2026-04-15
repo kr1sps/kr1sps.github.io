@@ -11,6 +11,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
+    "build:prod": "nest build",
     "start:prod": "node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -18,9 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed": "ts-node seed.ts",
-    "build:front": "cd ../backlabs && npm run build && copy dist\\* ..\\backlabs-api\\public\\",
-    "prebuild": "npm run build:front"
+    "seed": "ts-node seed.ts"
   },
   "dependencies": {
     "@apollo/server": "^5.5.0",
