@@ -61,11 +61,11 @@ export class ProductsResolver {
 
   @Mutation(() => Product)
   async archiveProduct(@Args('id', { type: () => ID }) id: string) {
-    return this.productsService.update(id, { isActive: true });
+    return this.productsService.update(id, { isActive: false });
   }
 
   @Mutation(() => Product)
   async returnFromArchive(@Args('id', { type: () => ID }) id: string) {
-    return this.productsService.update(id, { isActive: false });
+    return this.productsService.update(id, { isActive: true });
   }
 }
