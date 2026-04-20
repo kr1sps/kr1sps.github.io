@@ -65,7 +65,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           }}>
             <img
               alt={product.name}
-              src={product.imageUrls[0] || 'https://via.placeholder.com/300?text=Нет+фото'}
+              src={product.imageUrls[0] || 'https://i.postimg.cc/9XD701DH/izobrazenie.png'}
               style={{
                 maxHeight: '100%',
                 maxWidth: '100%',

@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { Cart } from './entities/cart.entity';
 import { CartItem } from './entities/cart-item.entity';
 import { Product } from '../products/entities/product.entity';
-import { CartResponse } from './interfaces/cart.interface'; // Импортируем наш новый интерфейс
+import { CartResponse } from './interfaces/cart.interface';
 
 @Injectable()
 export class CartService {

@@ -97,7 +97,7 @@ export const AdminProductListPage = () => {
   const handleSave = async (values: ProductFormValues) => {
     const imageUrls = values.imageUrls
       ? [values.imageUrls]
-      : ['https://via.placeholder.com/300'];
+      : ['https://i.postimg.cc/9XD701DH/izobrazenie.png'];
 
     const payload = {
       name: values.name,
@@ -149,7 +149,7 @@ export const AdminProductListPage = () => {
       key: 'imageUrls',
       render: (urls: string[]) => (
         <img
-          src={urls?.[0] || 'https://via.placeholder.com/50'}
+          src={urls?.[0] || 'https://i.postimg.cc/9XD701DH/izobrazenie.png'}
           alt="preview"
           style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 8 }}
         />
@@ -316,7 +316,7 @@ export const AdminProductListPage = () => {
             rules={[{ required: true, message: 'Вставьте ссылку на картинку' }]}
           >
             <Input
-              placeholder="https://example.com/image.jpg"
+              placeholder="https://i.postimg.cc/9XD701DH/izobrazenie.png"
             />
           </Form.Item>
 

@@ -124,7 +124,7 @@ const ProductDetailPage = () => {
             background: 'var(--bg-secondary)',
           }}>
             <Image
-              src={product.imageUrls[0] || 'https://via.placeholder.com/500?text=Нет+фото'}
+              src={product.imageUrls[0] || 'https://i.postimg.cc/9XD701DH/izobrazenie.png'}
               alt={product.name}
               style={{ maxHeight: '400px', objectFit: 'contain', borderRadius: 16 }}
             />

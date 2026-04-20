@@ -56,7 +56,7 @@ const CartPage = () => {
       render: (_, item) => (
         <Space size={16}>
           <img
-            src={item.imageUrl || 'https://via.placeholder.com/80?text=Нет+фото'}
+            src={item.imageUrl || 'https://i.postimg.cc/9XD701DH/izobrazenie.png'}
             alt={item.name}
             style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: 16, background: 'white' }}
           />
