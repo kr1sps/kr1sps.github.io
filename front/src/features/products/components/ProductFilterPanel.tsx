@@ -1,7 +1,7 @@
 import { Card, Input, Select, Slider, Switch, Space, Button, Row, Col, Divider } from 'antd';
 import { SearchOutlined, FilterOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ProductFilter } from '../../../shared/types';
-import { SortOption } from '../logic/productFilters';
+import { SortOption } from '../enums/SortOption.ts';
 import { useCategories } from '../hooks/useProducts';
 
 const { Option } = Select;
@@ -122,11 +122,11 @@ const ProductFilterPanel = ({
                     value={sort}
                     onChange={handleSortChange}
                   >
-                      <Option value={SortOption.NEWEST}>✨ Сначала новые</Option>
-                      <Option value={SortOption.PRICE_ASC}>💰 Цена: по возрастанию</Option>
-                      <Option value={SortOption.PRICE_DESC}>💰 Цена: по убыванию</Option>
-                      <Option value={SortOption.NAME_ASC}>🔤 Название: А-Я</Option>
-                      <Option value={SortOption.NAME_DESC}>🔤 Название: Я-А</Option>
+                      <Option value={SortOption.NEWEST}>Сначала новые</Option>
+                      <Option value={SortOption.PRICE_ASC}>Цена: по возрастанию</Option>
+                      <Option value={SortOption.PRICE_DESC}>Цена: по убыванию</Option>
+                      <Option value={SortOption.NAME_ASC}>Название: А-Я</Option>
+                      <Option value={SortOption.NAME_DESC}>Название: Я-А</Option>
                   </Select>
               </Col>
               <Col xs={24} md={4}>

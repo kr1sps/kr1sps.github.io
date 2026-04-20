@@ -4,7 +4,7 @@ import { useProducts } from '../features/products/hooks/useProducts';
 import ProductCard from '../features/products/components/ProductCard';
 import ProductFilterPanel from '../features/products/components/ProductFilterPanel';
 import type { ProductFilter } from '../shared/types';
-import { SortOption } from '../features/products/logic/productFilters';
+import { SortOption } from '../features/products/enums/SortOption.ts';
 
 const { Title, Paragraph } = Typography;
 const DEFAULT_PAGE_SIZE = 12;

@@ -1,7 +1,8 @@
 import {
   Injectable,
   UnauthorizedException,
-  ConflictException, NotFoundException,
+  ConflictException,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -81,6 +82,7 @@ export class AuthService {
     Object.assign(user, updateDto);
     await this.userRepository.save(user);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _password, ...result } = user;
     return result as SafeUser;
   }

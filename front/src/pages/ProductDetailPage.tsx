@@ -25,6 +25,12 @@ import { formatPrice } from '../utils/formatters';
 
 const { Title, Paragraph, Text } = Typography;
 
+interface UploadOptions {
+  file: File | Blob;
+  onSuccess?: (response: unknown) => void;
+  onError?: (error: Error) => void;
+}
+
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -54,36 +60,44 @@ const ProductDetailPage = () => {
       await addItem({ productId: product.id, quantity });
       message.success(`${quantity} шт. добавлено в корзину`);
       setQuantity(1);
-    } catch (error: any) {
-      message.error(error.message || 'Не удалось добавить товар');
+    } catch (error: unknown) {
+      const err = error as Error;
+      message.error(err.message || 'Не удалось добавить товар');
     }
   };
 
-  const handleImageUpload = async (options: any) => {
-    const { file, onSuccess, onError } = options;
+  const handleImageUpload = async (options: unknown) => {
+    const { file, onSuccess, onError } = options as UploadOptions;
+
     const hideLoading = message.loading('Загрузка картинки в облако...', 0);
 
     try {
       const formData = new FormData();
       formData.append('image', file);
 
-      const uploadRes = await apiClient.post('/products/upload-image', formData, {
+      const uploadRes = await apiClient.post<{ url: string }>('/products/upload-image', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       const newImageUrl = uploadRes.data.url;
 
-      await apiClient.patch(`/products/${product.id}`, {
+      await apiClient.patch(`/products/${product!.id}`, {
         imageUrls: [newImageUrl],
       });
 
       hideLoading();
       message.success('Фотография товара успешно обновлена!');
-      onSuccess("ok");
+
+      if (onSuccess) onSuccess(newImageUrl);
 
       window.location.reload();
-    } catch (err: any) {
+    } catch (error: unknown) {
       hideLoading();
-      onError(err);
+
+      const err = error as { response?: { data?: { message?: string } } };
+
+      if (onError) onError(new Error('Upload failed'));
+
       message.error(err.response?.data?.message || 'Ошибка загрузки картинки');
     }
   };
@@ -118,7 +132,7 @@ const ProductDetailPage = () => {
             {isAdmin && (
               <div style={{ marginTop: 24 }}>
                 <Upload
-                  customRequest={handleImageUpload}
+                  customRequest={(options) => handleImageUpload(options)}
                   showUploadList={false}
                   accept="image/png, image/jpeg, image/jpg"
                 >

@@ -20,3 +20,29 @@ export enum OrderStatus {
     DELIVERED = 'delivered',
     CANCELLED = 'cancelled',
 }
+
+export interface BackendCartItem {
+    productId: string;
+    quantity: number;
+    product?: {
+        name: string;
+        price: number | string;
+        imageUrls?: string[];
+        stock: number;
+    };
+}
+
+export interface BackendCartResponse {
+    items: BackendCartItem[];
+    totalQuantity: number;
+    totalPrice: number;
+}
+
+export interface CartItemState {
+    productId: string;
+    name: string;
+    price: number;
+    quantity: number;
+    imageUrl: string;
+    maxQuantity: number;
+}

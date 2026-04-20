@@ -1,6 +1,6 @@
 import { apiClient } from '../../../lib/api-client';
 import type { Product, Category, PaginatedResponse, ProductFilter } from '../../../shared/types';
-import { SortOption } from '../logic/productFilters';
+import { SortOption } from '../enums/SortOption.ts';
 
 export const productService = {
   async getCategories(): Promise<Category[]> {
@@ -9,10 +9,12 @@ export const productService = {
   },
 
   async getProducts(filter?: ProductFilter, sort?: SortOption): Promise<PaginatedResponse<Product>> {
-    const params: any = { ...filter };
+    const params: ProductFilter & { sort?: SortOption } = { ...filter };
+
     if (sort) {
       params.sort = sort;
     }
+
     const response = await apiClient.get<PaginatedResponse<Product>>('/products', { params });
     return response.data;
   },

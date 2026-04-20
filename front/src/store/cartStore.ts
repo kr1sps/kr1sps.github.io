@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { cartService } from '../features/cart/services/cartService';
-import type { CartItem } from '../shared/types';
+import type { CartItem, BackendCartResponse, BackendCartItem, CartItemState } from '../shared/types';
 
 interface CartState {
   items: CartItem[];
@@ -15,14 +15,14 @@ interface CartState {
   clearCart: () => Promise<void>;
 }
 
-const mapBackendCartToState = (data: any) => {
+const mapBackendCartToState = (data: BackendCartResponse) => {
   return {
-    items: (data.items || []).map((item: any) => ({
+    items: (data.items || []).map((item: BackendCartItem): CartItemState => ({
       productId: item.productId,
       name: item.product?.name || 'Товар больше недоступен',
       price: Number(item.product?.price) || 0,
       quantity: Number(item.quantity) || 1,
-      imageUrl: item.product?.imageUrls?.[0] || 'https://via.placeholder.com/80?text=Нет+фото',
+      imageUrl: item.product?.imageUrls?.[0] || 'https://i.postimg.cc/9XD701DH/izobrazenie.png',
       maxQuantity: item.product?.stock || 0,
     })),
     totalQuantity: Number(data.totalQuantity) || 0,
@@ -52,9 +52,10 @@ export const useCartStore = create<CartState>((set) => ({
     try {
       const data = await cartService.addItem(productId, quantity);
       set(mapBackendCartToState(data));
-    } catch (error: any) {
-      console.error('[СТОР] Ошибка:', error.response?.data || error.message);
-      throw new Error(error.response?.data?.message || 'Ошибка добавления');
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      console.error('[СТОР] Ошибка:', err.response?.data);
+      throw new Error(err.response?.data?.message || 'Ошибка добавления');
     }
   },
 
@@ -75,8 +76,9 @@ export const useCartStore = create<CartState>((set) => ({
     try {
       const data = await cartService.updateQuantity(productId, quantity);
       set(mapBackendCartToState(data));
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Ошибка обновления количества');
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      throw new Error(err.response?.data?.message || 'Ошибка обновления количества');
     } finally {
       set({ isLoading: false });
     }

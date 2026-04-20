@@ -83,7 +83,18 @@ export const AdminProductListPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleSave = async (values: any) => {
+  interface ProductFormValues {
+    name: string;
+    description?: string;
+    price: number;
+    stock: number;
+    categoryId: string;
+    sku: string;
+    isActive: boolean;
+    imageUrls?: string;
+  }
+
+  const handleSave = async (values: ProductFormValues) => {
     const imageUrls = values.imageUrls
       ? [values.imageUrls]
       : ['https://via.placeholder.com/300'];
@@ -111,10 +122,9 @@ export const AdminProductListPage = () => {
       setIsModalOpen(false);
       form.resetFields();
       await fetchProducts();
-    } catch (error: any) {
-      message.error(
-        error.response?.data?.message || 'Ошибка при сохранении товара'
-      );
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      message.error(err.response?.data?.message || 'Ошибка при сохранении товара');
     }
   };
 
@@ -126,6 +136,7 @@ export const AdminProductListPage = () => {
       message.success(currentStatus ? 'Товар перенесён в архив' : 'Товар восстановлен из архива');
       await fetchProducts();
     } catch (error) {
+      console.log(error);
       hide();
       message.error('Ошибка при обновлении статуса');
     }

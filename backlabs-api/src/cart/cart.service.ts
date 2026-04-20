@@ -8,14 +8,7 @@ import { Repository } from 'typeorm';
 import { Cart } from './entities/cart.entity';
 import { CartItem } from './entities/cart-item.entity';
 import { Product } from '../products/entities/product.entity';
-
-export interface CartResponse {
-  id: string;
-  userId: string;
-  items: CartItem[];
-  totalQuantity: number;
-  totalPrice: number;
-}
+import { CartResponse } from './interfaces/cart.interface'; // Импортируем наш новый интерфейс
 
 @Injectable()
 export class CartService {
@@ -26,7 +19,29 @@ export class CartService {
     @InjectRepository(Product) private productRepository: Repository<Product>,
   ) {}
 
-  async getCart(userId: string): Promise<CartResponse> {
+  private mapToResponse(cart: Cart): CartResponse {
+    const items = (cart.items as unknown as CartItem[]) ?? [];
+
+    const totalQuantity = items.reduce(
+      (sum, item) => sum + Number(item.quantity),
+      0,
+    );
+
+    const totalPrice = items.reduce((sum, item) => {
+      const price = item.product ? Number(item.product.price) : 0;
+      return sum + price * Number(item.quantity);
+    }, 0);
+
+    return {
+      id: cart.id,
+      userId: cart.userId,
+      items,
+      totalQuantity,
+      totalPrice,
+    };
+  }
+
+  private async findOrCreateCart(userId: string): Promise<Cart> {
     let cart = await this.cartRepository.findOne({
       where: { userId },
       relations: ['items', 'items.product'],
@@ -36,26 +51,12 @@ export class CartService {
       cart = this.cartRepository.create({ userId, items: [] });
       await this.cartRepository.save(cart);
     }
+    return cart;
+  }
 
-    const items: CartItem[] = (cart.items as unknown as CartItem[]) ?? [];
-
-    const totalQuantity: number = items.reduce(
-      (sum: number, item: CartItem) => sum + item.quantity,
-      0,
-    );
-
-    const totalPrice: number = items.reduce((sum: number, item: CartItem) => {
-      const productPrice = item.product ? Number(item.product.price) : 0;
-      return sum + productPrice * Number(item.quantity);
-    }, 0);
-
-    return {
-      id: cart.id,
-      userId: cart.userId,
-      items: items,
-      totalQuantity,
-      totalPrice,
-    };
+  async getCart(userId: string): Promise<CartResponse> {
+    const cart = await this.findOrCreateCart(userId);
+    return this.mapToResponse(cart);
   }
 
   async addItem(
@@ -63,31 +64,22 @@ export class CartService {
     productId: string,
     quantity: number,
   ): Promise<CartResponse> {
-    let cart = await this.cartRepository.findOne({ where: { userId } });
-    if (!cart) {
-      cart = this.cartRepository.create({ userId, items: [] });
-      await this.cartRepository.save(cart);
-    }
-
+    const cart = await this.findOrCreateCart(userId);
     const product = await this.productRepository.findOne({
       where: { id: productId },
     });
-    if (!product) {
-      throw new NotFoundException('Товар не найден');
-    }
+
+    if (!product) throw new NotFoundException('Товар не найден');
 
     let cartItem = await this.cartItemRepository.findOne({
       where: { cartId: cart.id, productId },
     });
 
-    const newQuantity: number = cartItem
-      ? Number(cartItem.quantity) + Number(quantity)
-      : Number(quantity);
+    const currentQuantity = cartItem ? Number(cartItem.quantity) : 0;
+    const newQuantity = currentQuantity + Number(quantity);
 
     if (newQuantity > product.stock) {
-      throw new BadRequestException(
-        `Нельзя добавить больше. Доступно: ${product.stock} шт.`,
-      );
+      throw new BadRequestException(`Доступно только ${product.stock} шт.`);
     }
 
     if (cartItem) {
@@ -101,7 +93,6 @@ export class CartService {
     }
 
     await this.cartItemRepository.save(cartItem);
-
     return this.getCart(userId);
   }
 
@@ -110,49 +101,34 @@ export class CartService {
     productId: string,
     quantity: number,
   ): Promise<CartResponse> {
-    const cart = await this.cartRepository.findOne({ where: { userId } });
-    if (!cart) throw new NotFoundException('Корзина не найдена');
+    const cart = await this.findOrCreateCart(userId);
+
+    if (quantity <= 0) return this.removeItem(userId, productId);
 
     const product = await this.productRepository.findOne({
       where: { id: productId },
     });
-    if (!product) throw new NotFoundException('Товар не найден');
-
-    if (quantity <= 0) {
-      return this.removeItem(userId, productId);
+    if (product && quantity > product.stock) {
+      throw new BadRequestException(`Максимально доступно: ${product.stock}`);
     }
 
-    if (quantity > product.stock) {
-      throw new BadRequestException(
-        `Максимальное доступное количество: ${product.stock} шт.`,
-      );
-    }
-
-    const cartItem = await this.cartItemRepository.findOne({
-      where: { cartId: cart.id, productId },
-    });
-
-    if (cartItem) {
-      cartItem.quantity = quantity;
-      await this.cartItemRepository.save(cartItem);
-    }
+    await this.cartItemRepository.update(
+      { cartId: cart.id, productId },
+      { quantity },
+    );
 
     return this.getCart(userId);
   }
 
   async removeItem(userId: string, productId: string): Promise<CartResponse> {
-    const cart = await this.cartRepository.findOne({ where: { userId } });
-    if (cart) {
-      await this.cartItemRepository.delete({ cartId: cart.id, productId });
-    }
+    const cart = await this.findOrCreateCart(userId);
+    await this.cartItemRepository.delete({ cartId: cart.id, productId });
     return this.getCart(userId);
   }
 
   async clearCart(userId: string): Promise<CartResponse> {
-    const cart = await this.cartRepository.findOne({ where: { userId } });
-    if (cart) {
-      await this.cartItemRepository.delete({ cartId: cart.id });
-    }
+    const cart = await this.findOrCreateCart(userId);
+    await this.cartItemRepository.delete({ cartId: cart.id });
     return this.getCart(userId);
   }
 }

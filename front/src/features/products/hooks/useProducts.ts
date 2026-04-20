@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { productService } from '../services/productService';
 import type { ProductFilter } from '../../../shared/types';
-import { SortOption } from '../logic/productFilters';
+import { SortOption } from '../enums/SortOption.ts';
 import { keepPreviousData } from '@tanstack/react-query';
 
 export const productKeys = {

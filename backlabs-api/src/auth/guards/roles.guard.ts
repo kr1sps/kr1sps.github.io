@@ -7,6 +7,14 @@ import {
 import { Reflector } from '@nestjs/core';
 import { UserRole } from '../../users/entities/user.entity';
 
+interface RequestWithUser extends Request {
+  user?: {
+    id: string;
+    email: string;
+    role: UserRole;
+  };
+}
+
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -19,8 +27,10 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true;
     }
-    const request = context.switchToHttp().getRequest();
+
+    const request = context.switchToHttp().getRequest<RequestWithUser>();
     const user = request.user;
+
     if (!user) {
       throw new ForbiddenException('No user found');
     }

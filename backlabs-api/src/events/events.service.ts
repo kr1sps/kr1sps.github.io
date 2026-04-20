@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Subject } from 'rxjs';
+import { Order } from '../orders/entities/order.entity';
 
 export interface OrderEvent {
   type: 'created' | 'updated' | 'cancelled';
-  order: any;
+  order: Order;
 }
 
 @Injectable()

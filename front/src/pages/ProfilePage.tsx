@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import { Card, Form, Input, Button, Typography, Space, Row, Col, message, Divider } from 'antd';
-import { UserOutlined, PhoneOutlined, SaveOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { Card, Form, Input, Button, Typography, Space, Row, Col, message, Divider, Tag, Table } from 'antd';
+import { UserOutlined, PhoneOutlined, SaveOutlined, HistoryOutlined } from '@ant-design/icons';
 import { useAuthStore } from '../store/authStore';
 import { authService } from '../features/auth/services/authService';
+import { orderService } from '../features/orders/services/orderService.ts';
+import { formatPrice } from '../utils/formatters.ts';
+import { Order } from '../shared/types';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -10,17 +13,76 @@ const ProfilePage = () => {
   const { user, login, token } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
-  const onFinish = async (values: any) => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      const fetchOrders = async () => {
+        setOrdersLoading(true);
+        try {
+          const data = await orderService.getOrders();
+          setOrders(data);
+        } catch (error) {
+          console.error('Ошибка при загрузке заказов:', error);
+          message.error('Не удалось загрузить историю заказов');
+        } finally {
+          setOrdersLoading(false);
+        }
+      };
+      fetchOrders();
+    }
+  }, [user]);
+
+  const getStatusTag = (status: string) => {
+    const statusMap: Record<string, { color: string; label: string }> = {
+      pending: { color: 'orange', label: 'Ожидает' },
+      paid: { color: 'blue', label: 'Оплачен' },
+      shipped: { color: 'purple', label: 'Доставляется' },
+      delivered: { color: 'green', label: 'Доставлен' },
+      cancelled: { color: 'red', label: 'Отменен' },
+    };
+    const config = statusMap[status] || { color: 'default', label: status };
+    return <Tag color={config.color}>{config.label.toUpperCase()}</Tag>;
+  };
+
+  const orderColumns = [
+    {
+      title: 'Заказ №',
+      dataIndex: 'id',
+      key: 'id',
+      render: (id: string) => <Text copyable={{ text: id }}>{id.slice(0, 8)}</Text>,
+    },
+    {
+      title: 'Дата',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (date: string) => new Date(date).toLocaleDateString(),
+    },
+    {
+      title: 'Статус',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status: string) => getStatusTag(status),
+    },
+    {
+      title: 'Сумма',
+      dataIndex: 'total',
+      key: 'total',
+      render: (total: number) => <Text strong>{formatPrice(total)}</Text>,
+    },
+  ];
+
+  const onFinish = async (values: { name: string; phone?: string; address?: string }) => {
     setLoading(true);
     try {
-      const { email, ...profileData } = values;
-
+      const { ...profileData } = values;
       const updatedUser = await authService.updateProfile(profileData);
-
       if (token) login(updatedUser, token);
       message.success('Профиль успешно обновлен');
-    } catch (error: any) {
-      message.error(error.response?.data?.message || 'Ошибка при обновлении');
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      message.error(err.response?.data?.message || 'Ошибка при обновлении');
     } finally {
       setLoading(false);
     }
@@ -89,6 +151,20 @@ const ProfilePage = () => {
                 </Button>
               </Form.Item>
             </Form>
+          </Card>
+          <Card
+            className="glass-card"
+            title={<Space><HistoryOutlined /> История заказов</Space>}
+            style={{ marginTop: 24 }}
+          >
+            <Table
+              dataSource={orders}
+              columns={orderColumns}
+              rowKey="id"
+              loading={ordersLoading}
+              pagination={{ pageSize: 5 }}
+              size="small"
+            />
           </Card>
         </Col>
 

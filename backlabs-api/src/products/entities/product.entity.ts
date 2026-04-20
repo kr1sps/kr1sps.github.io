@@ -43,7 +43,7 @@ export class Product {
 
   @Field(() => [String])
   @Column('simple-array', {
-    default: ['https://via.placeholder.com/300?text=No+Image'],
+    default: ['https://i.postimg.cc/9XD701DH/izobrazenie.png'],
   })
   imageUrls: string[];
 

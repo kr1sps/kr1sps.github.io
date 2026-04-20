@@ -5,7 +5,7 @@ import { formatPrice } from '../utils/formatters';
 import { useNavigate } from 'react-router-dom';
 import type { ColumnsType } from 'antd/es/table';
 import type { CartItem } from '../shared/types';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const { Title, Text } = Typography;
 
@@ -37,11 +37,12 @@ const CartPage = () => {
   const { items, totalQuantity, totalPrice, updateQuantity, removeItem, clearCart } = useCartStore();
 
   const handleQuantityChange = (productId: string, value: number | null) => {
-    if (value) {
+    if (value !== null) {
       try {
         updateQuantity(productId, value);
-      } catch (error: any) {
-        message.error(error.message || 'Ошибка изменения количества');
+      } catch (error: unknown) {
+        const err = error as Error;
+        message.error(err.message || 'Ошибка изменения количества');
       }
     }
   };
@@ -138,7 +139,7 @@ const CartPage = () => {
         style={{ background: 'transparent' }}
         components={{
           header: {
-            cell: (props: any) => (
+            cell: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
               <th
                 {...props}
                 style={{

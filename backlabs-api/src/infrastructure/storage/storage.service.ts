@@ -8,15 +8,6 @@ export class StorageService {
   private s3Client: S3Client;
 
   constructor() {
-    console.log('--- S3 DEBUG ---');
-    console.log(
-      'Key ID:',
-      process.env.S3_ACCESS_KEY_ID?.substring(0, 10) + '...',
-    );
-    console.log(process.env.S3_SECRET_ACCESS_KEY);
-    console.log('Bucket:', process.env.S3_BUCKET_NAME);
-    console.log('----------------');
-
     this.s3Client = new S3Client({
       region: process.env.S3_REGION! || 'ru-central1',
       endpoint: process.env.S3_ENDPOINT! || 'https://storage.yandexcloud.net',

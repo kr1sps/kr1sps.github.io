@@ -38,7 +38,7 @@ export class ProductsService {
       imageUrls:
         createProductDto.imageUrls && createProductDto.imageUrls.length > 0
           ? createProductDto.imageUrls
-          : ['https://via.placeholder.com/300?text=No+Photo'],
+          : ['https://i.postimg.cc/9XD701DH/izobrazenie.png'],
       isActive: createProductDto.isActive ?? true,
     });
 

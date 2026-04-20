@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { authService } from '../features/auth/services/authService';
+import { LoginRequest } from '../shared/types';
 
 const { Title } = Typography;
 
@@ -13,7 +14,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
 
-  const onFinish = async (values: { email: string; password: string }) => {
+  const onFinish = async (values: LoginRequest) => {
     setLoading(true);
     setError(null);
     try {
@@ -21,7 +22,8 @@ const LoginPage = () => {
       login(response.user, response.accessToken);
       message.success('Вход выполнен успешно');
       navigate('/products');
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
       setError(err.response?.data?.message || 'Ошибка входа');
     } finally {
       setLoading(false);

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../../shared/types';
 import { formatPrice } from '../../../utils/formatters';
 import { useCartStore } from '../../../store/cartStore';
+import React from 'react';
 
 const { Meta } = Card;
 const { Text, Paragraph } = Typography;
@@ -34,8 +35,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         quantity: 1,
       });
       message.success(`${product.name} добавлен в корзину`);
-    } catch (error: any) {
-      message.error(error.message || 'Не удалось добавить товар');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        message.error(error.message);
+      } else {
+        message.error('Не удалось добавить товар');
+      }
     }
   };
 

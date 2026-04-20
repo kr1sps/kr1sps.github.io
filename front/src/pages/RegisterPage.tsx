@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined, HomeOutlined }
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../features/auth/services/authService';
 import { useAuthStore } from '../store/authStore';
+import { LoginRequest } from '../shared/types';
 
 const { Title } = Typography;
 
@@ -13,16 +14,17 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: LoginRequest) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await authService.register(values);
+      const response = await authService.login(values);
       login(response.user, response.accessToken);
-      message.success('Регистрация успешна');
+      message.success('Вход выполнен успешно');
       navigate('/products');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Ошибка регистрации');
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      setError(err.response?.data?.message || 'Ошибка входа');
     } finally {
       setLoading(false);
     }

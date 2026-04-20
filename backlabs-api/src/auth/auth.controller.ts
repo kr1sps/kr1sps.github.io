@@ -19,6 +19,15 @@ import {
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { UpdateProfileDto } from '../users/dto/update-profile.dto';
+import { Request } from 'express';
+
+interface RequestWithUser extends Request {
+  user: {
+    id: string;
+    email: string;
+    role: string;
+  };
+}
 
 @ApiTags('auth')
 @Controller('auth')
@@ -44,7 +53,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Обновить данные профиля' })
   @ApiBearerAuth()
-  updateProfile(@Req() req: any, @Body() updateDto: UpdateProfileDto) {
+  updateProfile(
+    @Req() req: RequestWithUser,
+    @Body() updateDto: UpdateProfileDto,
+  ) {
     return this.authService.updateProfile(req.user.id, updateDto);
   }
 }

@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -17,6 +18,8 @@ import { UserRole } from '../users/entities/user.entity';
 import { Sse } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { EventsService, OrderEvent } from '../events/events.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 interface RequestWithUser {
   user?: {
@@ -25,6 +28,7 @@ interface RequestWithUser {
   };
 }
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
   constructor(
@@ -33,8 +37,10 @@ export class OrdersController {
   ) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   create(@Body() createOrderDto: CreateOrderDto, @Req() req: RequestWithUser) {
-    const userId = req.user?.id || 'temp-user-id';
+    const userId = req.user!.id;
     return this.ordersService.create(userId, createOrderDto);
   }
 
@@ -50,6 +56,8 @@ export class OrdersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   findAll(@Query('status') status?: OrderStatus, @Req() req?: RequestWithUser) {
     const userId = req?.user?.id;
     const role = req?.user?.role || UserRole.CUSTOMER;
@@ -57,6 +65,8 @@ export class OrdersController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   findOne(@Param('id') id: string, @Req() req?: RequestWithUser) {
     const userId = req?.user?.id;
     const role = req?.user?.role || UserRole.CUSTOMER;
@@ -64,6 +74,8 @@ export class OrdersController {
   }
 
   @Patch(':id/status')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   updateStatus(
     @Param('id') id: string,
     @Body() updateOrderStatusDto: UpdateOrderStatusDto,
@@ -74,8 +86,10 @@ export class OrdersController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   cancel(@Param('id') id: string, @Req() req?: RequestWithUser) {
-    const userId = req?.user?.id || 'temp-user-id';
+    const userId = req?.user?.id as string;
     const role = req?.user?.role || UserRole.CUSTOMER;
     return this.ordersService.cancel(id, userId, role);
   }
