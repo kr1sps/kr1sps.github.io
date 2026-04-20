@@ -157,3 +157,19 @@ a {
     max-width: 100%;
   }
 }
+
+.uniform-card {
+  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
+
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.uniform-card .ant-card-cover img {
+  height: 200px;
+  object-fit: cover;
+}
