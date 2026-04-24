@@ -70,7 +70,6 @@ body {
   padding: 1rem 0;
 }
 
-/* Кастомный скроллбар */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -90,7 +89,6 @@ body {
   background: var(--accent-light);
 }
 
-/* Глобальные анимации */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -118,7 +116,6 @@ body {
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
-/* Стили для заголовков */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading);
   font-weight: 600;
@@ -135,7 +132,6 @@ h1 {
   display: inline-block;
 }
 
-/* Стили для кнопок и ссылок */
 a {
   transition: all 0.2s ease;
 }
@@ -150,7 +146,6 @@ a {
   box-shadow: 0 12px 24px rgba(170, 59, 255, 0.3);
 }
 
-/* Адаптивные отступы */
 @media (max-width: 768px) {
   #root {
     padding: 0.5rem;
